@@ -1,22 +1,37 @@
 package br.com.matheus.agendamentoconsultas.controller.form;
 
+import javax.persistence.Column;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import br.com.matheus.agendamentoconsultas.constraints.CrmUnica;
+import br.com.matheus.agendamentoconsultas.constraints.EmailUnico;
 import br.com.matheus.agendamentoconsultas.model.Medico;
 
 public class MedicoForm {
 
-	@NotNull @NotBlank
+	@NotNull(message = "O campo 'nome' é obrigatório")
+	@NotBlank(message = "O campo 'nome' é obrigatório")
 	private String nome;
-	@NotNull @NotBlank @Email
+	
+	@Email
+	@EmailUnico
+	@Column(unique = true)
+	@NotNull(message = "O campo 'email' é obrigatório")
+	@NotBlank(message = "O campo 'email' é obrigatório") 
 	private String email;
-	@NotNull
+	
+	@NotNull(message = "O campo 'telefone' é orbigatório") 
 	private Long telefone;
-	@NotNull
+	
+	@CrmUnica
+	@Column(unique = true)
+	@NotNull(message = "O campo 'crm' é obrigatório")
 	private Long crm;
-	@NotNull @NotBlank
+	
+	@NotNull(message = "O campo 'endereço' é obrigatório")
+	@NotBlank(message = "O campo 'endereço' é obrigatório")
 	private String endereco;
 	
 	public String getNome() {

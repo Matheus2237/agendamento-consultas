@@ -1,9 +1,14 @@
 package br.com.matheus.agendamentoconsultas.model;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -18,6 +23,8 @@ public class Medico {
 	private Long telefone;
 	private Long crm;
 	private String endereco;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "medico", fetch = FetchType.LAZY)
+	private List<Consulta> consultas;
 	
 	public Medico() {
 	}
