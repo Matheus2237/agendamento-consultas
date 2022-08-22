@@ -1,21 +1,22 @@
 package br.com.matheus.agendamentoconsultas.controller.form;
 
+import javax.persistence.Column;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
+import br.com.matheus.agendamentoconsultas.constraints.EmailUnico;
 import br.com.matheus.agendamentoconsultas.model.Medico;
 import br.com.matheus.agendamentoconsultas.repository.MedicoRepository;
 
 public class AtualizacaoMedicoForm {
 
-	@NotNull @NotBlank
 	private String nome;
-	@NotNull @NotBlank @Email
+	
+	@Email
+	@EmailUnico
+	@Column(unique = true)
 	private String email;
-	@NotNull
+	
 	private Long telefone;
-	@NotNull @NotBlank
 	private String endereco;
 	
 	public String getNome() {
@@ -45,10 +46,14 @@ public class AtualizacaoMedicoForm {
 	
 	public Medico atualizar(Long id, MedicoRepository medicoRepository) {
 		Medico medico = medicoRepository.getReferenceById(id);
-		medico.setNome(this.nome);
-		medico.setEmail(this.email);
-		medico.setTelefone(this.telefone);
-		medico.setEndereco(this.endereco);
+		if (this.nome != null) 
+			medico.setNome(this.nome);
+		if (this.email != null)
+			medico.setEmail(this.email);
+		if (this.telefone != null)
+			medico.setTelefone(this.telefone);
+		if (this.endereco != null)
+			medico.setEndereco(this.endereco);
 		return medico;
 	}
 }

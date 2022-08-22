@@ -22,7 +22,7 @@ public class MedicoForm {
 	@NotBlank(message = "O campo 'email' é obrigatório") 
 	private String email;
 	
-	@NotNull(message = "O campo 'telefone' é orbigatório") 
+	@NotNull(message = "O campo 'telefone' é obrigatório") 
 	private Long telefone;
 	
 	@CrmUnica
