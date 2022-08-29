@@ -5,8 +5,11 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import br.com.matheus.agendamentoconsultas.constraints.CrmUnica;
-import br.com.matheus.agendamentoconsultas.constraints.EmailUnico;
+import org.hibernate.validator.constraints.Length;
+
+import br.com.matheus.agendamentoconsultas.constraints.UniqueCrm;
+import br.com.matheus.agendamentoconsultas.constraints.UniqueEmail;
+import br.com.matheus.agendamentoconsultas.constraints.ValidCrmFormat;
 import br.com.matheus.agendamentoconsultas.model.Medico;
 
 public class MedicoForm {
@@ -16,19 +19,21 @@ public class MedicoForm {
 	private String nome;
 	
 	@Email
-	@EmailUnico
+	@UniqueEmail
 	@Column(unique = true)
 	@NotNull(message = "O campo 'email' é obrigatório")
 	@NotBlank(message = "O campo 'email' é obrigatório") 
 	private String email;
 	
-	@NotNull(message = "O campo 'telefone' é obrigatório") 
+	@NotNull(message = "O campo 'telefone' é obrigatório")
+	@Length(min = 10, max = 11, message = "O campo 'telefone' deve conter o ddd e o número")
 	private Long telefone;
 	
-	@CrmUnica
+	@ValidCrmFormat
+	@UniqueCrm
 	@Column(unique = true)
 	@NotNull(message = "O campo 'crm' é obrigatório")
-	private Long crm;
+	private String crm;
 	
 	@NotNull(message = "O campo 'endereço' é obrigatório")
 	@NotBlank(message = "O campo 'endereço' é obrigatório")
@@ -52,10 +57,10 @@ public class MedicoForm {
 	public void setTelefone(Long telefone) {
 		this.telefone = telefone;
 	}
-	public Long getCrm() {
+	public String getCrm() {
 		return crm;
 	}
-	public void setCrm(Long crm) {
+	public void setCrm(String crm) {
 		this.crm = crm;
 	}
 	public String getEndereco() {

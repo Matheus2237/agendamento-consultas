@@ -11,7 +11,7 @@ public class MedicoDto {
 	private String nome;
 	private String email;
 	private Long telefone;
-	private Long crm;
+	private String crm;
 	private String endereco;
 	
 	public MedicoDto(Medico medico) {
@@ -39,7 +39,7 @@ public class MedicoDto {
 		return telefone;
 	}
 
-	public Long getCrm() {
+	public String getCrm() {
 		return crm;
 	}
 

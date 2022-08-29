@@ -6,17 +6,17 @@ import javax.validation.ConstraintValidatorContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import br.com.matheus.agendamentoconsultas.constraints.EmailUnico;
+import br.com.matheus.agendamentoconsultas.constraints.UniqueCrm;
 import br.com.matheus.agendamentoconsultas.repository.MedicoRepository;
 
 @Component
-public class EmailUnicoValidator implements ConstraintValidator<EmailUnico, String> {
+public class UniqueCrmValidator implements ConstraintValidator<UniqueCrm, String> {
 
 	@Autowired
 	private MedicoRepository medicoRepository;
-
+	
 	@Override
-	public boolean isValid(String email, ConstraintValidatorContext context) {
-		return !medicoRepository.existsByEmail(email);
+	public boolean isValid(String crm, ConstraintValidatorContext context) {
+		return !medicoRepository.existsByCrm(crm);
 	}
 }

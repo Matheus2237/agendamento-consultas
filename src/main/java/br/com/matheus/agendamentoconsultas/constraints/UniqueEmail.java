@@ -8,13 +8,13 @@ import java.lang.annotation.Target;
 import javax.validation.Constraint;
 import javax.validation.Payload;
 
-import br.com.matheus.agendamentoconsultas.constraints.validator.CrmUnicaValidator;
+import br.com.matheus.agendamentoconsultas.constraints.validator.UniqueEmailValidator;
 
-@Constraint(validatedBy = CrmUnicaValidator.class)
+@Constraint(validatedBy = UniqueEmailValidator.class)
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface CrmUnica{
-	String message() default "Essa crm já está registrada.";
+public @interface UniqueEmail {
+	String message() default "Esse email já está registrado.";
 	Class<?>[] groups() default {};
 	Class<? extends Payload>[] payload() default {};
 }

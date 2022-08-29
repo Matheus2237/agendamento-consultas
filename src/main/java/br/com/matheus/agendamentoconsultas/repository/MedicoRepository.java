@@ -8,5 +8,5 @@ public interface MedicoRepository extends JpaRepository<Medico, Long> {
 
 	boolean existsByEmail(String email);
 
-	boolean existsByCrm(Long crm);
+	boolean existsByCrm(String crm);
 }

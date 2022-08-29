@@ -3,7 +3,9 @@ package br.com.matheus.agendamentoconsultas.controller.form;
 import javax.persistence.Column;
 import javax.validation.constraints.Email;
 
-import br.com.matheus.agendamentoconsultas.constraints.EmailUnico;
+import org.hibernate.validator.constraints.Length;
+
+import br.com.matheus.agendamentoconsultas.constraints.UniqueEmail;
 import br.com.matheus.agendamentoconsultas.model.Medico;
 import br.com.matheus.agendamentoconsultas.repository.MedicoRepository;
 
@@ -12,11 +14,13 @@ public class AtualizacaoMedicoForm {
 	private String nome;
 	
 	@Email
-	@EmailUnico
+	@UniqueEmail
 	@Column(unique = true)
 	private String email;
-	
+
+	@Length(min = 10, max = 11, message = "O campo 'telefone' deve conter o ddd e o número")
 	private Long telefone;
+	
 	private String endereco;
 	
 	public String getNome() {
