@@ -9,6 +9,7 @@ import org.hibernate.validator.constraints.Length;
 
 import br.com.matheus.agendamentoconsultas.constraints.UniqueCrm;
 import br.com.matheus.agendamentoconsultas.constraints.UniqueEmail;
+import br.com.matheus.agendamentoconsultas.constraints.ValidAddressFormat;
 import br.com.matheus.agendamentoconsultas.constraints.ValidCrmFormat;
 import br.com.matheus.agendamentoconsultas.model.Medico;
 
@@ -29,12 +30,13 @@ public class MedicoForm {
 	@Length(min = 10, max = 11, message = "O campo 'telefone' deve conter o ddd e o número")
 	private Long telefone;
 	
-	@ValidCrmFormat
 	@UniqueCrm
+	@ValidCrmFormat
 	@Column(unique = true)
 	@NotNull(message = "O campo 'crm' é obrigatório")
 	private String crm;
 	
+	@ValidAddressFormat
 	@NotNull(message = "O campo 'endereço' é obrigatório")
 	@NotBlank(message = "O campo 'endereço' é obrigatório")
 	private String endereco;

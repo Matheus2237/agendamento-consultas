@@ -6,6 +6,7 @@ import javax.validation.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 
 import br.com.matheus.agendamentoconsultas.constraints.UniqueEmail;
+import br.com.matheus.agendamentoconsultas.constraints.ValidAddressFormat;
 import br.com.matheus.agendamentoconsultas.model.Medico;
 import br.com.matheus.agendamentoconsultas.repository.MedicoRepository;
 
@@ -21,6 +22,7 @@ public class AtualizacaoMedicoForm {
 	@Length(min = 10, max = 11, message = "O campo 'telefone' deve conter o ddd e o número")
 	private Long telefone;
 	
+	@ValidAddressFormat
 	private String endereco;
 	
 	public String getNome() {

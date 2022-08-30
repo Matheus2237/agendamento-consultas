@@ -14,7 +14,7 @@ import br.com.matheus.agendamentoconsultas.constraints.validator.ValidCrmFormatV
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ValidCrmFormat {
-	String message() default "O campo 'crm'";
+	String message() default "O campo 'crm' não está no formato correto: CRM/UF 123456";
 	Class<?>[] groups() default {};
 	Class<? extends Payload>[] payload() default {};
 }
