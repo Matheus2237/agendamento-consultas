@@ -5,8 +5,10 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import br.com.matheus.agendamentoconsultas.constraints.UniqueCpf;
 import br.com.matheus.agendamentoconsultas.constraints.UniqueEmail;
 import br.com.matheus.agendamentoconsultas.constraints.ValidAddressFormat;
+import br.com.matheus.agendamentoconsultas.constraints.ValidCpfFormat;
 import br.com.matheus.agendamentoconsultas.model.Paciente;
 
 public class PacienteForm {
@@ -25,6 +27,8 @@ public class PacienteForm {
 	@NotNull(message = "O campo 'telefone' é obrigatório")
 	private Long telefone;
 	
+	@UniqueCpf
+	@ValidCpfFormat
 	@Column(unique = true)
 	@NotNull(message = "O campo 'cpf' é obrigatório")
 	private String cpf;
