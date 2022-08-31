@@ -5,10 +5,10 @@ import javax.validation.constraints.Email;
 
 import br.com.matheus.agendamentoconsultas.constraints.UniqueEmail;
 import br.com.matheus.agendamentoconsultas.constraints.ValidAddressFormat;
-import br.com.matheus.agendamentoconsultas.model.Medico;
-import br.com.matheus.agendamentoconsultas.repository.MedicoRepository;
+import br.com.matheus.agendamentoconsultas.model.Paciente;
+import br.com.matheus.agendamentoconsultas.repository.PacienteRepository;
 
-public class AtualizacaoMedicoForm {
+public class AtualizacaoPacienteForm {
 
 	private String nome;
 	
@@ -21,42 +21,49 @@ public class AtualizacaoMedicoForm {
 	
 	@ValidAddressFormat
 	private String endereco;
-	
+
 	public String getNome() {
 		return nome;
 	}
+
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+
 	public String getEmail() {
 		return email;
 	}
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
 	public Long getTelefone() {
 		return telefone;
 	}
+
 	public void setTelefone(Long telefone) {
 		this.telefone = telefone;
 	}
+
 	public String getEndereco() {
 		return endereco;
 	}
+
 	public void setEndereco(String endereco) {
 		this.endereco = endereco;
 	}
 	
-	public Medico atualizar(Long id, MedicoRepository medicoRepository) {
-		Medico medico = medicoRepository.getReferenceById(id);
+	public Paciente atualizar(Long id, PacienteRepository pacienteRepository) {
+		Paciente paciente = pacienteRepository.getReferenceById(id);
 		if (this.nome != null) 
-			medico.setNome(this.nome);
+			paciente.setNome(this.nome);
 		if (this.email != null)
-			medico.setEmail(this.email);
+			paciente.setEmail(this.email);
 		if (this.telefone != null)
-			medico.setTelefone(this.telefone);
+			paciente.setTelefone(this.telefone);
 		if (this.endereco != null)
-			medico.setEndereco(this.endereco);
-		return medico;
+			paciente.setEndereco(this.endereco);
+		return paciente;
 	}
 }

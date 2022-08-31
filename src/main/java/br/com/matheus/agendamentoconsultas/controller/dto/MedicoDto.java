@@ -26,23 +26,18 @@ public class MedicoDto {
 	public Long getId() {
 		return id;
 	}
-
 	public String getNome() {
 		return nome;
 	}
-
 	public String getEmail() {
 		return email;
 	}
-
 	public Long getTelefone() {
 		return telefone;
 	}
-
 	public String getCrm() {
 		return crm;
 	}
-
 	public String getEndereco() {
 		return endereco;
 	}

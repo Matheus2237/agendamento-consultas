@@ -5,13 +5,11 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import br.com.matheus.agendamentoconsultas.constraints.UniqueCrm;
 import br.com.matheus.agendamentoconsultas.constraints.UniqueEmail;
 import br.com.matheus.agendamentoconsultas.constraints.ValidAddressFormat;
-import br.com.matheus.agendamentoconsultas.constraints.ValidCrmFormat;
-import br.com.matheus.agendamentoconsultas.model.Medico;
+import br.com.matheus.agendamentoconsultas.model.Paciente;
 
-public class MedicoForm {
+public class PacienteForm {
 
 	@NotNull(message = "O campo 'nome' é obrigatório")
 	@NotBlank(message = "O campo 'nome' é obrigatório")
@@ -27,11 +25,9 @@ public class MedicoForm {
 	@NotNull(message = "O campo 'telefone' é obrigatório")
 	private Long telefone;
 	
-	@UniqueCrm
-	@ValidCrmFormat
 	@Column(unique = true)
-	@NotNull(message = "O campo 'crm' é obrigatório")
-	private String crm;
+	@NotNull(message = "O campo 'cpf' é obrigatório")
+	private String cpf;
 	
 	@ValidAddressFormat
 	@NotNull(message = "O campo 'endereço' é obrigatório")
@@ -56,11 +52,11 @@ public class MedicoForm {
 	public void setTelefone(Long telefone) {
 		this.telefone = telefone;
 	}
-	public String getCrm() {
-		return crm;
+	public String getCpf() {
+		return cpf;
 	}
-	public void setCrm(String crm) {
-		this.crm = crm;
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
 	}
 	public String getEndereco() {
 		return endereco;
@@ -69,7 +65,7 @@ public class MedicoForm {
 		this.endereco = endereco;
 	}
 	
-	public Medico toMedico() {
-		return new Medico(nome, email, telefone, crm, endereco);
+	public Paciente toPaciente() {
+		return new Paciente(nome, email, telefone, cpf, endereco);
 	}
 }

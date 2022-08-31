@@ -14,7 +14,7 @@ import br.com.matheus.agendamentoconsultas.constraints.validator.UniqueCrmValida
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface UniqueCrm{
-	String message() default "Essa crm já está registrada.";
+	String message() default "Esta crm já está registrada.";
 	Class<?>[] groups() default {};
 	Class<? extends Payload>[] payload() default {};
 }

@@ -14,7 +14,7 @@ import br.com.matheus.agendamentoconsultas.constraints.validator.UniqueEmailVali
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface UniqueEmail {
-	String message() default "Esse email já está registrado.";
+	String message() default "Este email já está registrado.";
 	Class<?>[] groups() default {};
 	Class<? extends Payload>[] payload() default {};
 }
