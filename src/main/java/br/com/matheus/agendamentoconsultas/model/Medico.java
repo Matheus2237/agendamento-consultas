@@ -20,7 +20,7 @@ public class Medico {
 	private Long id;
 	private String nome;
 	private String email;
-	private Long telefone;
+	private String telefone;
 	private String crm;
 	private String endereco;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "medico", fetch = FetchType.LAZY)
@@ -29,7 +29,7 @@ public class Medico {
 	public Medico() {
 	}
 
-	public Medico(String nome, String email, Long telefone, String crm, String endereco) {
+	public Medico(String nome, String email, String telefone, String crm, String endereco) {
 		this.nome = nome;
 		this.email = email;
 		this.telefone = telefone;
@@ -55,10 +55,10 @@ public class Medico {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public Long getTelefone() {
+	public String getTelefone() {
 		return telefone;
 	}
-	public void setTelefone(Long telefone) {
+	public void setTelefone(String telefone) {
 		this.telefone = telefone;
 	}
 	public String getCrm() {

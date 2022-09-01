@@ -10,7 +10,7 @@ public class MedicoDto {
 	private Long id;
 	private String nome;
 	private String email;
-	private Long telefone;
+	private String telefone;
 	private String crm;
 	private String endereco;
 	
@@ -32,7 +32,7 @@ public class MedicoDto {
 	public String getEmail() {
 		return email;
 	}
-	public Long getTelefone() {
+	public String getTelefone() {
 		return telefone;
 	}
 	public String getCrm() {

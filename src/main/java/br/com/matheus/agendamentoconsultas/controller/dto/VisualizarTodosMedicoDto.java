@@ -9,7 +9,7 @@ public class VisualizarTodosMedicoDto {
 
 	private Long id;
 	private String nome;
-	private Long telefone;
+	private String telefone;
 	private String endereco;
 
 	public VisualizarTodosMedicoDto(Medico medico) {
@@ -25,7 +25,7 @@ public class VisualizarTodosMedicoDto {
 	public String getNome() {
 		return nome;
 	}
-	public Long getTelefone() {
+	public String getTelefone() {
 		return telefone;
 	}
 	public String getEndereco() {

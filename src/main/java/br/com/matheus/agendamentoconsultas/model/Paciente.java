@@ -15,14 +15,14 @@ public class Paciente {
 	private Long id;
 	private String nome;
 	private String email;
-	private Long telefone;
+	private String telefone;
 	private String cpf;
 	private String endereco;
 	
 	public Paciente() {
 	}
 	
-	public Paciente(String nome, String email, Long telefone, String cpf, String endereco) {
+	public Paciente(String nome, String email, String telefone, String cpf, String endereco) {
 		this.nome = nome;
 		this.email = email;
 		this.telefone = telefone;
@@ -48,10 +48,10 @@ public class Paciente {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public Long getTelefone() {
+	public String getTelefone() {
 		return telefone;
 	}
-	public void setTelefone(Long telefone) {
+	public void setTelefone(String telefone) {
 		this.telefone = telefone;
 	}
 	public String getCpf() {

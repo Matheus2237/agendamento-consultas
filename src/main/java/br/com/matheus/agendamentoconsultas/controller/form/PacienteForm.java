@@ -9,6 +9,7 @@ import br.com.matheus.agendamentoconsultas.constraints.UniqueCpf;
 import br.com.matheus.agendamentoconsultas.constraints.UniqueEmail;
 import br.com.matheus.agendamentoconsultas.constraints.ValidAddressFormat;
 import br.com.matheus.agendamentoconsultas.constraints.ValidCpfFormat;
+import br.com.matheus.agendamentoconsultas.constraints.ValidPhoneFormat;
 import br.com.matheus.agendamentoconsultas.model.Paciente;
 
 public class PacienteForm {
@@ -24,8 +25,9 @@ public class PacienteForm {
 	@NotBlank(message = "O campo 'email' é obrigatório") 
 	private String email;
 	
+	@ValidPhoneFormat
 	@NotNull(message = "O campo 'telefone' é obrigatório")
-	private Long telefone;
+	private String telefone;
 	
 	@UniqueCpf
 	@ValidCpfFormat
@@ -50,10 +52,10 @@ public class PacienteForm {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public Long getTelefone() {
+	public String getTelefone() {
 		return telefone;
 	}
-	public void setTelefone(Long telefone) {
+	public void setTelefone(String telefone) {
 		this.telefone = telefone;
 	}
 	public String getCpf() {

@@ -8,13 +8,13 @@ import java.lang.annotation.Target;
 import javax.validation.Constraint;
 import javax.validation.Payload;
 
-import br.com.matheus.agendamentoconsultas.constraints.validator.ValidCpfFormatValidator;
+import br.com.matheus.agendamentoconsultas.constraints.validator.ValidPhoneFormatValidator;
 
-@Constraint(validatedBy = ValidCpfFormatValidator.class)
+@Constraint(validatedBy = ValidPhoneFormatValidator.class)
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ValidCpfFormat {
-	String message() default "O campo 'cpf' não está no formato correto: 123.456.789-00";
+public @interface ValidPhoneFormat {
+	String message() default "O campo 'telefone' não está no formato correto: (DD) 9XXXX-XXXX ou (DD) XXXX-XXXX";
 	Class<?>[] groups() default {};
 	Class<? extends Payload>[] payload() default {};
 }
