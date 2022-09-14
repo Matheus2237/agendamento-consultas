@@ -73,4 +73,10 @@ public class Medico {
 	public void setEndereco(String endereco) {
 		this.endereco = endereco;
 	}
+	public List<Consulta> getConsultas() {
+		return consultas;
+	}
+	public void setConsultas(List<Consulta> consultas) {
+		this.consultas = consultas;
+	}
 }
