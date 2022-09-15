@@ -31,7 +31,7 @@ public class MedicoForm {
 	private String telefone;
 	
 	@NotNull(message = "O campo 'especialização' é obrigatório")
-	private Especializacao especializacao;
+	private String especializacao;
 	
 	@UniqueCrm
 	@ValidCrmFormat
@@ -62,6 +62,12 @@ public class MedicoForm {
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
 	}
+	public String getEspecializacao() {
+		return especializacao;
+	}
+	public void setEspecializacao(String especializacao) {
+		this.especializacao = especializacao;
+	}
 	public String getCrm() {
 		return crm;
 	}
@@ -76,6 +82,6 @@ public class MedicoForm {
 	}
 	
 	public Medico toMedico() {
-		return new Medico(nome, email, telefone, especializacao, crm, endereco);
+		return new Medico(nome, email, telefone, Especializacao.stringToEnum(especializacao), crm, endereco);
 	}
 }

@@ -40,4 +40,8 @@ public enum Especializacao {
 	public String getName() {
 		return name;
 	}
+
+	public static Especializacao stringToEnum(String name) {
+		return Especializacao.valueOf(name);
+	}
 }

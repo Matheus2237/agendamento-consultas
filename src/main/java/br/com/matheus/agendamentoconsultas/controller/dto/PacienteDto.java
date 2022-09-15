@@ -1,8 +1,5 @@
 package br.com.matheus.agendamentoconsultas.controller.dto;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import br.com.matheus.agendamentoconsultas.model.Paciente;
 
 public class PacienteDto {
@@ -40,9 +37,5 @@ public class PacienteDto {
 	}
 	public String getEndereco() {
 		return endereco;
-	}
-	
-	public static List<PacienteDto> converter(List<Paciente> pacientes) {
-		return pacientes.stream().map(PacienteDto::new).collect(Collectors.toList());
 	}
 }

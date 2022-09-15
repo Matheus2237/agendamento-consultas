@@ -18,6 +18,6 @@ public class FormValidationExceptionDto {
 	}
 	
 	public String toString() {
-		return "Erro no campo " + this.campo + "-> " + this.mensagem;
+		return "Erro no campo " + this.campo + " -> " + this.mensagem;
 	}
 }
