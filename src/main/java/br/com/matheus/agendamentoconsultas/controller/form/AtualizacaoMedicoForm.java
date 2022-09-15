@@ -2,6 +2,7 @@
 
 import br.com.matheus.agendamentoconsultas.constraints.ValidAddressAtualizationFormat;
 import br.com.matheus.agendamentoconsultas.constraints.ValidPhoneAtualizationFormat;
+import br.com.matheus.agendamentoconsultas.model.Especializacao;
 import br.com.matheus.agendamentoconsultas.model.Medico;
 import br.com.matheus.agendamentoconsultas.repository.MedicoRepository;
 
@@ -11,6 +12,8 @@ public class AtualizacaoMedicoForm {
 
 	@ValidPhoneAtualizationFormat
 	private String telefone;
+	
+	private Especializacao especializacao;
 	
 	@ValidAddressAtualizationFormat
 	private String endereco;
@@ -40,6 +43,8 @@ public class AtualizacaoMedicoForm {
 			medico.setNome(this.nome);
 		if (this.telefone != null)
 			medico.setTelefone(this.telefone);
+		if (this.especializacao != null)
+			medico.setEspecializacao(especializacao);
 		if (this.endereco != null)
 			medico.setEndereco(this.endereco);
 		return medico;

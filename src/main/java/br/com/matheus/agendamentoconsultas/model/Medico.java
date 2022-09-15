@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,6 +23,8 @@ public class Medico {
 	private String nome;
 	private String email;
 	private String telefone;
+	@Enumerated(value = EnumType.STRING)
+	private Especializacao especializacao;
 	private String crm;
 	private String endereco;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "medico", fetch = FetchType.LAZY)
@@ -29,14 +33,15 @@ public class Medico {
 	public Medico() {
 	}
 
-	public Medico(String nome, String email, String telefone, String crm, String endereco) {
+	public Medico(String nome, String email, String telefone, Especializacao especializacao, String crm, String endereco) {
 		this.nome = nome;
 		this.email = email;
 		this.telefone = telefone;
+		this.especializacao = especializacao;
 		this.crm = crm;
 		this.endereco = endereco;
 	}
-	
+
 	public Long getId() {
 		return id;
 	}
@@ -60,6 +65,12 @@ public class Medico {
 	}
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
+	}
+	public Especializacao getEspecializacao() {
+		return especializacao;
+	}
+	public void setEspecializacao(Especializacao especializacao) {
+		this.especializacao = especializacao;
 	}
 	public String getCrm() {
 		return crm;

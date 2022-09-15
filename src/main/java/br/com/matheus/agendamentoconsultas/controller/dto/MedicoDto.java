@@ -3,6 +3,7 @@ package br.com.matheus.agendamentoconsultas.controller.dto;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import br.com.matheus.agendamentoconsultas.model.Especializacao;
 import br.com.matheus.agendamentoconsultas.model.Medico;
 
 public class MedicoDto {
@@ -11,6 +12,7 @@ public class MedicoDto {
 	private String nome;
 	private String email;
 	private String telefone;
+	private Especializacao especializacao;
 	private String crm;
 	private String endereco;
 	
@@ -19,6 +21,7 @@ public class MedicoDto {
 		this.nome = medico.getNome();
 		this.email = medico.getEmail();
 		this.telefone = medico.getTelefone();
+		this.especializacao = medico.getEspecializacao();
 		this.crm = medico.getCrm();
 		this.endereco = medico.getEndereco();
 	}
@@ -34,6 +37,9 @@ public class MedicoDto {
 	}
 	public String getTelefone() {
 		return telefone;
+	}
+	public Especializacao getEspecializacao() {
+		return especializacao;
 	}
 	public String getCrm() {
 		return crm;

@@ -10,6 +10,7 @@ import br.com.matheus.agendamentoconsultas.constraints.UniqueEmail;
 import br.com.matheus.agendamentoconsultas.constraints.ValidAddressFormat;
 import br.com.matheus.agendamentoconsultas.constraints.ValidCrmFormat;
 import br.com.matheus.agendamentoconsultas.constraints.ValidPhoneFormat;
+import br.com.matheus.agendamentoconsultas.model.Especializacao;
 import br.com.matheus.agendamentoconsultas.model.Medico;
 
 public class MedicoForm {
@@ -28,6 +29,9 @@ public class MedicoForm {
 	@ValidPhoneFormat
 	@NotNull(message = "O campo 'telefone' é obrigatório")
 	private String telefone;
+	
+	@NotNull(message = "O campo 'especialização' é obrigatório")
+	private Especializacao especializacao;
 	
 	@UniqueCrm
 	@ValidCrmFormat
@@ -72,6 +76,6 @@ public class MedicoForm {
 	}
 	
 	public Medico toMedico() {
-		return new Medico(nome, email, telefone, crm, endereco);
+		return new Medico(nome, email, telefone, especializacao, crm, endereco);
 	}
 }
