@@ -13,7 +13,7 @@ public class AtualizacaoMedicoForm {
 	@ValidPhoneAtualizationFormat
 	private String telefone;
 	
-	private Especializacao especializacao;
+	private String especializacao;
 	
 	@ValidAddressAtualizationFormat
 	private String endereco;
@@ -30,6 +30,12 @@ public class AtualizacaoMedicoForm {
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
 	}
+	public String getEspecializacao() {
+		return especializacao;
+	}
+	public void setEspecializacao(String especializacao) {
+		this.especializacao = especializacao;
+	}
 	public String getEndereco() {
 		return endereco;
 	}
@@ -44,7 +50,7 @@ public class AtualizacaoMedicoForm {
 		if (this.telefone != null)
 			medico.setTelefone(this.telefone);
 		if (this.especializacao != null)
-			medico.setEspecializacao(especializacao);
+			medico.setEspecializacao(Especializacao.stringToEnum(especializacao.toUpperCase()));
 		if (this.endereco != null)
 			medico.setEndereco(this.endereco);
 		return medico;

@@ -82,6 +82,6 @@ public class MedicoForm {
 	}
 	
 	public Medico toMedico() {
-		return new Medico(nome, email, telefone, Especializacao.stringToEnum(especializacao), crm, endereco);
+		return new Medico(nome, email, telefone, Especializacao.stringToEnum(especializacao.toUpperCase()), crm, endereco);
 	}
 }
