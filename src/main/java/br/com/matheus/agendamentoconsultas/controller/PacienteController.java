@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,9 +38,9 @@ public class PacienteController {
 	PacienteRepository pacienteRepository;
 	
 	@GetMapping
-	public Page<VisualizarTodosPacientesDto> visualizarTodos(@PageableDefault(page = 0, size = 20, sort = "nome", direction = Direction.ASC) Pageable pageable) {
+	public ResponseEntity<Page<VisualizarTodosPacientesDto>> visualizarTodos(@PageableDefault(page = 0, size = 20, sort = "nome", direction = Direction.ASC) Pageable pageable) {
 		Page<Paciente> pacientes = pacienteRepository.findAll(pageable);
-		return VisualizarTodosPacientesDto.converter(pacientes);
+		return ResponseEntity.ok().body(VisualizarTodosPacientesDto.converter(pacientes));
 	}
 	
 	@PostMapping
@@ -49,36 +50,36 @@ public class PacienteController {
 		pacienteRepository.save(paciente);
 		URI uri = uriComponentsBuilder.path("paciente/{id}").buildAndExpand(paciente.getId()).toUri();
 		return ResponseEntity.created(uri).body(new PacienteDto(paciente));
-		}
+	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<PacienteDto> datalharPaciente(@PathVariable Long id) {
+	public ResponseEntity<Object> datalharPaciente(@PathVariable Long id) {
 		Optional<Paciente> paciente = pacienteRepository.findById(id);
 		if (paciente.isPresent()) {
 			return ResponseEntity.ok(new PacienteDto(paciente.get()));
 		}
-		return ResponseEntity.notFound().build();
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Paciente não encontrado.");
 	}
 	
 	@PutMapping("/{id}")
 	@Transactional
-	public ResponseEntity<PacienteDto> atualizar(@PathVariable Long id, @RequestBody @Valid AtualizacaoPacienteForm atualizacaoPacienteForm) {
-		Optional<Paciente> optional = pacienteRepository.findById(id);
-		if (optional.isPresent()) {
+	public ResponseEntity<Object> atualizar(@PathVariable Long id, @RequestBody @Valid AtualizacaoPacienteForm atualizacaoPacienteForm) {
+		Optional<Paciente> pacienteOptional = pacienteRepository.findById(id);
+		if (pacienteOptional.isPresent()) {
 			Paciente paciente = atualizacaoPacienteForm.atualizar(id, pacienteRepository);
 			return ResponseEntity.ok(new PacienteDto(paciente));
 		}
-		return ResponseEntity.notFound().build();
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Paciente não encontrado.");
 	}
 	
 	@DeleteMapping("/{id}")
 	@Transactional
-	public ResponseEntity<PacienteDto> deletar(@PathVariable Long id) {
-		Optional<Paciente> paciente = pacienteRepository.findById(id);
-		if (paciente.isPresent()) {
+	public ResponseEntity<Object> deletar(@PathVariable Long id) {
+		Optional<Paciente> pacienteOptional = pacienteRepository.findById(id);
+		if (pacienteOptional.isPresent()) {
 			pacienteRepository.deleteById(id);
-			return ResponseEntity.ok().build();
+			return ResponseEntity.ok().body("Paciente excluído com sucesso.");
 		}
-		return ResponseEntity.notFound().build();
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Paciente não encontrado.");
 	}
 }

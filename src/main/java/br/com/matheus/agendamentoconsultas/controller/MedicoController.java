@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -52,33 +53,33 @@ public class MedicoController {
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<MedicoDto> detalharMedico(@PathVariable Long id) {
+	public ResponseEntity<Object> detalharMedico(@PathVariable Long id) {
 		Optional<Medico> medico = medicoRepository.findById(id);
 		if (medico.isPresent()) {
 			return ResponseEntity.ok(new MedicoDto(medico.get()));
 		}
-		return ResponseEntity.notFound().build();
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Médico não encontrado.");
 	}
 	
 	@PutMapping("/{id}")
 	@Transactional
-	public ResponseEntity<MedicoDto> atualizar(@PathVariable Long id, @RequestBody @Valid AtualizacaoMedicoForm atualizacaoMedicoForm) {
-		Optional<Medico> optional = medicoRepository.findById(id);
-		if (optional.isPresent()) {
+	public ResponseEntity<Object> atualizar(@PathVariable Long id, @RequestBody @Valid AtualizacaoMedicoForm atualizacaoMedicoForm) {
+		Optional<Medico> medicoOptional = medicoRepository.findById(id);
+		if (medicoOptional.isPresent()) {
 			Medico medico = atualizacaoMedicoForm.atualizar(id, medicoRepository);
 			return ResponseEntity.ok(new MedicoDto(medico));
 		}
-		return ResponseEntity.notFound().build();
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Médico não encontrado.");
 	}
 	
 	@DeleteMapping("/{id}")
 	@Transactional
-	public ResponseEntity<MedicoDto> deletar(@PathVariable Long id) {
-		Optional<Medico> medico = medicoRepository.findById(id);
-		if (medico.isPresent()) {
+	public ResponseEntity<Object> deletar(@PathVariable Long id) {
+		Optional<Medico> medicoOptional = medicoRepository.findById(id);
+		if (medicoOptional.isPresent()) {
 			medicoRepository.deleteById(id);
-			return ResponseEntity.ok().build();
+			return ResponseEntity.ok().body("Médico excluído com sucesso.");
 		}
-		return ResponseEntity.notFound().build();
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Médico não encontrado.");
 	}
 }
