@@ -1,13 +1,16 @@
 package br.com.matheus.agendamentoconsultas.controller;
 
 import java.net.URI;
-import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,8 +37,8 @@ public class PacienteController {
 	PacienteRepository pacienteRepository;
 	
 	@GetMapping
-	public List<VisualizarTodosPacientesDto> visualizarTodos() {
-		List<Paciente> pacientes = pacienteRepository.findAll();
+	public Page<VisualizarTodosPacientesDto> visualizarTodos(@PageableDefault(page = 0, size = 20, sort = "nome", direction = Direction.ASC) Pageable pageable) {
+		Page<Paciente> pacientes = pacienteRepository.findAll(pageable);
 		return VisualizarTodosPacientesDto.converter(pacientes);
 	}
 	

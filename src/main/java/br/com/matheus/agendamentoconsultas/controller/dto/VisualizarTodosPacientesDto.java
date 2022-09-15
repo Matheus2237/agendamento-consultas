@@ -1,7 +1,6 @@
 package br.com.matheus.agendamentoconsultas.controller.dto;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import org.springframework.data.domain.Page;
 
 import br.com.matheus.agendamentoconsultas.model.Paciente;
 
@@ -32,7 +31,7 @@ public class VisualizarTodosPacientesDto {
 		return endereco;
 	}
 	
-	public static List<VisualizarTodosPacientesDto> converter(List<Paciente> pacientes) {
-		return pacientes.stream().map(VisualizarTodosPacientesDto::new).collect(Collectors.toList());
+	public static Page<VisualizarTodosPacientesDto> converter(Page<Paciente> pacientes) {
+		return pacientes.map(VisualizarTodosPacientesDto::new);
 	}
 }
