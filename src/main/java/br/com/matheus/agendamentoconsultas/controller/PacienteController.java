@@ -29,34 +29,37 @@ import br.com.matheus.agendamentoconsultas.controller.form.AtualizacaoPacienteFo
 import br.com.matheus.agendamentoconsultas.controller.form.PacienteForm;
 import br.com.matheus.agendamentoconsultas.model.Paciente;
 import br.com.matheus.agendamentoconsultas.repository.PacienteRepository;
+import br.com.matheus.agendamentoconsultas.service.CrudPacienteService;
 
 @RestController
 @RequestMapping("/paciente")
 public class PacienteController {
 
 	@Autowired
-	PacienteRepository pacienteRepository;
+	private PacienteRepository pacienteRepository;
+	@Autowired
+	private CrudPacienteService crudPacienteService;
 	
 	@GetMapping
 	public ResponseEntity<Page<VisualizarTodosPacientesDto>> visualizarTodos(@PageableDefault(page = 0, size = 20, sort = "nome", direction = Direction.ASC) Pageable pageable) {
-		Page<Paciente> pacientes = pacienteRepository.findAll(pageable);
-		return ResponseEntity.ok().body(VisualizarTodosPacientesDto.converter(pacientes));
+		Page<Paciente> pacientes = this.pacienteRepository.findAll(pageable);
+		return ResponseEntity.ok().body(crudPacienteService.converterLista(pacientes));
 	}
 	
 	@PostMapping
 	@Transactional
 	public ResponseEntity<PacienteDto> cadastrar(@RequestBody @Valid PacienteForm pacienteForm, UriComponentsBuilder uriComponentsBuilder) {
-		Paciente paciente = pacienteForm.toPaciente();
-		pacienteRepository.save(paciente);
+		Paciente paciente = crudPacienteService.formToPaciente(pacienteForm);
+		this.pacienteRepository.save(paciente);
 		URI uri = uriComponentsBuilder.path("paciente/{id}").buildAndExpand(paciente.getId()).toUri();
 		return ResponseEntity.created(uri).body(new PacienteDto(paciente));
 	}
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<Object> datalharPaciente(@PathVariable Long id) {
-		Optional<Paciente> paciente = pacienteRepository.findById(id);
-		if (paciente.isPresent()) {
-			return ResponseEntity.ok(new PacienteDto(paciente.get()));
+		Optional<Paciente> pacienteOptional = this.pacienteRepository.findById(id);
+		if (pacienteOptional.isPresent()) {
+			return ResponseEntity.ok(new PacienteDto(pacienteOptional.get()));
 		}
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Paciente não encontrado.");
 	}
@@ -64,9 +67,9 @@ public class PacienteController {
 	@PutMapping("/{id}")
 	@Transactional
 	public ResponseEntity<Object> atualizar(@PathVariable Long id, @RequestBody @Valid AtualizacaoPacienteForm atualizacaoPacienteForm) {
-		Optional<Paciente> pacienteOptional = pacienteRepository.findById(id);
+		Optional<Paciente> pacienteOptional = this.pacienteRepository.findById(id);
 		if (pacienteOptional.isPresent()) {
-			Paciente paciente = atualizacaoPacienteForm.atualizar(id, pacienteRepository);
+			Paciente paciente = crudPacienteService.atualizar(id, atualizacaoPacienteForm);
 			return ResponseEntity.ok(new PacienteDto(paciente));
 		}
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Paciente não encontrado.");
@@ -75,9 +78,9 @@ public class PacienteController {
 	@DeleteMapping("/{id}")
 	@Transactional
 	public ResponseEntity<Object> deletar(@PathVariable Long id) {
-		Optional<Paciente> pacienteOptional = pacienteRepository.findById(id);
+		Optional<Paciente> pacienteOptional = this.pacienteRepository.findById(id);
 		if (pacienteOptional.isPresent()) {
-			pacienteRepository.deleteById(id);
+			this.pacienteRepository.deleteById(id);
 			return ResponseEntity.ok().body("Paciente excluído com sucesso.");
 		}
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Paciente não encontrado.");

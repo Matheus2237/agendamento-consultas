@@ -10,7 +10,6 @@ import br.com.matheus.agendamentoconsultas.constraints.UniqueEmail;
 import br.com.matheus.agendamentoconsultas.constraints.ValidAddressFormat;
 import br.com.matheus.agendamentoconsultas.constraints.ValidCpfFormat;
 import br.com.matheus.agendamentoconsultas.constraints.ValidPhoneFormat;
-import br.com.matheus.agendamentoconsultas.model.Paciente;
 
 public class PacienteForm {
 
@@ -69,9 +68,5 @@ public class PacienteForm {
 	}
 	public void setEndereco(String endereco) {
 		this.endereco = endereco;
-	}
-	
-	public Paciente toPaciente() {
-		return new Paciente(nome, email, telefone, cpf, endereco);
 	}
 }

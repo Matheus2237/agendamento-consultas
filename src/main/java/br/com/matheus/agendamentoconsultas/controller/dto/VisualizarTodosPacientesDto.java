@@ -1,7 +1,5 @@
 package br.com.matheus.agendamentoconsultas.controller.dto;
 
-import org.springframework.data.domain.Page;
-
 import br.com.matheus.agendamentoconsultas.model.Paciente;
 
 public class VisualizarTodosPacientesDto {
@@ -29,9 +27,5 @@ public class VisualizarTodosPacientesDto {
 	}
 	public String getEndereco() {
 		return endereco;
-	}
-	
-	public static Page<VisualizarTodosPacientesDto> converter(Page<Paciente> pacientes) {
-		return pacientes.map(VisualizarTodosPacientesDto::new);
 	}
 }
