@@ -1,6 +1,7 @@
 	package br.com.matheus.agendamentoconsultas.controller.form;
 
 import br.com.matheus.agendamentoconsultas.constraints.ValidAddressAtualizationFormat;
+import br.com.matheus.agendamentoconsultas.constraints.ValidEspecialization;
 import br.com.matheus.agendamentoconsultas.constraints.ValidPhoneAtualizationFormat;
 import br.com.matheus.agendamentoconsultas.model.Especializacao;
 import br.com.matheus.agendamentoconsultas.model.Medico;
@@ -13,6 +14,7 @@ public class AtualizacaoMedicoForm {
 	@ValidPhoneAtualizationFormat
 	private String telefone;
 	
+	@ValidEspecialization
 	private String especializacao;
 	
 	@ValidAddressAtualizationFormat

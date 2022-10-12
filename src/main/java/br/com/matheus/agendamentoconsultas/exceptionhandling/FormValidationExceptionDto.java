@@ -1,4 +1,4 @@
-package br.com.matheus.agendamentoconsultas.constraints.exceptionhandling;
+package br.com.matheus.agendamentoconsultas.exceptionhandling;
 
 public class FormValidationExceptionDto {
 

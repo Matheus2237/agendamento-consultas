@@ -1,16 +1,11 @@
 package br.com.matheus.agendamentoconsultas.model;
 
-import java.util.List;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -27,8 +22,6 @@ public class Medico {
 	private Especializacao especializacao;
 	private String crm;
 	private String endereco;
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "medico", fetch = FetchType.LAZY)
-	private List<Consulta> consultas;
 	
 	public Medico() {
 	}
@@ -83,11 +76,5 @@ public class Medico {
 	}
 	public void setEndereco(String endereco) {
 		this.endereco = endereco;
-	}
-	public List<Consulta> getConsultas() {
-		return consultas;
-	}
-	public void setConsultas(List<Consulta> consultas) {
-		this.consultas = consultas;
 	}
 }

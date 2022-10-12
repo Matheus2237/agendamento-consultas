@@ -29,6 +29,7 @@ import br.com.matheus.agendamentoconsultas.controller.form.AtualizacaoMedicoForm
 import br.com.matheus.agendamentoconsultas.controller.form.MedicoForm;
 import br.com.matheus.agendamentoconsultas.model.Medico;
 import br.com.matheus.agendamentoconsultas.repository.MedicoRepository;
+import br.com.matheus.agendamentoconsultas.service.CrudMedicoService;
 
 @RestController
 @RequestMapping("/medico")
@@ -37,26 +38,29 @@ public class MedicoController {
 	@Autowired
 	private MedicoRepository medicoRepository;
 	
+	@Autowired
+	private CrudMedicoService crudMedicoService;
+	
 	@GetMapping
 	public ResponseEntity<Page<VisualizarTodosMedicoDto>> visualizarTodos(@PageableDefault(page = 0, size = 20, sort = "nome", direction = Direction.ASC) Pageable pageable) {
-		Page<Medico> medicos = medicoRepository.findAll(pageable);
-		return ResponseEntity.ok().body(VisualizarTodosMedicoDto.converter(medicos));
+		Page<Medico> medicos = this.medicoRepository.findAll(pageable);
+		return ResponseEntity.ok().body(crudMedicoService.converterLista(medicos));
 	}
 	
 	@PostMapping
 	@Transactional
 	public ResponseEntity<MedicoDto> cadastrar(@RequestBody @Valid MedicoForm medicoForm, UriComponentsBuilder uriComponentsBuilder) {
-		Medico medico = medicoForm.toMedico();
-		medicoRepository.save(medico);
+		Medico medico = crudMedicoService.formToMedico(medicoForm);
+		this.medicoRepository.save(medico);
 		URI uri = uriComponentsBuilder.path("medico/{id}").buildAndExpand(medico.getId()).toUri();
 		return ResponseEntity.created(uri).body(new MedicoDto(medico));
 	}
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<Object> detalharMedico(@PathVariable Long id) {
-		Optional<Medico> medico = medicoRepository.findById(id);
-		if (medico.isPresent()) {
-			return ResponseEntity.ok(new MedicoDto(medico.get()));
+		Optional<Medico> medicoOptional = this.medicoRepository.findById(id);
+		if (medicoOptional.isPresent()) {
+			return ResponseEntity.ok(new MedicoDto(medicoOptional.get()));
 		}
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Médico não encontrado.");
 	}
@@ -64,9 +68,9 @@ public class MedicoController {
 	@PutMapping("/{id}")
 	@Transactional
 	public ResponseEntity<Object> atualizar(@PathVariable Long id, @RequestBody @Valid AtualizacaoMedicoForm atualizacaoMedicoForm) {
-		Optional<Medico> medicoOptional = medicoRepository.findById(id);
+		Optional<Medico> medicoOptional = this.medicoRepository.findById(id);
 		if (medicoOptional.isPresent()) {
-			Medico medico = atualizacaoMedicoForm.atualizar(id, medicoRepository);
+			Medico medico = crudMedicoService.atualizar(id, atualizacaoMedicoForm);
 			return ResponseEntity.ok(new MedicoDto(medico));
 		}
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Médico não encontrado.");
@@ -75,9 +79,9 @@ public class MedicoController {
 	@DeleteMapping("/{id}")
 	@Transactional
 	public ResponseEntity<Object> deletar(@PathVariable Long id) {
-		Optional<Medico> medicoOptional = medicoRepository.findById(id);
+		Optional<Medico> medicoOptional = this.medicoRepository.findById(id);
 		if (medicoOptional.isPresent()) {
-			medicoRepository.deleteById(id);
+			this.medicoRepository.deleteById(id);
 			return ResponseEntity.ok().body("Médico excluído com sucesso.");
 		}
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Médico não encontrado.");

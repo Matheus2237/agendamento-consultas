@@ -1,4 +1,4 @@
-package br.com.matheus.agendamentoconsultas.constraints.exceptionhandling;
+package br.com.matheus.agendamentoconsultas.exceptionhandling;
 
 import java.util.ArrayList;
 import java.util.List;
