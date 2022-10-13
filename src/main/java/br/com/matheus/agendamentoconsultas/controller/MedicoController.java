@@ -29,7 +29,6 @@ import br.com.matheus.agendamentoconsultas.controller.form.AtualizacaoMedicoForm
 import br.com.matheus.agendamentoconsultas.controller.form.MedicoForm;
 import br.com.matheus.agendamentoconsultas.model.Medico;
 import br.com.matheus.agendamentoconsultas.repository.MedicoRepository;
-import br.com.matheus.agendamentoconsultas.service.CrudMedicoService;
 
 @RestController
 @RequestMapping("/medico")
@@ -37,9 +36,6 @@ public class MedicoController {
 
 	@Autowired
 	private MedicoRepository medicoRepository;
-	
-	@Autowired
-	private CrudMedicoService crudMedicoService;
 	
 	@GetMapping
 	public ResponseEntity<Page<VisualizarTodosMedicoDto>> visualizarTodos(@PageableDefault(page = 0, size = 20, sort = "nome", direction = Direction.ASC) Pageable pageable) {
@@ -50,7 +46,7 @@ public class MedicoController {
 	@PostMapping
 	@Transactional
 	public ResponseEntity<MedicoDto> cadastrar(@RequestBody @Valid MedicoForm medicoForm, UriComponentsBuilder uriComponentsBuilder) {
-		Medico medico = crudMedicoService.formToMedico(medicoForm);
+		Medico medico = medicoForm.toMedico();
 		this.medicoRepository.save(medico);
 		URI uri = uriComponentsBuilder.path("medico/{id}").buildAndExpand(medico.getId()).toUri();
 		return ResponseEntity.created(uri).body(new MedicoDto(medico));
@@ -70,7 +66,7 @@ public class MedicoController {
 	public ResponseEntity<Object> atualizar(@PathVariable Long id, @RequestBody @Valid AtualizacaoMedicoForm atualizacaoMedicoForm) {
 		Optional<Medico> medicoOptional = this.medicoRepository.findById(id);
 		if (medicoOptional.isPresent()) {
-			Medico medico = crudMedicoService.atualizar(id, atualizacaoMedicoForm);
+			Medico medico = atualizacaoMedicoForm.atualizar(id, medicoRepository);
 			return ResponseEntity.ok(new MedicoDto(medico));
 		}
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Médico não encontrado.");

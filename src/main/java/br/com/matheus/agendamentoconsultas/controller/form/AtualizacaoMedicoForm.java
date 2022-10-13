@@ -3,6 +3,9 @@
 import br.com.matheus.agendamentoconsultas.constraints.ValidAddressAtualizationFormat;
 import br.com.matheus.agendamentoconsultas.constraints.ValidEspecialization;
 import br.com.matheus.agendamentoconsultas.constraints.ValidPhoneAtualizationFormat;
+import br.com.matheus.agendamentoconsultas.model.Especializacao;
+import br.com.matheus.agendamentoconsultas.model.Medico;
+import br.com.matheus.agendamentoconsultas.repository.MedicoRepository;
 
 public class AtualizacaoMedicoForm {
 
@@ -40,5 +43,18 @@ public class AtualizacaoMedicoForm {
 	}
 	public void setEndereco(String endereco) {
 		this.endereco = endereco;
+	}
+	
+	public Medico atualizar(Long id, MedicoRepository medicoRepository) {
+		Medico medico = medicoRepository.getReferenceById(id);
+		if(this.nome != null)
+			medico.setNome(this.nome);
+		if (this.telefone != null)
+			medico.setTelefone(this.telefone);
+		if (this.especializacao != null)
+			medico.setEspecializacao(Especializacao.stringToEnum(this.especializacao));
+		if (this.endereco != null)
+			medico.setEndereco(this.endereco);
+		return medico;
 	}
 }
