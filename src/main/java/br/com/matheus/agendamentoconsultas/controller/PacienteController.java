@@ -29,7 +29,6 @@ import br.com.matheus.agendamentoconsultas.controller.form.AtualizacaoPacienteFo
 import br.com.matheus.agendamentoconsultas.controller.form.PacienteForm;
 import br.com.matheus.agendamentoconsultas.model.Paciente;
 import br.com.matheus.agendamentoconsultas.repository.PacienteRepository;
-import br.com.matheus.agendamentoconsultas.service.CrudPacienteService;
 
 @RestController
 @RequestMapping("/paciente")
@@ -37,19 +36,17 @@ public class PacienteController {
 
 	@Autowired
 	private PacienteRepository pacienteRepository;
-	@Autowired
-	private CrudPacienteService crudPacienteService;
-	
+		
 	@GetMapping
 	public ResponseEntity<Page<VisualizarTodosPacientesDto>> visualizarTodos(@PageableDefault(page = 0, size = 20, sort = "nome", direction = Direction.ASC) Pageable pageable) {
 		Page<Paciente> pacientes = this.pacienteRepository.findAll(pageable);
-		return ResponseEntity.ok().body(crudPacienteService.converterLista(pacientes));
+		return ResponseEntity.ok().body(pacientes.map(VisualizarTodosPacientesDto::new));
 	}
 	
 	@PostMapping
 	@Transactional
 	public ResponseEntity<PacienteDto> cadastrar(@RequestBody @Valid PacienteForm pacienteForm, UriComponentsBuilder uriComponentsBuilder) {
-		Paciente paciente = crudPacienteService.formToPaciente(pacienteForm);
+		Paciente paciente = pacienteForm.toPaciente();
 		this.pacienteRepository.save(paciente);
 		URI uri = uriComponentsBuilder.path("paciente/{id}").buildAndExpand(paciente.getId()).toUri();
 		return ResponseEntity.created(uri).body(new PacienteDto(paciente));
@@ -69,7 +66,7 @@ public class PacienteController {
 	public ResponseEntity<Object> atualizar(@PathVariable Long id, @RequestBody @Valid AtualizacaoPacienteForm atualizacaoPacienteForm) {
 		Optional<Paciente> pacienteOptional = this.pacienteRepository.findById(id);
 		if (pacienteOptional.isPresent()) {
-			Paciente paciente = crudPacienteService.atualizar(id, atualizacaoPacienteForm);
+			Paciente paciente = atualizacaoPacienteForm.atualizar(id, pacienteRepository);
 			return ResponseEntity.ok(new PacienteDto(paciente));
 		}
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Paciente não encontrado.");

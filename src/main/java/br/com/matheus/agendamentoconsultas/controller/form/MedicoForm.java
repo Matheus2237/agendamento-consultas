@@ -11,6 +11,8 @@ import br.com.matheus.agendamentoconsultas.constraints.ValidAddressFormat;
 import br.com.matheus.agendamentoconsultas.constraints.ValidCrmFormat;
 import br.com.matheus.agendamentoconsultas.constraints.ValidEspecialization;
 import br.com.matheus.agendamentoconsultas.constraints.ValidPhoneFormat;
+import br.com.matheus.agendamentoconsultas.model.Especializacao;
+import br.com.matheus.agendamentoconsultas.model.Medico;
 
 public class MedicoForm {
 
@@ -79,5 +81,10 @@ public class MedicoForm {
 	}
 	public void setEndereco(String endereco) {
 		this.endereco = endereco;
+	}
+	
+	public Medico toMedico() {
+		Especializacao especializacaoEnum = Especializacao.stringToEnum(this.especializacao);
+		return new Medico(nome, email, telefone, especializacaoEnum, crm, endereco);
 	}
 }

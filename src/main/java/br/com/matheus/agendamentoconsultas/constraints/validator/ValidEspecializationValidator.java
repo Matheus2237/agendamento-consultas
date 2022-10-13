@@ -18,9 +18,9 @@ public class ValidEspecializationValidator implements ConstraintValidator<ValidE
 	
 	@Override
 	public boolean isValid(String especializacao, ConstraintValidatorContext context) {
-		for(Especializacao escpecializacaoEnum : especializacoes) {
-			String especializacaoComparacao = Especializacao.enumToString(escpecializacaoEnum).toUpperCase();
-			if(especializacao == especializacaoComparacao) {
+		for(Especializacao especializacaoEnum : especializacoes) {
+			String especializacaoComparacao = especializacaoEnum.getName();
+			if(especializacaoComparacao.contentEquals(especializacao)) {
 				return true;
 			}
 		}

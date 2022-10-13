@@ -37,7 +37,7 @@ public class Medico {
 		this.nome = nome;
 		this.email = email;
 		this.telefone = telefone;
-		this.especializacao =  especializacao;
+		this.especializacao = especializacao;
 		this.crm = crm;
 		this.endereco = endereco;
 	}

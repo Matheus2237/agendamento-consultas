@@ -1,6 +1,5 @@
 package br.com.matheus.agendamentoconsultas.controller.dto;
 
-import br.com.matheus.agendamentoconsultas.model.Especializacao;
 import br.com.matheus.agendamentoconsultas.model.Medico;
 
 public class VisualizarTodosMedicoDto {
@@ -8,13 +7,13 @@ public class VisualizarTodosMedicoDto {
 	private Long id;
 	private String nome;
 	private String telefone;
-	private Especializacao especializacao;
+	private String especializacao;
 
 	public VisualizarTodosMedicoDto(Medico medico) {
 		this.id = medico.getId();
 		this.nome = medico.getNome();
 		this.telefone = medico.getTelefone();
-		this.especializacao = medico.getEspecializacao();
+		this.especializacao = medico.getEspecializacao().getName();
 	}
 	
 	public Long getId() {
@@ -26,7 +25,7 @@ public class VisualizarTodosMedicoDto {
 	public String getTelefone() {
 		return telefone;
 	}
-	public Especializacao getEspecializacao() {
+	public String getEspecializacao() {
 		return especializacao;
 	}
 }
