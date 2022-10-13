@@ -1,10 +1,8 @@
 package br.com.matheus.agendamentoconsultas.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
-import br.com.matheus.agendamentoconsultas.controller.dto.VisualizarTodosMedicoDto;
 import br.com.matheus.agendamentoconsultas.controller.form.AtualizacaoMedicoForm;
 import br.com.matheus.agendamentoconsultas.controller.form.MedicoForm;
 import br.com.matheus.agendamentoconsultas.model.Especializacao;
@@ -16,10 +14,6 @@ public class CrudMedicoService {
 	
 	@Autowired
 	private MedicoRepository medicoRepository;
-	
-	public Page<VisualizarTodosMedicoDto> converterLista(Page<Medico> medicos) {
-		return medicos.map(VisualizarTodosMedicoDto::new);
-	}
 
 	public Medico formToMedico(MedicoForm medicoForm) {
 		String nome =  medicoForm.getNome();

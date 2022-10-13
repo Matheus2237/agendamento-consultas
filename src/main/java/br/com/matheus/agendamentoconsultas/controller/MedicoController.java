@@ -44,7 +44,7 @@ public class MedicoController {
 	@GetMapping
 	public ResponseEntity<Page<VisualizarTodosMedicoDto>> visualizarTodos(@PageableDefault(page = 0, size = 20, sort = "nome", direction = Direction.ASC) Pageable pageable) {
 		Page<Medico> medicos = this.medicoRepository.findAll(pageable);
-		return ResponseEntity.ok().body(crudMedicoService.converterLista(medicos));
+		return ResponseEntity.ok().body(medicos.map(VisualizarTodosMedicoDto::new));
 	}
 	
 	@PostMapping
