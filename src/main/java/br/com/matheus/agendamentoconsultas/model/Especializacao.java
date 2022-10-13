@@ -44,8 +44,4 @@ public enum Especializacao {
 	public static Especializacao stringToEnum(String nome) {
 		return Especializacao.valueOf(nome.toUpperCase());
 	}
-	
-	public static String enumToString(Especializacao especializacao) {
-		return especializacao.toString();
-	}
 }
