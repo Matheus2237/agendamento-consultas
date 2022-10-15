@@ -2,6 +2,7 @@ package br.com.matheus.agendamentoconsultas.repository;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -23,38 +24,7 @@ class PacienteRepositoryTest {
 	@Autowired
 	private TestEntityManager testEntityManager;
 	
-	@Test
-	public void deveRetornarVerdadeiroSeExistirNoBancoDeDadosUmRegistroDeUmPacienteBuscandoPorUmEmail() {
-		popularBancoDedDadosComUmPaciente();
-		String email = "emaildeteste@email.com";
-		Boolean resultadoDaBusca = pacienteRepository.existsByEmail(email);
-		assertEquals(true, resultadoDaBusca);
-	}
-	
-	@Test
-	public void deveRetornarFalsoSeNaoExistirNoBancoDeDadosUmRegistroDeUmPacienteBuscandoPorUmEmail() {
-		popularBancoDedDadosComUmPaciente();
-		String emailErrado = "emailerrado@email.com";
-		Boolean resultadoDaBusca = pacienteRepository.existsByEmail(emailErrado);
-		assertEquals(false, resultadoDaBusca);
-	}
-	
-	@Test
-	public void deveRetornarVerdadeiroSeExistirNoBancoDeDadosUmRegistroDeUmPacienteBuscandoPorUmCPF() {
-		popularBancoDedDadosComUmPaciente();
-		String cpf = "12345678910";
-		Boolean resultadoDaBusca = pacienteRepository.existsByCpf(cpf);
-		assertEquals(true, resultadoDaBusca);
-	}
-	
-	@Test
-	public void deveRetornarFalsoSeNaoExistirNoBancoDeDadosUmRegistroDeUmPacienteBuscandoPorUmCPF() {
-		popularBancoDedDadosComUmPaciente();
-		String cpfErrado = "10987654321";
-		Boolean resultadoDaBusca = pacienteRepository.existsByCpf(cpfErrado);
-		assertEquals(false, resultadoDaBusca);
-	}
-	
+	@BeforeEach
 	private void popularBancoDedDadosComUmPaciente() {
 		String nome = "Matheus Paulino Ribeiro";
 		String email = "emaildeteste@email.com";
@@ -63,5 +33,33 @@ class PacienteRepositoryTest {
 		String endereco = "Rua Professor Matheus Paulino, 360, bl4, apto101, Jardim das Orquídeas, Sertãozinho, SP, 14169-777";
 		Paciente paciente = new Paciente(nome, email, telefone, cpf, endereco);
 		testEntityManager.persist(paciente);
+	}
+	
+	@Test
+	public void deveRetornarVerdadeiroSeExistirNoBancoDeDadosUmRegistroDeUmPacienteBuscandoPorUmEmail() {
+		String email = "emaildeteste@email.com";
+		Boolean resultadoDaBusca = pacienteRepository.existsByEmail(email);
+		assertEquals(true, resultadoDaBusca);
+	}
+	
+	@Test
+	public void deveRetornarFalsoSeNaoExistirNoBancoDeDadosUmRegistroDeUmPacienteBuscandoPorUmEmail() {
+		String emailErrado = "emailerrado@email.com";
+		Boolean resultadoDaBusca = pacienteRepository.existsByEmail(emailErrado);
+		assertEquals(false, resultadoDaBusca);
+	}
+	
+	@Test
+	public void deveRetornarVerdadeiroSeExistirNoBancoDeDadosUmRegistroDeUmPacienteBuscandoPorUmCPF() {
+		String cpf = "12345678910";
+		Boolean resultadoDaBusca = pacienteRepository.existsByCpf(cpf);
+		assertEquals(true, resultadoDaBusca);
+	}
+	
+	@Test
+	public void deveRetornarFalsoSeNaoExistirNoBancoDeDadosUmRegistroDeUmPacienteBuscandoPorUmCPF() {
+		String cpfErrado = "10987654321";
+		Boolean resultadoDaBusca = pacienteRepository.existsByCpf(cpfErrado);
+		assertEquals(false, resultadoDaBusca);
 	}
 }
