@@ -46,8 +46,8 @@ public class MedicoRepositoryTest {
 	
 	@Test
 	public void deveRetornarFalsoSeNaoExistirNoBancoDeDadosUmRegistroDeUmMedicoBuscandoPorUmEmail() {
-		String email = ("outroemaildeteste@email.com");
-		Boolean resultadoDaBusca = medicoRepository.existsByEmail(email);
+		String emailErrado = ("outroemaildeteste@email.com");
+		Boolean resultadoDaBusca = medicoRepository.existsByEmail(emailErrado);
 		assertEquals(false, resultadoDaBusca);
 	}
 	
@@ -60,8 +60,8 @@ public class MedicoRepositoryTest {
 	
 	@Test
 	public void deveRetornarFalsoSeNaoExistirNoBancoDeDadosUmRegistroDeUmMedicoBuscandoPorUmaCRM() {
-		String crm = "CRM/SP 654321";
-		Boolean resultadoDaBusca = medicoRepository.existsByCrm(crm);
+		String crmErrada = "CRM/SP 654321";
+		Boolean resultadoDaBusca = medicoRepository.existsByCrm(crmErrada);
 		assertEquals(false, resultadoDaBusca);
 	}
 }
