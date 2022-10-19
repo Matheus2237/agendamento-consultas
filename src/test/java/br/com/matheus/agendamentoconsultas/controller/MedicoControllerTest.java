@@ -38,6 +38,7 @@ class MedicoControllerTest {
 		String endereco = "Rua Professor Matheus Paulino, 360, bl4, apto101, Jardim das Orquídeas, Sertãozinho, SP, 14169-777";
 		Medico medico = new Medico(nome, email, telefone, especializacao, crm, endereco);
 		medicoRepository.save(medico);
+		System.out.println(medico.getId());
 	}
 	
 	@Test
@@ -158,7 +159,7 @@ class MedicoControllerTest {
 				.status()
 				.is(400));
 	}
-	
+		
 	@Test
 	public void deveriaDevolverCodigo404AoEnviarUmaRequisicaoDeAtualizacaoParaUmMedicoQueExisteNoBancoDedDados() throws Exception {
 		URI uri = new URI("/medico/100");
@@ -170,6 +171,26 @@ class MedicoControllerTest {
 				.put(uri)
 				.content(json)
 				.contentType(MediaType.APPLICATION_JSON))
+		.andExpect(MockMvcResultMatchers
+				.status()
+				.is(404));
+	}
+	
+	@Test
+	public void deveriaDevolverCodigo200AoEnviarUmaRequisicaoDeleteParaExcluirUmMedicoQueExisteNoBandoDeDados() throws Exception {
+		URI uri = new URI("/medico/7");
+		mockMvc.perform(MockMvcRequestBuilders
+				.delete(uri))
+		.andExpect(MockMvcResultMatchers
+				.status()
+				.is(200));
+	}
+	
+	@Test
+	public void deveriaDevolverCodigo404AoEnviarUmaRequisicaoDeleteParaExcluirUmMedicoQueNaoExisteNoBandoDeDados() throws Exception {
+		URI uri = new URI("/medico/100");
+		mockMvc.perform(MockMvcRequestBuilders
+				.delete(uri))
 		.andExpect(MockMvcResultMatchers
 				.status()
 				.is(404));
