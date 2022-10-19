@@ -74,7 +74,7 @@ class MedicoControllerTest {
 	}
 	
 	@Test
-	public void deveriaDevolverCodigo404AoEnviarUmaRequisicaoGetParaRetornarUmMedicoEspeficoAPartirDoSeuId() throws Exception {
+	public void deveriaDevolverCodigo404AoEnviarUmaRequisicaoGetParaRetornarUmMedicoEspeficoAPartirDeUmIdInexistente() throws Exception {
 		URI uri = new URI("/medico/100");
 		mockMvc
 		.perform(MockMvcRequestBuilders
@@ -177,7 +177,7 @@ class MedicoControllerTest {
 	
 	@Test
 	public void deveriaDevolverCodigo200AoEnviarUmaRequisicaoDeleteParaExcluirUmMedicoQueExisteNoBandoDeDados() throws Exception {
-		URI uri = new URI("/medico/7");
+		URI uri = new URI("/medico/2");
 		mockMvc.perform(MockMvcRequestBuilders
 				.delete(uri))
 		.andExpect(MockMvcResultMatchers
