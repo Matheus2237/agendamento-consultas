@@ -52,7 +52,7 @@ class MedicoControllerTest {
 	}
 	
 	@Test
-	public void deveriaDevolverCodigo404AoEnviarUmaRequisicaoParaUmaURINaoExistente() throws Exception {
+	public void deveriaDevolverCodigo404AoEnviarUmaRequisicaoGetParaUmaURINaoExistente() throws Exception {
 		URI uri = new URI("/uriquenaoexiste");
 		mockMvc
 		.perform(MockMvcRequestBuilders
@@ -126,4 +126,53 @@ class MedicoControllerTest {
 				.status()
 				.is(400));
 	}
+	
+	@Test
+	public void deveriaDevolverCodigo200AoAtualizarOsDadosDeUmMedicoQueExisteNoBancoDedDadosPassandoDadosValidos() throws Exception {
+		URI uri = new URI("/medico/1");
+		String json = "{\r\n"
+					+ "    \"telefone\":\"35988086808\",\r\n"
+					+ "    \"especializacao\":\"Cardiologia\"\r\n"
+					+ "}";
+		mockMvc.perform(MockMvcRequestBuilders
+				.put(uri)
+				.content(json)
+				.contentType(MediaType.APPLICATION_JSON))
+		.andExpect(MockMvcResultMatchers
+				.status()
+				.is(200));
+	}
+	
+	@Test
+	public void deveriaDevolverCodigo400AoAtualizarOsDadosDeUmMedicoQueExisteNoBancoDedDadosPassandoDadosInvalidos() throws Exception {
+		URI uri = new URI("/medico/1");
+		String json = "{\r\n"
+					+ "    \"telefone\":\"(35) 988\",\r\n"
+					+ "    \"especializacao\":\"pediattia\"\r\n"
+					+ "}";
+		mockMvc.perform(MockMvcRequestBuilders
+				.put(uri)
+				.content(json)
+				.contentType(MediaType.APPLICATION_JSON))
+		.andExpect(MockMvcResultMatchers
+				.status()
+				.is(400));
+	}
+	
+	@Test
+	public void deveriaDevolverCodigo404AoEnviarUmaRequisicaoDeAtualizacaoParaUmMedicoQueExisteNoBancoDedDados() throws Exception {
+		URI uri = new URI("/medico/100");
+		String json = "{\r\n"
+					+ "    \"telefone\":\"35988086808\",\r\n"
+					+ "    \"especializacao\":\"Cardiologia\"\r\n"
+					+ "}";
+		mockMvc.perform(MockMvcRequestBuilders
+				.put(uri)
+				.content(json)
+				.contentType(MediaType.APPLICATION_JSON))
+		.andExpect(MockMvcResultMatchers
+				.status()
+				.is(404));
+	}
 }
+
