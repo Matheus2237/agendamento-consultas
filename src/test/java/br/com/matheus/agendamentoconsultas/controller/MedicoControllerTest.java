@@ -38,7 +38,6 @@ class MedicoControllerTest {
 		String endereco = "Rua Professor Matheus Paulino, 360, bl4, apto101, Jardim das Orquídeas, Sertãozinho, SP, 14169-777";
 		Medico medico = new Medico(nome, email, telefone, especializacao, crm, endereco);
 		medicoRepository.save(medico);
-		System.out.println(medico.getId());
 	}
 	
 	@Test
@@ -86,7 +85,7 @@ class MedicoControllerTest {
 	}
 	
 	@Test
-	public void deveriaDevolverCodigo201AoCadastrarUmMedicoNoBancoDeDadosPassandoOsDadosCorretamente() throws Exception {
+	public void deveriaDevolverCodigo201AoEnviarUmaRequisicaoPostParaCadastrarUmMedicoNoBancoDeDadosPassandoOsDadosCorretamente() throws Exception {
 		URI uri = new URI("/medico");
 		String json = ""
 				+ "{\r\n"
@@ -108,7 +107,7 @@ class MedicoControllerTest {
 	}
 	
 	@Test
-	public void deveriaDevolverCodigo400AoCadastrarUmMedicoNoBancoDeDadosPassandoDadosInvalidos() throws Exception {
+	public void deveriaDevolverCodigo400AoEnviarUmaRequisicaoPostParaCadastrarUmMedicoNoBancoDeDadosPassandoDadosInvalidos() throws Exception {
 		URI uri = new URI("/medico");
 		String json = "{\r\n"
 				+ "    \"nome\":\"Maria Antonieta Goulart\",\r\n"
@@ -129,7 +128,7 @@ class MedicoControllerTest {
 	}
 	
 	@Test
-	public void deveriaDevolverCodigo200AoAtualizarOsDadosDeUmMedicoQueExisteNoBancoDedDadosPassandoDadosValidos() throws Exception {
+	public void deveriaDevolverCodigo200AoEnviarUmaRequisicaoPutParaAtualizarOsDadosDeUmMedicoQueExisteNoBancoDedDadosPassandoDadosValidos() throws Exception {
 		URI uri = new URI("/medico/1");
 		String json = "{\r\n"
 					+ "    \"telefone\":\"35988086808\",\r\n"
@@ -145,7 +144,7 @@ class MedicoControllerTest {
 	}
 	
 	@Test
-	public void deveriaDevolverCodigo400AoAtualizarOsDadosDeUmMedicoQueExisteNoBancoDedDadosPassandoDadosInvalidos() throws Exception {
+	public void deveriaDevolverCodigo400AoEnviarUmaRequisicaoPutParaAtualizarOsDadosDeUmMedicoQueExisteNoBancoDedDadosPassandoDadosInvalidos() throws Exception {
 		URI uri = new URI("/medico/1");
 		String json = "{\r\n"
 					+ "    \"telefone\":\"(35) 988\",\r\n"
@@ -161,7 +160,7 @@ class MedicoControllerTest {
 	}
 		
 	@Test
-	public void deveriaDevolverCodigo404AoEnviarUmaRequisicaoDeAtualizacaoParaUmMedicoQueExisteNoBancoDedDados() throws Exception {
+	public void deveriaDevolverCodigo404AoEnviarUmaRequisicaoPutParaAtualizarOsDadosDeUmMedicoQueExisteNoBancoDedDados() throws Exception {
 		URI uri = new URI("/medico/100");
 		String json = "{\r\n"
 					+ "    \"telefone\":\"35988086808\",\r\n"
