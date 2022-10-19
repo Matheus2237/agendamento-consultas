@@ -87,15 +87,14 @@ class MedicoControllerTest {
 	@Test
 	public void deveriaDevolverCodigo201AoEnviarUmaRequisicaoPostParaCadastrarUmMedicoNoBancoDeDadosPassandoOsDadosCorretamente() throws Exception {
 		URI uri = new URI("/medico");
-		String json = ""
-				+ "{\r\n"
-				+ "    \"nome\":\"Maria Antonieta Goulart\",\r\n"
-				+ "    \"email\":\"mantonieta@gmail.com\",\r\n"
-				+ "    \"telefone\":\"16933654120\",\r\n"
-				+ "    \"especializacao\":\"Pediatria\",\r\n"
-				+ "    \"crm\":\"CRM/SP 459870\",\r\n"
-				+ "    \"endereco\":\"Rua Alfeu Seron Júnior, 270, bl4, apto101, Jardim Venetto II, Sertãozinho, SP, 14169622\"\r\n"
-				+ "}";
+		String json = "{\r\n"
+					+ "    \"nome\":\"Maria Antonieta Goulart\",\r\n"
+					+ "    \"email\":\"mantonieta@gmail.com\",\r\n"
+					+ "    \"telefone\":\"16933654120\",\r\n"
+					+ "    \"especializacao\":\"Pediatria\",\r\n"
+					+ "    \"crm\":\"CRM/SP 459870\",\r\n"
+					+ "    \"endereco\":\"Rua Alfeu Seron Júnior, 270, bl4, apto101, Jardim Venetto II, Sertãozinho, SP, 14169622\"\r\n"
+					+ "}";
 		mockMvc
 		.perform(MockMvcRequestBuilders
 				.post(uri)
@@ -110,13 +109,13 @@ class MedicoControllerTest {
 	public void deveriaDevolverCodigo400AoEnviarUmaRequisicaoPostParaCadastrarUmMedicoNoBancoDeDadosPassandoDadosInvalidos() throws Exception {
 		URI uri = new URI("/medico");
 		String json = "{\r\n"
-				+ "    \"nome\":\"Maria Antonieta Goulart\",\r\n"
-				+ "    \"email\":\"mantonie\",\r\n"
-				+ "    \"telefone\":\"1620\",\r\n"
-				+ "    \"especializacao\":\"Ortpdia\",\r\n"
-				+ "    \"crm\":\"CRM459870\",\r\n"
-				+ "    \"endereco\":\"Rua Atto II, Sertãozinho, SP, 14169622\"\r\n"
-				+ "}";
+					+ "    \"nome\":\"Maria Antonieta Goulart\",\r\n"
+					+ "    \"email\":\"mantonie\",\r\n"
+					+ "    \"telefone\":\"1620\",\r\n"
+					+ "    \"especializacao\":\"Ortpdia\",\r\n"
+					+ "    \"crm\":\"CRM459870\",\r\n"
+					+ "    \"endereco\":\"Rua Atto II, Sertãozinho, SP, 14169622\"\r\n"
+					+ "}";
 		mockMvc
 		.perform(MockMvcRequestBuilders
 				.post(uri)
