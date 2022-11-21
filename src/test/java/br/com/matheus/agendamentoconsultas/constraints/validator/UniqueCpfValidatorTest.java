@@ -22,14 +22,10 @@ class UniqueCpfValidatorTest {
 	private PacienteRepository pacienteRepository;
 	
 	@BeforeEach
-	public void setUp() {
+	public void preparandoPaciente() {
 		String cpf = "12345678900";
-		Paciente paciente = new Paciente(
-				"João Augusto",
-				"jotaaug@gmail.com",
-				"(54) 954332345",
-				cpf,
-				"Av. Bandeirantes, 21, andar 4, apartamento 42, Jardim Planalto, São Paulo, SP, 32143-654");
+		Paciente paciente = new Paciente();
+		paciente.setCpf(cpf);
 		pacienteRepository.save(paciente);
 	}
 	
