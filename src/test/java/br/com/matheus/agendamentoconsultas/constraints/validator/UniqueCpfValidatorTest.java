@@ -30,7 +30,7 @@ class UniqueCpfValidatorTest {
 	}
 	
 	@Test
-	public void deveRetornarVerdadeiroAoPassarUmCpfÚnicoNoSistema() {
+	public void deveRetornarVerdadeiroAoPassarUmCpfUnicoNoSistema() {
 		String cpf = "12345678901";
 		Boolean result = uniqueCpfValidator.isValid(cpf, null);
 		assertEquals(true, result);
