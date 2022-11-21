@@ -42,5 +42,4 @@ class UniqueCrmValidatorTest {
 		Boolean result = uniqueCrmValidator.isValid(crm, null);
 		assertEquals(false, result);
 	}
-
 }
