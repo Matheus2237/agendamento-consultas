@@ -11,6 +11,7 @@ import org.springframework.test.context.ActiveProfiles;
 @SpringBootTest
 @ActiveProfiles("test")
 class ValidAddressFormatValidatorTest {
+	
 	@Autowired
 	private ValidAddressFormatValidator validAddressFormatValidator;
 	
