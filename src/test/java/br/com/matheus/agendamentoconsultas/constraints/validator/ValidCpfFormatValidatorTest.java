@@ -16,37 +16,29 @@ class ValidCpfFormatValidatorTest {
 	private ValidCpfFormatValidator validCpfFormatValidator;
 	
 	@Test
-	void deveRetornarTrueCasoForPassadoUmCpfComOFormatoValidoSemPontosETraco() {
-		String cpfValido = "12345678900";
-		Boolean result = validCpfFormatValidator.isValid(cpfValido, null);
-		assertTrue(result);
+	void deveRetornarTrueCasoForPassadoUmCpfComOFormatoValido() {
+		String cpfValidoSemPontosETraco = "12345678900";
+		String cpfValidoComPontosETraco = "123.456.789-00";
+		Boolean resultSemPontosETraco= validCpfFormatValidator.isValid(cpfValidoSemPontosETraco, null);
+		Boolean resultComPontosETraco = validCpfFormatValidator.isValid(cpfValidoComPontosETraco, null);
+		assertTrue(resultSemPontosETraco);
+		assertTrue(resultComPontosETraco);
 	}
-	
+
 	@Test
-	void deveRetornarTrueCasoForPassadoUmCpfComOFormatoValidoComPontosETraco() {
-		String cpfValido = "123.456.789-00";
-		Boolean result = validCpfFormatValidator.isValid(cpfValido, null);
-		assertTrue(result);
+	void deveRetornarFalseCasoForPassadoUmCpfComMaisDigitosOuMenosQueOEsperado() {
+		String cpfMaior = "123456789001";
+		String cpfMenor = "1234567890";
+		Boolean resultMaior = validCpfFormatValidator.isValid(cpfMaior, null);
+		Boolean resultMenor = validCpfFormatValidator.isValid(cpfMenor, null);
+		assertFalse(resultMaior);
+		assertFalse(resultMenor);
 	}
-	
+		
 	@Test
 	void deveRetornarFalseCasoForPassadoUmCpfVazio() {
 		String cpfVazio = "";
 		Boolean result = validCpfFormatValidator.isValid(cpfVazio, null);
-		assertFalse(result);
-	}
-	
-	@Test
-	void deveRetornarFalseCasoForPassadoUmCpfComMaisDigitosQueONormal() {
-		String cpfMaior = "123456789001";
-		Boolean result = validCpfFormatValidator.isValid(cpfMaior, null);
-		assertFalse(result);
-	}
-	
-	@Test
-	void deveRetornarFalseCasoForPassadoUmCpfComMenosDigitosQueONormal() {
-		String cpfMenor = "1234567890";
-		Boolean result = validCpfFormatValidator.isValid(cpfMenor, null);
 		assertFalse(result);
 	}
 	
