@@ -1,6 +1,7 @@
 package br.com.matheus.agendamentoconsultas.constraints.validator;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
@@ -61,10 +62,6 @@ class ValidCrmFormatValidatorTest {
 	@Test
 	void deveLancarUmaExceptionCasoForPassadoUmaCrmNula() {
 		String crmNula = null;
-		try {
-			validCrmFormatValidator.isValid(crmNula, null);
-		} catch(Exception e) {
-			assertTrue(true);
-		}
+		assertThrows(NullPointerException.class, () -> validCrmFormatValidator.isValid(crmNula, null));
 	}
 }
