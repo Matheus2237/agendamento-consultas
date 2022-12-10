@@ -1,6 +1,7 @@
 package br.com.matheus.agendamentoconsultas.constraints.validator;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
@@ -34,5 +35,18 @@ class ValidEspecializationValidatorTest {
 		String especializacaoNaoExistente = "Veterinaria";
 		Boolean result = validEspecializationValidator.isValid(especializacaoNaoExistente, null);
 		assertFalse(result);
+	}
+	
+	@Test
+	void deveRetornarFalseAoPassarUmaEspecializacaoVazia() {
+		String especializacaoVazia = "";
+		Boolean result = validEspecializationValidator.isValid(especializacaoVazia, null);
+		assertFalse(result);
+	}
+	
+	@Test
+	void deveRetornarUmaExceptionAoPassarUmaEspecializacaoNula() {
+		String especializacaoNula = null;
+		assertThrows(NullPointerException.class, () -> validEspecializationValidator.isValid(especializacaoNula, null));
 	}
 }
