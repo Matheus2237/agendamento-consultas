@@ -1,16 +1,15 @@
 package br.com.matheus.agendamentoconsultas.controller.form;
 
-import javax.persistence.Column;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-
 import br.com.matheus.agendamentoconsultas.constraints.UniqueCpf;
 import br.com.matheus.agendamentoconsultas.constraints.UniqueEmail;
 import br.com.matheus.agendamentoconsultas.constraints.ValidAddressFormat;
 import br.com.matheus.agendamentoconsultas.constraints.ValidCpfFormat;
 import br.com.matheus.agendamentoconsultas.constraints.ValidPhoneFormat;
 import br.com.matheus.agendamentoconsultas.model.Paciente;
+import jakarta.persistence.Column;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 public class PacienteForm {
 

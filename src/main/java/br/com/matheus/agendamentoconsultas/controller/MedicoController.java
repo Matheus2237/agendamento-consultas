@@ -3,9 +3,6 @@ package br.com.matheus.agendamentoconsultas.controller;
 import java.net.URI;
 import java.util.Optional;
 
-import javax.transaction.Transactional;
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,6 +26,8 @@ import br.com.matheus.agendamentoconsultas.controller.form.AtualizacaoMedicoForm
 import br.com.matheus.agendamentoconsultas.controller.form.MedicoForm;
 import br.com.matheus.agendamentoconsultas.model.Medico;
 import br.com.matheus.agendamentoconsultas.repository.MedicoRepository;
+import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/medico")
