@@ -2,12 +2,11 @@ package br.com.matheus.agendamentoconsultas.constraints.validator;
 
 import java.util.regex.Pattern;
 
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
-
 import org.springframework.stereotype.Component;
 
 import br.com.matheus.agendamentoconsultas.constraints.ValidAddressFormat;
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
 
 @Component
 public class ValidAddressFormatValidator implements ConstraintValidator<ValidAddressFormat, String> {
