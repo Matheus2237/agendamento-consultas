@@ -360,3 +360,7 @@ buildNumber.properties
 .ionide
 
 # End of https://www.toptal.com/developers/gitignore/api/java,maven,eclipse,intellij+all,intellij,intellij+iml,visualstudiocode
+
+# Local running files
+agendamentoconsultas.env
+docker-compose.yaml
