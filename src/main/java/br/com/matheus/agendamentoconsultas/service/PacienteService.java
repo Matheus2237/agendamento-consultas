@@ -10,9 +10,9 @@ import br.com.matheus.agendamentoconsultas.repository.PacienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
-import static java.util.Optional.ofNullable;
-
+@Service
 public class PacienteService {
 
     private final PacienteRepository pacienteRepository;
@@ -41,9 +41,7 @@ public class PacienteService {
     public ResponsePacienteDto atualizar(Long id, RequestAtualizacaoPacienteDTO atualizacao) {
         Paciente paciente = this.pacienteRepository.findById(id)
                 .orElseThrow(PacienteNaoEncontradoException::new);
-        ofNullable(atualizacao.getNome()).ifPresent(paciente::setNome);
-        ofNullable(atualizacao.getTelefone()).ifPresent(paciente::setTelefone);
-        ofNullable(atualizacao.getEndereco()).ifPresent(paciente::setEndereco);
+        atualizacao.atualizar(paciente);
         return new ResponsePacienteDto(paciente);
     }
 
