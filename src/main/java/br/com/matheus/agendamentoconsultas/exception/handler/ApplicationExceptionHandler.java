@@ -1,8 +1,7 @@
-package br.com.matheus.agendamentoconsultas.exceptionhandling;
+package br.com.matheus.agendamentoconsultas.exception.handler;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import br.com.matheus.agendamentoconsultas.exception.MedicoNaoEncontradoException;
+import br.com.matheus.agendamentoconsultas.exception.handler.dto.RequestValidationHandledExceptionDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -13,22 +12,35 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RestControllerAdvice
-public class FormValidationExceptionHandler {
+public class ApplicationExceptionHandler {
+
+	private final MessageSource messageSource;
 
 	@Autowired
-	private MessageSource messageSource;
-	
-	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
+    public ApplicationExceptionHandler(MessageSource messageSource) {
+        this.messageSource = messageSource;
+    }
+
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public List<String> handle(MethodArgumentNotValidException exception) {
 		List<String> listaDeErros = new ArrayList<>();
 		List<FieldError> fieldErrors = exception.getBindingResult().getFieldErrors();
 		fieldErrors.forEach(error -> {
 			String mensagem = messageSource.getMessage(error, LocaleContextHolder.getLocale());
-			FormValidationExceptionDto erro = new FormValidationExceptionDto(error.getField(), mensagem);
+			RequestValidationHandledExceptionDto erro = new RequestValidationHandledExceptionDto(error.getField(), mensagem);
 			listaDeErros.add(erro.toString());
 		});
 		return listaDeErros;
+	}
+
+	@ResponseStatus(HttpStatus.NOT_FOUND)
+	@ExceptionHandler(MedicoNaoEncontradoException.class)
+	public String handle(MedicoNaoEncontradoException exception) {
+		return exception.getMessage();
 	}
 }

@@ -2,14 +2,14 @@ package br.com.matheus.agendamentoconsultas.controller.dto;
 
 import br.com.matheus.agendamentoconsultas.model.Medico;
 
-public class VisualizarTodosMedicoDto {
+public class ResponseTodosMedicosDto {
 
 	private Long id;
 	private String nome;
 	private String telefone;
 	private String especializacao;
 
-	public VisualizarTodosMedicoDto(Medico medico) {
+	public ResponseTodosMedicosDto(Medico medico) {
 		this.id = medico.getId();
 		this.nome = medico.getNome();
 		this.telefone = medico.getTelefone();

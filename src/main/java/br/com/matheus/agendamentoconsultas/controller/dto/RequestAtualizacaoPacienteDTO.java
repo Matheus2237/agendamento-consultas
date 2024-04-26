@@ -1,11 +1,15 @@
-package br.com.matheus.agendamentoconsultas.controller.form;
+package br.com.matheus.agendamentoconsultas.controller.dto;
 
 import br.com.matheus.agendamentoconsultas.constraints.ValidAddressAtualizationFormat;
 import br.com.matheus.agendamentoconsultas.constraints.ValidPhoneAtualizationFormat;
 import br.com.matheus.agendamentoconsultas.model.Paciente;
 import br.com.matheus.agendamentoconsultas.repository.PacienteRepository;
+import lombok.Getter;
+import lombok.Setter;
 
-public class AtualizacaoPacienteForm {
+@Getter
+@Setter
+public class RequestAtualizacaoPacienteDTO {
 
 	private String nome;
 
@@ -15,25 +19,6 @@ public class AtualizacaoPacienteForm {
 	@ValidAddressAtualizationFormat
 	private String endereco;
 
-	public String getNome() {
-		return nome;
-	}
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-	public String getTelefone() {
-		return telefone;
-	}
-	public void setTelefone(String telefone) {
-		this.telefone = telefone;
-	}
-	public String getEndereco() {
-		return endereco;
-	}
-	public void setEndereco(String endereco) {
-		this.endereco = endereco;
-	}
-	
 	public Paciente atualizar(Long id, PacienteRepository pacienteRepository) {
 		Paciente paciente = pacienteRepository.getReferenceById(id);
 		if(this.nome != null)

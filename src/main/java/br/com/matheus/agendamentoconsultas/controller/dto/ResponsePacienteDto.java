@@ -1,31 +1,26 @@
 package br.com.matheus.agendamentoconsultas.controller.dto;
 
 import br.com.matheus.agendamentoconsultas.model.Paciente;
+import lombok.Getter;
+import lombok.Setter;
 
-public class VisualizarTodosPacientesDto {
+@Getter
+@Setter
+public class ResponsePacienteDto {
 
 	private Long id;
 	private String nome;
+	private String email;
 	private String telefone;
+	private String cpf;
 	private String endereco;
-
-	public VisualizarTodosPacientesDto(Paciente paciente) {
+	
+	public ResponsePacienteDto(Paciente paciente) {
 		this.id = paciente.getId();
 		this.nome = paciente.getNome();
+		this.email = paciente.getEmail();
 		this.telefone = paciente.getTelefone();
+		this.cpf = paciente.getCpf();
 		this.endereco = paciente.getEndereco();
-	}
-	
-	public Long getId() {
-		return id;
-	}
-	public String getNome() {
-		return nome;
-	}
-	public String getTelefone() {
-		return telefone;
-	}
-	public String getEndereco() {
-		return endereco;
 	}
 }
