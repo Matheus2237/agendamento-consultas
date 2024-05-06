@@ -14,7 +14,7 @@ import org.springframework.test.context.ActiveProfiles;
 class ValidPhoneFormatValidatorTest {
 
 	@Autowired
-	private ValidPhoneFormatValidator validPhoneFormatValidator;
+	private ValidTelefoneDTOValidator validPhoneFormatValidator;
 	
 	@Test
 	void deveRetornarTrueAoPassarUmTelefoneVálido() {

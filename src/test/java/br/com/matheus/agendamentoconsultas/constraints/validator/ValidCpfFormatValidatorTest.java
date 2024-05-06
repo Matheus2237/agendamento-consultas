@@ -14,7 +14,7 @@ import org.springframework.test.context.ActiveProfiles;
 class ValidCpfFormatValidatorTest {
 
 	@Autowired
-	private ValidCpfFormatValidator validCpfFormatValidator;
+	private ValidCpfValidator validCpfFormatValidator;
 	
 	@Test
 	void deveRetornarTrueCasoForPassadoUmCpfComOFormatoValido() {

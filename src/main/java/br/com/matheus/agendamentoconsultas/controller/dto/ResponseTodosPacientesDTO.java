@@ -1,0 +1,35 @@
+package br.com.matheus.agendamentoconsultas.controller.dto;
+
+import br.com.matheus.agendamentoconsultas.model.Endereco;
+import br.com.matheus.agendamentoconsultas.model.Paciente;
+import br.com.matheus.agendamentoconsultas.model.Telefone;
+
+public record ResponseTodosPacientesDTO(
+
+        Long id,
+        String nome,
+        TelefoneResponseDTO telefone,
+        EnderecoResponseDTO endereco
+) {
+
+    private record TelefoneResponseDTO(String ddd, String numero) {
+
+        public TelefoneResponseDTO(Telefone telefone) {
+            this(telefone.getDdd(), telefone.getNumero());
+        }
+    }
+
+    private record EnderecoResponseDTO(
+            String logradouro, String numero, String bairro, String cidade, String uf, String cep) {
+
+        public EnderecoResponseDTO(Endereco endereco) {
+            this(endereco.getLogradouro(), endereco.getNumero(), endereco.getBairro(),
+                    endereco.getCidade(), endereco.getUf(), endereco.getCep());
+        }
+    }
+
+    public ResponseTodosPacientesDTO(Paciente paciente) {
+        this(paciente.getId(), paciente.getNome(), new TelefoneResponseDTO(paciente.getTelefone()),
+                new EnderecoResponseDTO(paciente.getEndereco()));
+    }
+}

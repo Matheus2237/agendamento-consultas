@@ -14,7 +14,7 @@ import org.springframework.test.context.ActiveProfiles;
 class ValidAddressFormatValidatorTest {
 	
 	@Autowired
-	private ValidAddressFormatValidator validAddressFormatValidator;
+	private ValidEnderecoDTOValidator validAddressFormatValidator;
 	
 	@Test
 	void deveRetornarTrueCasoForPassadoUmEnderecoComOFormatoValido() {

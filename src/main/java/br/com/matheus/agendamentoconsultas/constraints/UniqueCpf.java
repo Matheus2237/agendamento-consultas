@@ -13,7 +13,8 @@ import jakarta.validation.Payload;
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface UniqueCpf {
-	String message() default "Este cpf já está registrado.";
+
+	String message() default "Cpf já registrado.";
 	Class<?>[] groups() default {};
 	Class<? extends Payload>[] payload() default {};
 }

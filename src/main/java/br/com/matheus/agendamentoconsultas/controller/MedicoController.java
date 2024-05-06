@@ -2,8 +2,8 @@ package br.com.matheus.agendamentoconsultas.controller;
 
 import br.com.matheus.agendamentoconsultas.controller.dto.RequestAtualizacaoMedicoDTO;
 import br.com.matheus.agendamentoconsultas.controller.dto.RequestCadastroMedicoDTO;
-import br.com.matheus.agendamentoconsultas.controller.dto.ResponseMedicoDto;
-import br.com.matheus.agendamentoconsultas.controller.dto.ResponseTodosMedicosDto;
+import br.com.matheus.agendamentoconsultas.controller.dto.ResponseMedicoDTO;
+import br.com.matheus.agendamentoconsultas.controller.dto.ResponseTodosMedicosDTO;
 import br.com.matheus.agendamentoconsultas.model.Medico;
 import br.com.matheus.agendamentoconsultas.service.MedicoService;
 import jakarta.transaction.Transactional;
@@ -31,29 +31,29 @@ public class MedicoController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<ResponseTodosMedicosDto>> visualizarTodos(@PageableDefault(size = 20, sort = "nome", direction = Direction.ASC) Pageable pageable) {
-        Page<ResponseTodosMedicosDto> medicos = this.medicoService.visualizarTodos(pageable);
+    public ResponseEntity<Page<ResponseTodosMedicosDTO>> visualizarTodos(@PageableDefault(size = 20, sort = "nome", direction = Direction.ASC) Pageable pageable) {
+        Page<ResponseTodosMedicosDTO> medicos = this.medicoService.visualizarTodos(pageable);
         return ResponseEntity.ok().body(medicos);
     }
 
     @PostMapping
     @Transactional
-    public ResponseEntity<ResponseMedicoDto> cadastrar(@RequestBody @Valid RequestCadastroMedicoDTO requestCadastroMedicoDTO, UriComponentsBuilder uriComponentsBuilder) {
+    public ResponseEntity<ResponseMedicoDTO> cadastrar(@RequestBody @Valid RequestCadastroMedicoDTO requestCadastroMedicoDTO, UriComponentsBuilder uriComponentsBuilder) {
         Medico medico = this.medicoService.cadastrar(requestCadastroMedicoDTO);
         URI uri = uriComponentsBuilder.path("medico/{id}").buildAndExpand(medico.getId()).toUri();
-        return ResponseEntity.created(uri).body(new ResponseMedicoDto(medico));
+        return ResponseEntity.created(uri).body(new ResponseMedicoDTO(medico));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ResponseMedicoDto> detalharMedico(@PathVariable Long id) {
-        ResponseMedicoDto detalhesMedico = this.medicoService.detalharMedico(id);
+    public ResponseEntity<ResponseMedicoDTO> detalharMedico(@PathVariable Long id) {
+        ResponseMedicoDTO detalhesMedico = this.medicoService.detalharMedico(id);
         return ResponseEntity.ok(detalhesMedico);
     }
 
     @PutMapping("/{id}")
     @Transactional
-    public ResponseEntity<ResponseMedicoDto> atualizar(@PathVariable Long id, @RequestBody @Valid RequestAtualizacaoMedicoDTO requestAtualizacaoMedicoDTO) {
-        ResponseMedicoDto medicoAtualizado = this.medicoService.atualizar(id, requestAtualizacaoMedicoDTO);
+    public ResponseEntity<ResponseMedicoDTO> atualizar(@PathVariable Long id, @RequestBody @Valid RequestAtualizacaoMedicoDTO requestAtualizacaoMedicoDTO) {
+        ResponseMedicoDTO medicoAtualizado = this.medicoService.atualizar(id, requestAtualizacaoMedicoDTO);
         return ResponseEntity.ok(medicoAtualizado);
     }
 

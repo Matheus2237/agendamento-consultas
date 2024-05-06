@@ -13,7 +13,8 @@ import jakarta.validation.Payload;
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface UniqueEmail {
-	String message() default "Este email já está registrado.";
+
+	String message() default "Email já registrado.";
 	Class<?>[] groups() default {};
 	Class<? extends Payload>[] payload() default {};
 }

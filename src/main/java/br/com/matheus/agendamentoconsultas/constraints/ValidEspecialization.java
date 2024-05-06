@@ -13,6 +13,7 @@ import jakarta.validation.Payload;
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ValidEspecialization {
+
 	String message() default "Especialização não encontrada";
 	Class<?>[] groups() default {};
 	Class<? extends Payload>[] payload() default {}; 

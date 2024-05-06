@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 import br.com.matheus.agendamentoconsultas.constraints.ValidEspecialization;
-import br.com.matheus.agendamentoconsultas.model.Especializacao;
+import br.com.matheus.agendamentoconsultas.enums.Especializacao;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
@@ -18,8 +18,7 @@ public class ValidEspecializationValidator implements ConstraintValidator<ValidE
 	@Override
 	public boolean isValid(String especializacao, ConstraintValidatorContext context) {
 		for(Especializacao especializacaoEnum : especializacoes) {
-			String especializacaoComparacao = especializacaoEnum.getName();
-			if(especializacaoComparacao.contentEquals(especializacao)) {
+			if(especializacaoEnum.equals(Especializacao.valueOf(especializacao))) {
 				return true;
 			}
 		}

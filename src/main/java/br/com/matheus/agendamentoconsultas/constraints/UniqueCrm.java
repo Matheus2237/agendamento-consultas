@@ -13,7 +13,8 @@ import jakarta.validation.Payload;
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface UniqueCrm{
-	String message() default "Esta crm já está registrada.";
+
+	String message() default "Crm já registrada.";
 	Class<?>[] groups() default {};
 	Class<? extends Payload>[] payload() default {};
 }
