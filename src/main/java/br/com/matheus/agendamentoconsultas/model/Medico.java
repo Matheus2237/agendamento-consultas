@@ -1,93 +1,53 @@
 package br.com.matheus.agendamentoconsultas.model;
 
-import java.util.List;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import br.com.matheus.agendamentoconsultas.model.vo.CRM;
+import br.com.matheus.agendamentoconsultas.model.vo.Email;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import lombok.*;
 
 @Entity
-@Table(name = "medicos")
+@Builder
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "medico")
 public class Medico {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+
+	@NotNull
 	private String nome;
-	private String email;
-	private String telefone;
-	@Enumerated(value = EnumType.STRING)
-	private Especializacao especializacao;
-	private String crm;
-	private String endereco;
-	
-	@OneToMany(mappedBy = "medico", fetch = FetchType.LAZY)
-	private List<Consulta> consultas;
-	
-	public Medico() {
-	}
 
-	public Medico(String nome, String email, String telefone, Especializacao especializacao, String crm, String endereco) {
-		this.nome = nome;
-		this.email = email;
-		this.telefone = telefone;
-		this.especializacao = especializacao;
-		this.crm = crm;
-		this.endereco = endereco;
-	}
+	@Embedded
+	private CRM crm;
 
-	public Long getId() {
-		return id;
-	}
-	public void setId(Long id) {
-		this.id = id;
-	}
-	public String getNome() {
-		return nome;
-	}
-	public void setNome(String nome) {
+	@Embedded
+	private Email email;
+
+	@Embedded
+	private Telefone telefone;
+
+//	@Enumerated(value = EnumType.STRING)
+//	private Especializacao especializacao;
+
+	@Embedded
+	private Endereco endereco;
+
+//	@ElementCollection
+//	@OneToMany(mappedBy = "medico", cascade = CascadeType.ALL)
+//	@JoinColumn(name = "id_medico")
+//	private List<HorarioAtendimento> horariosAtendimento;
+
+	public Medico(String nome, String crm, String email, Telefone telefone, Endereco endereco) {
 		this.nome = nome;
-	}
-	public String getEmail() {
-		return email;
-	}
-	public void setEmail(String email) {
-		this.email = email;
-	}
-	public String getTelefone() {
-		return telefone;
-	}
-	public void setTelefone(String telefone) {
+		this.crm = new CRM(crm);
+		this.email = new Email(email);
 		this.telefone = telefone;
-	}
-	public Especializacao getEspecializacao() {
-		return especializacao;
-	}
-	public void setEspecializacao(Especializacao especializacao) {
-		this.especializacao = especializacao;
-	}
-	public String getCrm() {
-		return crm;
-	}
-	public void setCrm(String crm) {
-		this.crm = crm;
-	}
-	public String getEndereco() {
-		return endereco;
-	}
-	public void setEndereco(String endereco) {
 		this.endereco = endereco;
-	}
-	public List<Consulta> getConsultas() {
-		return consultas;
-	}
-	public void setConsultas(List<Consulta> consultas) {
-		this.consultas = consultas;
 	}
 }

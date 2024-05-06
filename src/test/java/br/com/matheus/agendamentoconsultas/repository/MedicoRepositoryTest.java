@@ -11,7 +11,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.ActiveProfiles;
 
-import br.com.matheus.agendamentoconsultas.model.Especializacao;
+import br.com.matheus.agendamentoconsultas.enums.Especializacao;
 import br.com.matheus.agendamentoconsultas.model.Medico;
 
 @DataJpaTest

@@ -14,7 +14,7 @@ import org.springframework.test.context.ActiveProfiles;
 class ValidCrmFormatValidatorTest {
 
 	@Autowired
-	private ValidCrmFormatValidator validCrmFormatValidator;
+	private ValidCrmValidator validCrmFormatValidator;
 	
 	@Test
 	void deveRetornarTrueCasoForPassadoUmaCrmComOFormatoValido() {

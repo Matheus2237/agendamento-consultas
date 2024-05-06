@@ -2,8 +2,8 @@ package br.com.matheus.agendamentoconsultas.service;
 
 import br.com.matheus.agendamentoconsultas.controller.dto.RequestAtualizacaoPacienteDTO;
 import br.com.matheus.agendamentoconsultas.controller.dto.RequestCadastroPacienteDTO;
-import br.com.matheus.agendamentoconsultas.controller.dto.ResponsePacienteDto;
-import br.com.matheus.agendamentoconsultas.controller.dto.ResponseTodosPacientesDto;
+import br.com.matheus.agendamentoconsultas.controller.dto.ResponsePacienteDTO;
+import br.com.matheus.agendamentoconsultas.controller.dto.ResponseTodosPacientesDTO;
 import br.com.matheus.agendamentoconsultas.exception.PacienteNaoEncontradoException;
 import br.com.matheus.agendamentoconsultas.model.Paciente;
 import br.com.matheus.agendamentoconsultas.repository.PacienteRepository;
@@ -22,9 +22,9 @@ public class PacienteService {
         this.pacienteRepository = pacienteRepository;
     }
 
-    public Page<ResponseTodosPacientesDto> visualizarTodos(Pageable pageable) {
+    public Page<ResponseTodosPacientesDTO> visualizarTodos(Pageable pageable) {
         Page<Paciente> pacientes = this.pacienteRepository.findAll(pageable);
-        return pacientes.map(ResponseTodosPacientesDto::new);
+        return pacientes.map(ResponseTodosPacientesDTO::new);
     }
 
     public Paciente cadastrar(RequestCadastroPacienteDTO requestCadastroPacienteDTO) {
@@ -32,17 +32,17 @@ public class PacienteService {
         return this.pacienteRepository.save(paciente);
     }
 
-    public ResponsePacienteDto detalharPaciente(Long id) {
+    public ResponsePacienteDTO detalharPaciente(Long id) {
         Paciente paciente = this.pacienteRepository.findById(id)
                 .orElseThrow(PacienteNaoEncontradoException::new);
-        return new ResponsePacienteDto(paciente);
+        return new ResponsePacienteDTO(paciente);
     }
 
-    public ResponsePacienteDto atualizar(Long id, RequestAtualizacaoPacienteDTO atualizacao) {
+    public ResponsePacienteDTO atualizar(Long id, RequestAtualizacaoPacienteDTO atualizacao) {
         Paciente paciente = this.pacienteRepository.findById(id)
                 .orElseThrow(PacienteNaoEncontradoException::new);
         atualizacao.atualizar(paciente);
-        return new ResponsePacienteDto(paciente);
+        return new ResponsePacienteDTO(paciente);
     }
 
     public void deletar(Long id) {
