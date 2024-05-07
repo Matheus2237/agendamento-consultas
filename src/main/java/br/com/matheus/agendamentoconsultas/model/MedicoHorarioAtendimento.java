@@ -1,6 +1,8 @@
 package br.com.matheus.agendamentoconsultas.model;
 
+import br.com.matheus.agendamentoconsultas.enums.DiaDaSemana;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,25 +15,23 @@ import java.time.LocalTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "medico_horario_atendimento")
-public class HorarioAtendimento {
+public class MedicoHorarioAtendimento {
 
-//    @EmbeddedId
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @ManyToOne
+    @JoinColumn(name = "id_medico")
+    private Medico medico;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "id_medico")
-//    private Medico medico;
+    @Id
+    @Enumerated(EnumType.STRING)
+    @Column(name = "dia_da_semana")
+    private DiaDaSemana diaDaSemana;
 
-//    @Enumerated(EnumType.STRING)
-//    @Column(name = "dia_da_semana")
-//    private DiaDaSemana diaDaSemana;
-
+    @NotNull
     @Column(name = "hora_inicial")
     private LocalTime horaInicial;
 
+    @NotNull
     @Column(name = "hora_final")
     private LocalTime horaFinal;
 }

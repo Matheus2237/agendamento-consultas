@@ -1,11 +1,14 @@
 package br.com.matheus.agendamentoconsultas.model;
 
+import br.com.matheus.agendamentoconsultas.enums.Especializacao;
 import br.com.matheus.agendamentoconsultas.model.vo.CRM;
 import br.com.matheus.agendamentoconsultas.model.vo.Email;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+
+import java.util.List;
 
 @Entity
 @Builder
@@ -32,16 +35,16 @@ public class Medico {
 	@Embedded
 	private Telefone telefone;
 
-//	@Enumerated(value = EnumType.STRING)
-//	private Especializacao especializacao;
+	@NotNull
+	@NotBlank
+	@Enumerated(value = EnumType.STRING)
+	private Especializacao especializacao;
 
 	@Embedded
 	private Endereco endereco;
 
-//	@ElementCollection
-//	@OneToMany(mappedBy = "medico", cascade = CascadeType.ALL)
-//	@JoinColumn(name = "id_medico")
-//	private List<HorarioAtendimento> horariosAtendimento;
+	@OneToMany(mappedBy = "medico", cascade = CascadeType.ALL)
+	private List<MedicoHorarioAtendimento> horariosAtendimento;
 
 	public Medico(String nome, String crm, String email, Telefone telefone, Endereco endereco) {
 		this.nome = nome;
