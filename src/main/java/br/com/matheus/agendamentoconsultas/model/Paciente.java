@@ -33,12 +33,4 @@ public class Paciente {
 
 	@Embedded
 	private Endereco endereco;
-
-	public Paciente(String nome, String cpf, String email, Telefone telefone, Endereco endereco) {
-		this.nome = nome;
-		this.cpf = new CPF(cpf);
-		this.email = new Email(email);
-		this.telefone = telefone;
-		this.endereco = endereco;
-	}
 }

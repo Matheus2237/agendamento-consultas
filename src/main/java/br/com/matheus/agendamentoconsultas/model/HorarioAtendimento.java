@@ -1,31 +1,28 @@
 package br.com.matheus.agendamentoconsultas.model;
 
-import br.com.matheus.agendamentoconsultas.enums.DiaDaSemana;
+import br.com.matheus.agendamentoconsultas.model.pk.HorarioAtendimentoPK;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalTime;
 
 @Entity
+@Builder
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class MedicoHorarioAtendimento {
+@Table(name = "medico_horario_atendimento")
+public class HorarioAtendimento {
 
-    @Id
+    @EmbeddedId
+    private HorarioAtendimentoPK primaryKey;
+
+    @MapsId("medicoId")
     @ManyToOne
     @JoinColumn(name = "id_medico")
     private Medico medico;
-
-    @Id
-    @Enumerated(EnumType.STRING)
-    @Column(name = "dia_da_semana")
-    private DiaDaSemana diaDaSemana;
 
     @NotNull
     @Column(name = "hora_inicial")

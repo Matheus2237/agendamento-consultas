@@ -1,4 +1,4 @@
-package br.com.matheus.agendamentoconsultas.enums;
+package br.com.matheus.agendamentoconsultas.model.enums;
 
 public enum Especializacao {
 
@@ -30,9 +30,5 @@ public enum Especializacao {
 	PNEUMOLOGIA,
 	PSIQUIATRIA,
 	REUMATOLOGIA,
-	UROLOGIA;
-
-	public static Especializacao stringToEnum(String e) {
-		return valueOf(e);
-	}
+	UROLOGIA
 }

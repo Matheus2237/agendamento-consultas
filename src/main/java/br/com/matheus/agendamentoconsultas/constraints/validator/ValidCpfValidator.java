@@ -10,10 +10,10 @@ import java.util.regex.Pattern;
 @Component
 public class ValidCpfValidator implements ConstraintValidator<ValidCpf, String> {
 
-	// TODO: Incluir logica de validacao na classe CPF
+    private static final Pattern CPF_PATTERN  = Pattern.compile("^(\\d{11})$");
+
     @Override
 	public boolean isValid(String cpf, ConstraintValidatorContext context) {
-        final String regex = "^(\\d{11})$";
-        return Pattern.compile(regex).matcher(cpf).matches();
+        return cpf == null || cpf.trim().isEmpty() || CPF_PATTERN.matcher(cpf).matches();
 	}
 }

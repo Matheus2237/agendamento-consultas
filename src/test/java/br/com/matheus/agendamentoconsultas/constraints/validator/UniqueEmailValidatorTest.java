@@ -1,73 +1,71 @@
 package br.com.matheus.agendamentoconsultas.constraints.validator;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
+import br.com.matheus.agendamentoconsultas.constraints.UniqueEmail;
+import br.com.matheus.agendamentoconsultas.repository.EmailRepository;
+import jakarta.validation.ConstraintValidatorContext;
+import lombok.SneakyThrows;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.springframework.context.ApplicationContext;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-import br.com.matheus.agendamentoconsultas.model.Medico;
-import br.com.matheus.agendamentoconsultas.model.Paciente;
-import br.com.matheus.agendamentoconsultas.repository.MedicoRepository;
-import br.com.matheus.agendamentoconsultas.repository.PacienteRepository;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.when;
+import static org.mockito.MockitoAnnotations.openMocks;
 
-@SpringBootTest
-@ActiveProfiles("test")
 class UniqueEmailValidatorTest {
 
-	@Autowired
-	private UniqueEmailValidator uniqueEmailValidator;
-	
-	@Autowired
-	private MedicoRepository medicoRepository;
+	@InjectMocks
+	private UniqueEmailValidator validator;
 
-	@Autowired
-	private PacienteRepository pacienteRepository;
-	
+	@Mock
+	private UniqueEmail uniqueEmailMock;
+
+	@Mock
+	private JpaRepository<?, ?> jpaRepositoryMock;
+
+	@Mock
+	private ApplicationContext applicationContextMock;
+
+	@Mock
+	private EmailRepository emailRepositoryMock;
+
+	@Mock
+	private ConstraintValidatorContext constraintValidatorContextMock;
+
+	private static final String EMAIL = "exemplo@email.com";
+
+	private AutoCloseable mocks;
+
 	@BeforeEach
-	void preparandoMedico() {
-		String emailMedico = "mantonieta@gmail.com";
-		Medico medico = new Medico();
-		medico.setEmail(emailMedico);
-		medicoRepository.save(medico);
+	void setUp() {
+		mocks = openMocks(this);
+		when(uniqueEmailMock.repository()).thenAnswer(invocation -> JpaRepository.class);
+		when(applicationContextMock.getBean(JpaRepository.class)).thenReturn(jpaRepositoryMock);
+		validator.initialize(uniqueEmailMock);
 	}
-	
-	@BeforeEach
-	void preparandoPaciente() {
-		String emailPaciente = "jotaaug@gmail.com";
-		Paciente paciente = new Paciente();
-		paciente.setEmail(emailPaciente);
-		pacienteRepository.save(paciente);
+
+	@AfterEach
+	@SneakyThrows
+	void tearDown() {
+		mocks.close();
 	}
 
 	@Test
-	void deveRetornarVerdadeiroAoPassarNoSistemaUmEmailDeMedicoUnico() {
-		String email = "terezacramos@outlook.com";
-		Boolean result = uniqueEmailValidator.isValid(email, null);
-		assertEquals(true, result);
-	}
-	
-	@Test
-	void deveRetornarFalsoAoPassarUmEmailDeMedicoPreExistenteNoSistema() {
-		String email = "mantonieta@gmail.com";
-		Boolean result = uniqueEmailValidator.isValid(email, null);
-		assertEquals(false, result);
-	}
-	
-	@Test
-	void deveRetornarVerdadeiroAoPassarNoSistemaUmEmailDePacienteUnico() {
-		String email = "lucioalazevedo@yahoo.com.br";
-		Boolean result = uniqueEmailValidator.isValid(email, null);
-		assertEquals(true, result);
+	void deveRetornarVerdadeiroAoPassarUmEmailUnicoNoSistema() {
+		when(emailRepositoryMock.existsByEmail(EMAIL, jpaRepositoryMock)).thenReturn(false);
+		boolean isValid = validator.isValid(EMAIL, constraintValidatorContextMock);
+		assertTrue(isValid, "Deve retornar verdadeiro ao não possuir o email no sistema.");
 	}
 
-	// Teste está falhando.
 	@Test
-	void deveRetornarFalsoAoPassarUmEmailDePacientePreExistenteNoSistema() {
-		String email = "jotaaug@gmail.com";
-		Boolean result = uniqueEmailValidator.isValid(email, null);
-		assertEquals(false, result);
+	void deveRetornarFalsoAoPassarUmEmailJaExistenteNoSistema() {
+		when(emailRepositoryMock.existsByEmail(EMAIL, jpaRepositoryMock)).thenReturn(true);
+		boolean isValid = validator.isValid(EMAIL, constraintValidatorContextMock);
+		assertFalse(isValid, "Deve retornar falso ao existir o email no sistema previamente.");
 	}
 }

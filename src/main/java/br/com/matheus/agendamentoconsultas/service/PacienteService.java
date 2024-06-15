@@ -1,16 +1,19 @@
 package br.com.matheus.agendamentoconsultas.service;
 
-import br.com.matheus.agendamentoconsultas.controller.dto.RequestAtualizacaoPacienteDTO;
-import br.com.matheus.agendamentoconsultas.controller.dto.RequestCadastroPacienteDTO;
-import br.com.matheus.agendamentoconsultas.controller.dto.ResponsePacienteDTO;
-import br.com.matheus.agendamentoconsultas.controller.dto.ResponseTodosPacientesDTO;
+import br.com.matheus.agendamentoconsultas.controller.dto.*;
 import br.com.matheus.agendamentoconsultas.exception.PacienteNaoEncontradoException;
+import br.com.matheus.agendamentoconsultas.model.Endereco;
 import br.com.matheus.agendamentoconsultas.model.Paciente;
+import br.com.matheus.agendamentoconsultas.model.Telefone;
+import br.com.matheus.agendamentoconsultas.model.vo.CPF;
+import br.com.matheus.agendamentoconsultas.model.vo.Email;
 import br.com.matheus.agendamentoconsultas.repository.PacienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import static java.util.Optional.ofNullable;
 
 @Service
 public class PacienteService {
@@ -27,8 +30,17 @@ public class PacienteService {
         return pacientes.map(ResponseTodosPacientesDTO::new);
     }
 
-    public Paciente cadastrar(RequestCadastroPacienteDTO requestCadastroPacienteDTO) {
-        Paciente paciente = requestCadastroPacienteDTO.toPaciente();
+    public Paciente cadastrar(RequestCadastroPacienteDTO pacienteDTO) {
+        TelefoneRequestDTO telefoneDTO = pacienteDTO.telefone();
+        EnderecoRequestDTO enderecoDTO = pacienteDTO.endereco();
+        Paciente paciente = Paciente.builder()
+                .nome(pacienteDTO.nome())
+                .cpf(new CPF(pacienteDTO.cpf()))
+                .email(new Email(pacienteDTO.email()))
+                .telefone(new Telefone(telefoneDTO.ddd(), telefoneDTO.numero()))
+                .endereco(new Endereco(enderecoDTO.logradouro(), enderecoDTO.numero(), enderecoDTO.bairro(),
+                        enderecoDTO.cidade(), enderecoDTO.uf(), enderecoDTO.cep()))
+                .build();
         return this.pacienteRepository.save(paciente);
     }
 
@@ -38,10 +50,12 @@ public class PacienteService {
         return new ResponsePacienteDTO(paciente);
     }
 
-    public ResponsePacienteDTO atualizar(Long id, RequestAtualizacaoPacienteDTO atualizacao) {
+    public ResponsePacienteDTO atualizar(Long id, RequestAtualizacaoPacienteDTO dadosAtualizacao) {
         Paciente paciente = this.pacienteRepository.findById(id)
                 .orElseThrow(PacienteNaoEncontradoException::new);
-        atualizacao.atualizar(paciente);
+        ofNullable(dadosAtualizacao.nome()).filter(n -> !n.isBlank()).ifPresent(paciente::setNome);
+        ofNullable(dadosAtualizacao.telefone()).ifPresent(t -> paciente.setTelefone(t.toModel()));
+        ofNullable(dadosAtualizacao.endereco()).ifPresent(e -> paciente.setEndereco(e.toModel()));
         return new ResponsePacienteDTO(paciente);
     }
 

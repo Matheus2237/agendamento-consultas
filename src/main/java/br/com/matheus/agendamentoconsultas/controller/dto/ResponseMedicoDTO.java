@@ -1,9 +1,9 @@
 package br.com.matheus.agendamentoconsultas.controller.dto;
 
-import br.com.matheus.agendamentoconsultas.model.Endereco;
 import br.com.matheus.agendamentoconsultas.model.Medico;
-import br.com.matheus.agendamentoconsultas.model.Telefone;
-import lombok.Getter;
+
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public record ResponseMedicoDTO(
 
@@ -12,29 +12,15 @@ public record ResponseMedicoDTO(
 	String crm,
 	String email,
 	TelefoneResponseDTO telefone,
-	EnderecoResponseDTO endereco
-//	private final String especializacao;
-
+	EnderecoResponseDTO endereco,
+	String especializacao,
+	Set<HorarioAtendimentoResponseDTO> horariosAtendimento
 ) {
-
-	private record TelefoneResponseDTO(String ddd, String numero) {
-
-		public TelefoneResponseDTO(Telefone telefone) {
-			this(telefone.getDdd(), telefone.getNumero());
-		}
-	}
-
-	private record EnderecoResponseDTO(
-			String logradouro, String numero, String bairro, String cidade, String uf, String cep) {
-
-		public EnderecoResponseDTO(Endereco endereco) {
-			this(endereco.getLogradouro(), endereco.getNumero(), endereco.getBairro(),
-					endereco.getCidade(), endereco.getUf(), endereco.getCep());
-		}
-	}
 
 	public ResponseMedicoDTO(Medico medico) {
 		this(medico.getId(), medico.getNome(), medico.getCrm().getValue(), medico.getEmail().getValue(),
-				new TelefoneResponseDTO(medico.getTelefone()), new EnderecoResponseDTO(medico.getEndereco()));
+				new TelefoneResponseDTO(medico.getTelefone()), new EnderecoResponseDTO(medico.getEndereco()),
+				medico.getEspecializacao().toString(), medico.getHorariosAtendimento().stream()
+						.map(HorarioAtendimentoResponseDTO::new).collect(Collectors.toSet()));
 	}
 }

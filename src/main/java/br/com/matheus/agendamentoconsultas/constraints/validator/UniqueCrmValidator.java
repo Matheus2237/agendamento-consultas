@@ -19,6 +19,6 @@ public class UniqueCrmValidator implements ConstraintValidator<UniqueCrm, String
 
     @Override
 	public boolean isValid(String crm, ConstraintValidatorContext context) {
-		return !medicoRepository.existsByCrm(crm);
+		return !medicoRepository.existsByCrmValue(crm);
 	}
 }

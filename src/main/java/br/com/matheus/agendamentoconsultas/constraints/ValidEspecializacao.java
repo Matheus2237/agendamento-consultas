@@ -5,16 +5,16 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import br.com.matheus.agendamentoconsultas.constraints.validator.ValidEnderecoDTOValidator;
+import br.com.matheus.agendamentoconsultas.constraints.validator.ValidEspecializacaoValidator;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 
-@Constraint(validatedBy = ValidEnderecoDTOValidator.class)
+@Constraint(validatedBy = ValidEspecializacaoValidator.class)
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ValidEnderecoDTO {
+public @interface ValidEspecializacao {
 
-	String message() default "Endereço inválido.";
+	String message() default "Especialização não encontrada.";
 	Class<?>[] groups() default {};
 	Class<? extends Payload>[] payload() default {}; 
 }

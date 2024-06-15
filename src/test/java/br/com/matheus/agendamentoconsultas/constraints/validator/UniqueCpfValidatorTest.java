@@ -1,45 +1,56 @@
 package br.com.matheus.agendamentoconsultas.constraints.validator;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
+import br.com.matheus.agendamentoconsultas.repository.PacienteRepository;
+import jakarta.validation.ConstraintValidatorContext;
+import lombok.SneakyThrows;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 
-import br.com.matheus.agendamentoconsultas.model.Paciente;
-import br.com.matheus.agendamentoconsultas.repository.PacienteRepository;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.when;
+import static org.mockito.MockitoAnnotations.openMocks;
 
-@SpringBootTest
-@ActiveProfiles("test")
 class UniqueCpfValidatorTest {
-	
-	@Autowired
-	private UniqueCpfValidator uniqueCpfValidator;
-	
-	@Autowired
+
+	@InjectMocks
+	private UniqueCpfValidator validator;
+
+	@Mock
 	private PacienteRepository pacienteRepository;
-	
+
+	@Mock
+	private ConstraintValidatorContext context;
+
+	private AutoCloseable mocks;
+
+	private static final String CPF = "12345678900";
+
 	@BeforeEach
-	public void preparandoPaciente() {
-		String cpf = "12345678900";
-		Paciente paciente = new Paciente();
-		paciente.setCpf(cpf);
-		pacienteRepository.save(paciente);
+	void setUp() {
+		mocks = openMocks(this);
 	}
-	
-	@Test
-	public void deveRetornarVerdadeiroAoPassarUmCpfUnicoNoSistema() {
-		String cpf = "12345678901";
-		Boolean result = uniqueCpfValidator.isValid(cpf, null);
-		assertEquals(true, result);
+
+	@AfterEach
+	@SneakyThrows
+	void tearDown() {
+		mocks.close();
 	}
-	
+
 	@Test
-	public void deveRetornarFalsoAoPassarUmCpfPreExistenteNoSistema() {
-		String cpf = "12345678900";
-		Boolean result = uniqueCpfValidator.isValid(cpf, null);
-		assertEquals(false, result);
+	void deveRetornarVerdadeiroAoPassarUmCpfUnicoNoSistema() {
+		when(pacienteRepository.existsByCpfValue(CPF)).thenReturn(false);
+		boolean isValid = validator.isValid(CPF, context);
+		assertTrue(isValid, "Deve retornar verdadeiro quando não existir esse cpf no sistema.");
+	}
+
+	@Test
+	void deveRetornarFalsoAoPassarUmCpfJaExistenteNoSistema() {
+		when(pacienteRepository.existsByCpfValue(CPF)).thenReturn(true);
+		boolean isValid = validator.isValid(CPF, context);
+		assertFalse(isValid, "Deve retornar falso ao existir um cpf no sistema.");
 	}
 }

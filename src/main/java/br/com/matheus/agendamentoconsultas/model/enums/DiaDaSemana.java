@@ -1,4 +1,4 @@
-package br.com.matheus.agendamentoconsultas.enums;
+package br.com.matheus.agendamentoconsultas.model.enums;
 
 public enum DiaDaSemana {
 
