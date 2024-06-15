@@ -1,45 +1,56 @@
 package br.com.matheus.agendamentoconsultas.constraints.validator;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
+import br.com.matheus.agendamentoconsultas.repository.MedicoRepository;
+import jakarta.validation.ConstraintValidatorContext;
+import lombok.SneakyThrows;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 
-import br.com.matheus.agendamentoconsultas.model.Medico;
-import br.com.matheus.agendamentoconsultas.repository.MedicoRepository;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.when;
+import static org.mockito.MockitoAnnotations.openMocks;
 
-@SpringBootTest
-@ActiveProfiles("test")
 class UniqueCrmValidatorTest {
 
-	@Autowired
-	private UniqueCrmValidator uniqueCrmValidator;
-	
-	@Autowired
+	@InjectMocks
+	private UniqueCrmValidator validator;
+
+	@Mock
 	private MedicoRepository medicoRepository;
-	
+
+	@Mock
+	private ConstraintValidatorContext context;
+
+	private AutoCloseable mocks;
+
+	private static final String CRM = "SP123456";
+
 	@BeforeEach
-	void preparandoMedico() {
-		String crm = "CRM/SP 123456"; 
-		Medico medico = new Medico();
-		medico.setCrm(crm);
-		medicoRepository.save(medico);
+	void setUp() {
+		mocks = openMocks(this);
+	}
+
+	@AfterEach
+	@SneakyThrows
+	void tearDown() {
+		mocks.close();
 	}
 
 	@Test
-	void deveRetornarVerdadeiroAoPassarUmaCRMUnicaNoSistema() {
-		String crm = "CRM/MG 654321";
-		Boolean result = uniqueCrmValidator.isValid(crm, null);
-		assertEquals(true, result);
+	void deveRetornarVerdadeiroAoPassarUmCrmUnicoNoSistema() {
+		when(medicoRepository.existsByCrmValue(CRM)).thenReturn(false);
+		boolean isValid = validator.isValid(CRM, context);
+		assertTrue(isValid, "Deve retornar verdadeiro quando não existir esse crm no sistema.");
 	}
-	
+
 	@Test
-	void deveRetornarFalsoAoPassarUmaCRMPreExistenteNoSistema() {
-		String crm = "CRM/SP 123456"; 
-		Boolean result = uniqueCrmValidator.isValid(crm, null);
-		assertEquals(false, result);
+	void deveRetornarFalsoAoPassarUmCrmJaExistenteNoSistema() {
+		when(medicoRepository.existsByCrmValue(CRM)).thenReturn(true);
+		boolean isValid = validator.isValid(CRM, context);
+		assertFalse(isValid, "Deve retornar falso ao existir um crm no sistema.");
 	}
 }

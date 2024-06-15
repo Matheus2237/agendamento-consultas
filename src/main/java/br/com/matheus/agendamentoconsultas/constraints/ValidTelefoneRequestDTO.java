@@ -5,16 +5,16 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import br.com.matheus.agendamentoconsultas.constraints.validator.ValidEspecializationValidator;
+import br.com.matheus.agendamentoconsultas.constraints.validator.ValidTelefoneRequestDTOValidator;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 
-@Constraint(validatedBy = ValidEspecializationValidator.class)
+@Constraint(validatedBy = ValidTelefoneRequestDTOValidator.class)
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ValidEspecialization {
+public @interface ValidTelefoneRequestDTO {
 
-	String message() default "Especialização não encontrada";
+	String message() default "Telefone inválido.";
 	Class<?>[] groups() default {};
-	Class<? extends Payload>[] payload() default {}; 
+	Class<? extends Payload>[] payload() default {};
 }

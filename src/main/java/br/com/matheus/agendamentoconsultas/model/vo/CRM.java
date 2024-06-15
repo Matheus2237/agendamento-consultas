@@ -3,22 +3,21 @@ package br.com.matheus.agendamentoconsultas.model.vo;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Objects;
 
 @Embeddable
-@Getter
-@Setter
+@Data
+@NoArgsConstructor
 @AllArgsConstructor
 public class CRM {
 
     @NotBlank
     @Column(name = "crm", unique = true, nullable = false)
-    private final String value;
+    private String value;
 
     @Override
     public boolean equals(Object obj) {

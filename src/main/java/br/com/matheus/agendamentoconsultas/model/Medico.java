@@ -1,14 +1,13 @@
 package br.com.matheus.agendamentoconsultas.model;
 
-import br.com.matheus.agendamentoconsultas.enums.Especializacao;
+import br.com.matheus.agendamentoconsultas.model.enums.Especializacao;
 import br.com.matheus.agendamentoconsultas.model.vo.CRM;
 import br.com.matheus.agendamentoconsultas.model.vo.Email;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Builder
@@ -19,38 +18,32 @@ import java.util.List;
 @Table(name = "medico")
 public class Medico {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	@NotNull
-	private String nome;
+    @NotNull
+    private String nome;
 
-	@Embedded
-	private CRM crm;
+    @Embedded
+    private CRM crm;
 
-	@Embedded
-	private Email email;
+    @Embedded
+    private Email email;
 
-	@Embedded
-	private Telefone telefone;
+    @Embedded
+    private Telefone telefone;
 
-	@NotNull
-	@NotBlank
-	@Enumerated(value = EnumType.STRING)
-	private Especializacao especializacao;
+    @Embedded
+    private Endereco endereco;
 
-	@Embedded
-	private Endereco endereco;
+    @NotNull
+    @Enumerated(value = EnumType.STRING)
+    private Especializacao especializacao;
 
-	@OneToMany(mappedBy = "medico", cascade = CascadeType.ALL)
-	private List<MedicoHorarioAtendimento> horariosAtendimento;
-
-	public Medico(String nome, String crm, String email, Telefone telefone, Endereco endereco) {
-		this.nome = nome;
-		this.crm = new CRM(crm);
-		this.email = new Email(email);
-		this.telefone = telefone;
-		this.endereco = endereco;
-	}
+    @OneToMany(
+            mappedBy = "medico",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private Set<HorarioAtendimento> horariosAtendimento;
 }

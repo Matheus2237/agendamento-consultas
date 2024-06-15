@@ -61,6 +61,6 @@ public class MedicoController {
     @Transactional
     public ResponseEntity<String> deletar(@PathVariable Long id) {
         this.medicoService.deletar(id);
-        return ResponseEntity.ok().body("Médico excluído com sucesso.");
+        return ResponseEntity.ok().build();
     }
 }

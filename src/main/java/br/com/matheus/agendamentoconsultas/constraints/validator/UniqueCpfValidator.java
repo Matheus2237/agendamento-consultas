@@ -1,7 +1,6 @@
 package br.com.matheus.agendamentoconsultas.constraints.validator;
 
 import br.com.matheus.agendamentoconsultas.constraints.UniqueCpf;
-import br.com.matheus.agendamentoconsultas.model.vo.CPF;
 import br.com.matheus.agendamentoconsultas.repository.PacienteRepository;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
@@ -20,6 +19,6 @@ public class UniqueCpfValidator implements ConstraintValidator<UniqueCpf, String
 
     @Override
 	public boolean isValid(String cpf, ConstraintValidatorContext context) {
-		return !pacienteRepository.existsByCpf(cpf);
+		return !pacienteRepository.existsByCpfValue(cpf);
 	}
 }
