@@ -12,6 +12,7 @@ import br.com.matheus.agendamentoconsultas.model.pk.HorarioAtendimentoPK;
 import br.com.matheus.agendamentoconsultas.model.vo.CRM;
 import br.com.matheus.agendamentoconsultas.model.vo.Email;
 import br.com.matheus.agendamentoconsultas.repository.MedicoRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -38,6 +39,7 @@ public class MedicoService {
         return medicos.map(ResponseTodosMedicosDTO::new);
     }
 
+    @Transactional
     public Medico cadastrar(final RequestCadastroMedicoDTO medicoDTO) {
         TelefoneRequestDTO telefoneDTO = medicoDTO.telefone();
         EnderecoRequestDTO enderecoDTO = medicoDTO.endereco();
@@ -65,6 +67,7 @@ public class MedicoService {
         return new ResponseMedicoDTO(medico);
     }
 
+    @Transactional
     public ResponseMedicoDTO atualizar(final Long id, final RequestAtualizacaoMedicoDTO dadosAtualizacao) {
         Medico medico = this.medicoRepository.findById(id)
                 .orElseThrow(MedicoNaoEncontradoException::new);
@@ -75,6 +78,7 @@ public class MedicoService {
         return new ResponseMedicoDTO(medico);
     }
 
+    @Transactional
     public void deletar(Long id) {
         Long idMedico = this.medicoRepository.findById(id)
                 .orElseThrow(MedicoNaoEncontradoException::new).getId();

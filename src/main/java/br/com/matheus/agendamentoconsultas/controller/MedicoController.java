@@ -6,7 +6,6 @@ import br.com.matheus.agendamentoconsultas.controller.dto.ResponseMedicoDTO;
 import br.com.matheus.agendamentoconsultas.controller.dto.ResponseTodosMedicosDTO;
 import br.com.matheus.agendamentoconsultas.model.Medico;
 import br.com.matheus.agendamentoconsultas.service.MedicoService;
-import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -37,7 +36,6 @@ public class MedicoController {
     }
 
     @PostMapping
-    @Transactional
     public ResponseEntity<ResponseMedicoDTO> cadastrar(@RequestBody @Valid RequestCadastroMedicoDTO requestCadastroMedicoDTO, UriComponentsBuilder uriComponentsBuilder) {
         Medico medico = this.medicoService.cadastrar(requestCadastroMedicoDTO);
         URI uri = uriComponentsBuilder.path("medico/{id}").buildAndExpand(medico.getId()).toUri();
@@ -51,14 +49,12 @@ public class MedicoController {
     }
 
     @PutMapping("/{id}")
-    @Transactional
     public ResponseEntity<ResponseMedicoDTO> atualizar(@PathVariable Long id, @RequestBody @Valid RequestAtualizacaoMedicoDTO requestAtualizacaoMedicoDTO) {
         ResponseMedicoDTO medicoAtualizado = this.medicoService.atualizar(id, requestAtualizacaoMedicoDTO);
         return ResponseEntity.ok(medicoAtualizado);
     }
 
     @DeleteMapping("/{id}")
-    @Transactional
     public ResponseEntity<String> deletar(@PathVariable Long id) {
         this.medicoService.deletar(id);
         return ResponseEntity.ok().build();
