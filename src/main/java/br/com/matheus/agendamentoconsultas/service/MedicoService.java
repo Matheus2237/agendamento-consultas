@@ -11,8 +11,10 @@ import br.com.matheus.agendamentoconsultas.model.enums.Especializacao;
 import br.com.matheus.agendamentoconsultas.model.pk.HorarioAtendimentoPK;
 import br.com.matheus.agendamentoconsultas.model.vo.CRM;
 import br.com.matheus.agendamentoconsultas.model.vo.Email;
+import br.com.matheus.agendamentoconsultas.repository.HorarioAtendimentoRepository;
 import br.com.matheus.agendamentoconsultas.repository.MedicoRepository;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -28,10 +30,12 @@ import static java.util.Optional.ofNullable;
 public class MedicoService {
 
     private final MedicoRepository medicoRepository;
+    private final HorarioAtendimentoRepository horarioAtendimentoRepository;
 
     @Autowired
-    public MedicoService(MedicoRepository medicoRepository) {
+    public MedicoService(MedicoRepository medicoRepository, HorarioAtendimentoRepository horarioAtendimentoRepository) {
         this.medicoRepository = medicoRepository;
+        this.horarioAtendimentoRepository = horarioAtendimentoRepository;
     }
 
     public Page<ResponseTodosMedicosDTO> visualizarTodos(final Pageable pageable) {
@@ -83,5 +87,24 @@ public class MedicoService {
         Long idMedico = this.medicoRepository.findById(id)
                 .orElseThrow(MedicoNaoEncontradoException::new).getId();
         this.medicoRepository.deleteById(idMedico);
+    }
+
+    @Transactional
+    public Set<HorarioAtendimentoResponseDTO> atualizarHorariosAtendimento(Long id, @Valid Set<HorarioAtendimentoRequestDTO> horariosAtendimentoRequestDTO) {
+        Medico medico = this.medicoRepository.findById(id)
+                .orElseThrow(MedicoNaoEncontradoException::new);
+        horarioAtendimentoRepository.deleteByMedicoId(id);
+        Set<HorarioAtendimento> horariosAtendimento = horariosAtendimentoRequestDTO.stream()
+                .map(hrAt -> HorarioAtendimento.builder()
+                        .primaryKey(new HorarioAtendimentoPK(id, DiaDaSemana.valueOf(hrAt.diaDaSemana())))
+                        .medico(medico)
+                        .horaInicial(LocalTime.parse(hrAt.horaInicial()))
+                        .horaFinal(LocalTime.parse(hrAt.horaFinal()))
+                        .build())
+                .collect(Collectors.toSet());
+        horarioAtendimentoRepository.saveAll(horariosAtendimento);
+        return horariosAtendimento.stream()
+                .map(HorarioAtendimentoResponseDTO::new)
+                .collect(Collectors.toSet());
     }
 }

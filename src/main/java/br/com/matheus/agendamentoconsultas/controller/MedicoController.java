@@ -1,9 +1,6 @@
 package br.com.matheus.agendamentoconsultas.controller;
 
-import br.com.matheus.agendamentoconsultas.controller.dto.RequestAtualizacaoMedicoDTO;
-import br.com.matheus.agendamentoconsultas.controller.dto.RequestCadastroMedicoDTO;
-import br.com.matheus.agendamentoconsultas.controller.dto.ResponseMedicoDTO;
-import br.com.matheus.agendamentoconsultas.controller.dto.ResponseTodosMedicosDTO;
+import br.com.matheus.agendamentoconsultas.controller.dto.*;
 import br.com.matheus.agendamentoconsultas.model.Medico;
 import br.com.matheus.agendamentoconsultas.service.MedicoService;
 import jakarta.validation.Valid;
@@ -17,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/medico")
@@ -58,5 +56,11 @@ public class MedicoController {
     public ResponseEntity<String> deletar(@PathVariable Long id) {
         this.medicoService.deletar(id);
         return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/{id}/horarios-atendimento")
+    public ResponseEntity<Set<HorarioAtendimentoResponseDTO>> atualizarHorariosAtendimento(@PathVariable Long id, @RequestBody @Valid Set<HorarioAtendimentoRequestDTO> horariosAtendimentoRequestDTO) {
+        Set<HorarioAtendimentoResponseDTO> horariosAtendimento = medicoService.atualizarHorariosAtendimento(id, horariosAtendimentoRequestDTO);
+        return ResponseEntity.ok(horariosAtendimento);
     }
 }
