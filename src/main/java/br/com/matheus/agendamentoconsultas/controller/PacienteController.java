@@ -43,19 +43,19 @@ public class PacienteController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Object> datalharPaciente(@PathVariable Long id) {
+    public ResponseEntity<ResponsePacienteDTO> datalharPaciente(@PathVariable Long id) {
         ResponsePacienteDTO detalhesPaciente = this.pacienteService.detalharPaciente(id);
         return ResponseEntity.ok(detalhesPaciente);
     }
 
 	@PutMapping("/{id}")
-	public ResponseEntity<Object> atualizar(@PathVariable Long id, @RequestBody @Valid RequestAtualizacaoPacienteDTO requestAtualizacaoPacienteDTO) {
+	public ResponseEntity<ResponsePacienteDTO> atualizar(@PathVariable Long id, @RequestBody @Valid RequestAtualizacaoPacienteDTO requestAtualizacaoPacienteDTO) {
 		ResponsePacienteDTO pacienteAtualizado = this.pacienteService.atualizar(id, requestAtualizacaoPacienteDTO);
 		return ResponseEntity.ok(pacienteAtualizado);
 	}
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deletar(@PathVariable Long id) {
+    public ResponseEntity<Void> deletar(@PathVariable Long id) {
         this.pacienteService.deletar(id);
         return ResponseEntity.ok().build();
     }

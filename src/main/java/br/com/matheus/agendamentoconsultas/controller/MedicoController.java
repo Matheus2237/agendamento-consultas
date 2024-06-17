@@ -53,7 +53,7 @@ public class MedicoController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deletar(@PathVariable Long id) {
+    public ResponseEntity<Void> deletar(@PathVariable Long id) {
         this.medicoService.deletar(id);
         return ResponseEntity.ok().build();
     }
