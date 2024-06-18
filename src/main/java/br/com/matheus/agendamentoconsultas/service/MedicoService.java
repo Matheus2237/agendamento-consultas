@@ -77,8 +77,9 @@ public class MedicoService {
                 .orElseThrow(MedicoNaoEncontradoException::new);
         ofNullable(dadosAtualizacao.nome()).filter(n -> !n.isBlank()).ifPresent(medico::setNome);
         ofNullable(dadosAtualizacao.especializacao()).filter(e -> !e.isBlank()).ifPresent(e -> medico.setEspecializacao(Especializacao.valueOf(e)));
-        ofNullable(dadosAtualizacao.telefone()).ifPresent(t -> medico.setTelefone(t.toModel()));
-        ofNullable(dadosAtualizacao.endereco()).ifPresent(e -> medico.setEndereco(e.toModel()));
+        ofNullable(dadosAtualizacao.telefone()).ifPresent(t -> medico.setTelefone(new Telefone(t.ddd(), t.numero())));
+        ofNullable(dadosAtualizacao.endereco()).ifPresent(e -> medico.setEndereco(new Endereco(e.logradouro(),
+                e.numero(), e.bairro(), e.cidade(), e.uf(), e.cep())));
         return new ResponseMedicoDTO(medico);
     }
 

@@ -57,8 +57,9 @@ public class PacienteService {
         Paciente paciente = this.pacienteRepository.findById(id)
                 .orElseThrow(PacienteNaoEncontradoException::new);
         ofNullable(dadosAtualizacao.nome()).filter(n -> !n.isBlank()).ifPresent(paciente::setNome);
-        ofNullable(dadosAtualizacao.telefone()).ifPresent(t -> paciente.setTelefone(t.toModel()));
-        ofNullable(dadosAtualizacao.endereco()).ifPresent(e -> paciente.setEndereco(e.toModel()));
+        ofNullable(dadosAtualizacao.telefone()).ifPresent(t -> paciente.setTelefone(new Telefone(t.ddd(), t.numero())));
+        ofNullable(dadosAtualizacao.endereco()).ifPresent(e -> paciente.setEndereco(new Endereco(e.logradouro(),
+                e.numero(), e.bairro(), e.cidade(), e.uf(), e.cep())));
         return new ResponsePacienteDTO(paciente);
     }
 
