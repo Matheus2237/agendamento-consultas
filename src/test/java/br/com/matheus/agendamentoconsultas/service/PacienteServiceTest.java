@@ -84,7 +84,7 @@ class PacienteServiceTest {
         when(pacienteRepositorySpy.save(any(Paciente.class))).thenAnswer(i -> i.getArgument(0));
         RequestCadastroPacienteDTO pacienteDTO = getRequestCadastroPacienteDTO();
         Paciente pacienteCadastrado = pacienteService.cadastrar(pacienteDTO);
-        assertNotNull(pacienteCadastrado);
+        assertNotNull(pacienteCadastrado, "Paciente cadastrado não deve ser nulo.");
         assertAll("Dados do paciente persistido devem ser consistentes com o que foi recebido.",
                 () -> assertEquals(nome, pacienteCadastrado.getNome(), "Nome deve ser o mesmo."),
                 () -> assertEquals(cpf, pacienteCadastrado.getCpf().getValue(), "CPF deve ser o mesmo."),
@@ -105,7 +105,7 @@ class PacienteServiceTest {
         Paciente paciente = getPaciente();
         when(pacienteRepositorySpy.findById(id)).thenReturn(Optional.of(paciente));
         ResponsePacienteDTO responsePacienteDTO = pacienteService.detalharPaciente(id);
-        assertNotNull(responsePacienteDTO);
+        assertNotNull(responsePacienteDTO, "Paciente cadastrado não deve ser nulo.");
         assertAll("Dados do paciente retornado devem ser consistentes com os dados persistidos.",
                 () -> assertEquals(id, responsePacienteDTO.id(), "Id deve ser o mesmo."),
                 () -> assertEquals(nome, responsePacienteDTO.nome(), "Nome deve ser o mesmo."),
@@ -142,7 +142,7 @@ class PacienteServiceTest {
         EnderecoRequestDTO enderecoAtualizado = new EnderecoRequestDTO(logradouroAtualizado, numeroEnderecoAtualizado, bairroAtualizado, cidade, uf, cep);
         RequestAtualizacaoPacienteDTO dadosAtualizacao = new RequestAtualizacaoPacienteDTO(nomeAtualizado, telefoneAtualizado, enderecoAtualizado);
         ResponsePacienteDTO dadosPacienteAtualizado = pacienteService.atualizar(id, dadosAtualizacao);
-        assertNotNull(dadosPacienteAtualizado);
+        assertNotNull(dadosPacienteAtualizado, "Paciente cadastrado não deve ser nulo.");
         assertAll("Dados que constam no request devem ser atualizados enquanto o restante deve ser mantido.",
                 () -> assertEquals(id, dadosPacienteAtualizado.id(), "Id deve ser o mesmo."),
                 () -> assertEquals(nomeAtualizado, dadosPacienteAtualizado.nome(), "Nome deve ser o atualizado."),
@@ -203,9 +203,7 @@ class PacienteServiceTest {
 
     private RequestCadastroPacienteDTO getRequestCadastroPacienteDTO() {
         TelefoneRequestDTO telefoneDTO = new TelefoneRequestDTO(ddd, numeroTelefone);
-        EnderecoRequestDTO enderecoDTO = new EnderecoRequestDTO(logradouro, numeroEndereco, bairro,
-                cidade, uf, cep);
-        return new RequestCadastroPacienteDTO(nome, cpf,
-                email, telefoneDTO, enderecoDTO);
+        EnderecoRequestDTO enderecoDTO = new EnderecoRequestDTO(logradouro, numeroEndereco, bairro, cidade, uf, cep);
+        return new RequestCadastroPacienteDTO(nome, cpf, email, telefoneDTO, enderecoDTO);
     }
 }

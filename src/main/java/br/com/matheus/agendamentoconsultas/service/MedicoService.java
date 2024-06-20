@@ -91,7 +91,7 @@ public class MedicoService {
     }
 
     @Transactional
-    public Set<HorarioAtendimentoResponseDTO> atualizarHorariosAtendimento(Long id, @Valid Set<HorarioAtendimentoRequestDTO> horariosAtendimentoRequestDTO) {
+    public Set<HorarioAtendimentoResponseDTO> atualizarHorariosAtendimento(Long id, Set<HorarioAtendimentoRequestDTO> horariosAtendimentoRequestDTO) {
         Medico medico = this.medicoRepository.findById(id)
                 .orElseThrow(MedicoNaoEncontradoException::new);
         horarioAtendimentoRepository.deleteByMedicoId(id);
