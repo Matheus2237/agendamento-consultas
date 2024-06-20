@@ -1,6 +1,7 @@
 package br.com.matheus.agendamentoconsultas.exception.handler;
 
 import br.com.matheus.agendamentoconsultas.exception.MedicoNaoEncontradoException;
+import br.com.matheus.agendamentoconsultas.exception.PacienteNaoEncontradoException;
 import br.com.matheus.agendamentoconsultas.exception.handler.dto.RequestValidationHandledExceptionDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -41,6 +42,12 @@ public class ApplicationExceptionHandler {
 	@ResponseStatus(HttpStatus.NOT_FOUND)
 	@ExceptionHandler(MedicoNaoEncontradoException.class)
 	public String handle(MedicoNaoEncontradoException exception) {
+		return exception.getMessage();
+	}
+
+	@ResponseStatus(HttpStatus.NOT_FOUND)
+	@ExceptionHandler(PacienteNaoEncontradoException.class)
+	public String handle(PacienteNaoEncontradoException exception) {
 		return exception.getMessage();
 	}
 }
