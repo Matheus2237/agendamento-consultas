@@ -3,7 +3,7 @@ package br.com.matheus.agendamentoconsultas.controller;
 //@SpringBootTest
 //@AutoConfigureMockMvc
 //@ActiveProfiles("test")
-class MedicoControllerTest {
+class MedicoControllerIT {
 
 //	@Autowired
 //	private MedicoRepository medicoRepository;
