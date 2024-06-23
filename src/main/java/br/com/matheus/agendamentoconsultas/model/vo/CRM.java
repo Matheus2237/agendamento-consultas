@@ -3,14 +3,13 @@ package br.com.matheus.agendamentoconsultas.model.vo;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Objects;
 
 @Embeddable
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class CRM {
@@ -24,7 +23,7 @@ public class CRM {
         if (this == obj) return true;
         if (obj == null || getClass() != obj.getClass()) return false;
         CRM crm = (CRM) obj;
-        return value.equals(crm.value);
+        return Objects.equals(value, crm.value);
     }
 
     @Override

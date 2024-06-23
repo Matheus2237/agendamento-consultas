@@ -15,7 +15,7 @@ import java.util.Objects;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class HorarioAtendimentoPK {
+public final class HorarioAtendimentoPK {
 
     private Long medicoId;
 
@@ -25,11 +25,11 @@ public class HorarioAtendimentoPK {
 
     @Override
     public boolean equals(Object obj) {
+        if (obj == null || this.getClass() != obj.getClass()) return false;
         if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
         HorarioAtendimentoPK pk = (HorarioAtendimentoPK) obj;
-        return this.medicoId.equals(pk.medicoId)
-                && this.diaDaSemana.equals(pk.diaDaSemana);
+        return Objects.equals(this.medicoId, pk.medicoId)
+                && Objects.equals(this.diaDaSemana, pk.diaDaSemana);
     }
 
     @Override

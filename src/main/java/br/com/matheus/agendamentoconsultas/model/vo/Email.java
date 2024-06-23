@@ -26,7 +26,7 @@ public class Email {
         if (this == obj) return true;
         if (obj == null || getClass() != obj.getClass()) return false;
         Email email = (Email) obj;
-        return value.equals(email.value);
+        return Objects.equals(value, email.value);
     }
 
     @Override

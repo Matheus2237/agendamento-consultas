@@ -26,7 +26,7 @@ public class CPF {
         if (this == obj) return true;
         if (obj == null || getClass() != obj.getClass()) return false;
         CPF cpf = (CPF) obj;
-        return value.equals(cpf.value);
+        return Objects.equals(value, cpf.value);
     }
 
     @Override
