@@ -9,6 +9,18 @@ import lombok.*;
 
 import java.util.Set;
 
+/**
+ * <p>
+ * Representa um médico no sistema de agendamento de consultas.
+ * </p>
+ * <p>
+ * Esta classe contém informações detalhadas sobre o médico, incluindo seu nome,
+ * CRM, email, telefone, endereço, especialização e horários de atendimento.
+ * </p>
+ *
+ * @author Matheus Paulino Ribeiro
+ * @since 1.0.0
+ */
 @Entity
 @Builder
 @Getter

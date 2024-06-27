@@ -16,6 +16,18 @@ import org.springframework.stereotype.Service;
 
 import static java.util.Optional.ofNullable;
 
+/**
+ * <p>
+ * Serviço para operações relacionadas a pacientes.
+ * </p>
+ * <p>
+ * Este serviço gerencia operações de CRUD e outras operações relacionadas aos pacientes,
+ * como cadastro, atualização, exclusão, e consulta de pacientes.
+ * </p>
+ *
+ * @author Matheus Paulino Ribeiro
+ * @since 1.0.0
+ */
 @Service
 public class PacienteService {
 
@@ -26,11 +38,23 @@ public class PacienteService {
         this.pacienteRepository = pacienteRepository;
     }
 
+    /**
+     * Retorna uma paginaçãp de todos os pacientes cadastrados.
+     *
+     * @param pageable As informações da página solicitada.
+     * @return Uma pagniação de pacientes.
+     */
     public Page<ResponseTodosPacientesDTO> visualizarTodos(Pageable pageable) {
         Page<Paciente> pacientes = this.pacienteRepository.findAll(pageable);
         return pacientes.map(ResponseTodosPacientesDTO::new);
     }
 
+    /**
+     * Cadastra um novo paciente com base nos dados fornecidos.
+     *
+     * @param pacienteDTO Os dados do paciente a ser cadastrado.
+     * @return O paciente cadastrado.
+     */
     @Transactional
     public Paciente cadastrar(RequestCadastroPacienteDTO pacienteDTO) {
         TelefoneRequestDTO telefoneDTO = pacienteDTO.telefone();
@@ -46,12 +70,27 @@ public class PacienteService {
         return this.pacienteRepository.save(paciente);
     }
 
+    /**
+     * Detalha as informações de um paciente específico com base no ID fornecido.
+     *
+     * @param id O ID do paciente a ser detalhado.
+     * @return As informações detalhadas do paciente.
+     * @throws PacienteNaoEncontradoException Se o paciente com o ID especificado não for encontrado.
+     */
     public ResponsePacienteDTO detalharPaciente(Long id) {
         Paciente paciente = this.pacienteRepository.findById(id)
                 .orElseThrow(PacienteNaoEncontradoException::new);
         return new ResponsePacienteDTO(paciente);
     }
 
+    /**
+     * Atualiza as informações de um paciente existente com base no ID e nos dados fornecidos.
+     *
+     * @param id O ID do paciente a ser atualizado.
+     * @param dadosAtualizacao Os novos dados a serem atualizados para o paciente.
+     * @return As informações atualizadas do paciente.
+     * @throws PacienteNaoEncontradoException Se o paciente com o ID especificado não for encontrado.
+     */
     @Transactional
     public ResponsePacienteDTO atualizar(Long id, RequestAtualizacaoPacienteDTO dadosAtualizacao) {
         Paciente paciente = this.pacienteRepository.findById(id)
@@ -63,6 +102,12 @@ public class PacienteService {
         return new ResponsePacienteDTO(paciente);
     }
 
+    /**
+     * Deleta um paciente existente com base no ID fornecido.
+     *
+     * @param id O ID do paciente a ser deletado.
+     * @throws PacienteNaoEncontradoException Se o paciente com o ID especificado não for encontrado.
+     */
     @Transactional
     public void deletar(Long id) {
         Long idPaciente = this.pacienteRepository.findById(id)

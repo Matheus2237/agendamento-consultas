@@ -9,6 +9,17 @@ import lombok.*;
 
 import java.util.Objects;
 
+/**
+ * <p>
+ * Representa a chave primária composta para a entidade {@link br.com.matheus.agendamentoconsultas.model.HorarioAtendimento}.
+ * </p>
+ * <p>
+ * A chave primária é composta pelo identificador do médico e o dia da semana.
+ * </p>
+ *
+ * @author Matheus Paulino Ribeiro
+ * @since 1.0.0
+ */
 @Embeddable
 @Builder
 @Getter

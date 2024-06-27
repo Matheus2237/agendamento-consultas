@@ -7,6 +7,18 @@ import lombok.*;
 
 import java.util.Objects;
 
+/**
+ * <p>
+ * Representa o número de CRM de um médico, utilizado como um value object.
+ * </p>
+ * <p>
+ * Esta classe é uma entidade incorporável que representa o número de CRM de um médico.
+ * O número de CRM é obrigatório, único e não pode ser nulo.
+ * </p>
+ *
+ * @author Matheus Paulino Ribeiro
+ * @since 1.0.0
+ */
 @Embeddable
 @Getter
 @Setter

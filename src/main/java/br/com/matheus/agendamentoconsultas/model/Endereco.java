@@ -4,6 +4,17 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import lombok.*;
 
+/**
+ * <p>
+ * Representa o endereço de um paciente no sistema de agendamento de consultas.
+ * </p>
+ * <p>
+ * Armazena informações como logradouro, número, bairro, cidade, UF (Unidade Federativa) e CEP (Código de Endereçamento Postal).
+ * </p>
+ *
+ * @author Matheus Paulino Ribeiro
+ * @since 1.0.0
+ */
 @Embeddable
 @Builder
 @Getter

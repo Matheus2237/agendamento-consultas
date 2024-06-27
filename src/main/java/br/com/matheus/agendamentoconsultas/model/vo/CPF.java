@@ -10,6 +10,18 @@ import lombok.Setter;
 
 import java.util.Objects;
 
+/**
+ * <p>
+ * Representa o número de CPF de uma entidade, utilizado como um value object.
+ * </p>
+ * <p>
+ * Esta classe é uma entidade incorporável que representa o número de CPF de uma entidade maior.
+ * O número de CPF é obrigatório, único e não pode ser nulo.
+ * </p>
+ *
+ * @author Matheus Paulino Ribeiro
+ * @since 1.0.0
+ */
 @Embeddable
 @Getter
 @Setter

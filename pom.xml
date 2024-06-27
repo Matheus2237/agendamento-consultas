@@ -13,7 +13,7 @@
 
 	<groupId>br.com.matheus</groupId>
 	<artifactId>agendamento-consultas</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>agendamento-consultas</name>
 	<description>API para agendamento de consultas médicas</description>
 

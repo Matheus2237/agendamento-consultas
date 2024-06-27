@@ -7,6 +7,17 @@ import lombok.*;
 
 import java.time.LocalTime;
 
+/**
+ * <p>
+ * Representa o horário de atendimento de um médico no sistema de agendamento de consultas.
+ * </p>
+ * <p>
+ * Armazena informações sobre o médico, horário inicial e horário final de atendimento.
+ * </p>
+ *
+ * @author Matheus Paulino Ribeiro
+ * @since 1.0.0
+ */
 @Entity
 @Builder
 @Getter

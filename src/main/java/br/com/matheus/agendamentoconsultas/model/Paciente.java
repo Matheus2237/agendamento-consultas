@@ -6,6 +6,18 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
+/**
+ * <p>
+ * Representa um paciente no sistema de agendamento de consultas.
+ * </p>
+ * <p>
+ * Esta classe contém informações básicas sobre o paciente, incluindo seu nome,
+ * CPF, email, telefone e endereço.
+ * </p>
+ *
+ * @author Matheus Paulino Ribeiro
+ * @since 1.0.0
+ */
 @Entity
 @Builder
 @Getter

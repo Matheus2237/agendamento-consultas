@@ -10,6 +10,18 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+/**
+ * <p>
+ * Anotação de validação para Email único.
+ * </p>
+ * <p>
+ * Esta anotação é usada para validar se o valor do campo anotado é um email único no sistema.
+ * Permite especificar o repositório JPA a ser utilizado para a verificação.
+ * </p>
+ *
+ * @author Matheus Paulino Ribeiro
+ * @since 1.0.0
+ */
 @Constraint(validatedBy = UniqueEmailValidator.class)
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
