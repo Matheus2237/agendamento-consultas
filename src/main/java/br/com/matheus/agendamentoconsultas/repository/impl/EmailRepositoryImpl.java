@@ -12,8 +12,9 @@ import org.springframework.stereotype.Component;
  * </p>
  * <p>
  * Esta classe implementa a interface {@link br.com.matheus.agendamentoconsultas.repository.EmailRepository} e define
- * a lógica para verificar a existência de um e-mail em repositórios específicos de {@link PacienteRepository} ou
- * {@link MedicoRepository}.
+ * a lógica para verificar a existência de um e-mail em repositórios específicos de
+ * {@link br.com.matheus.agendamentoconsultas.repository.PacienteRepository} ou
+ * {@link br.com.matheus.agendamentoconsultas.repository.MedicoRepository}.
  * </p>
  *
  * @author Matheus Paulino Ribeiro

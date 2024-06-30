@@ -13,8 +13,8 @@ import java.util.stream.Stream;
  * Validador para o constraint {@link br.com.matheus.agendamentoconsultas.constraints.ValidEspecializacao}.
  * </p>
  * <p>
- * Esta classe implementa a lógica de validação para a anotação @ValidEspecializacao. Ela verifica
- * se a especialização informada é um valor válido de {@link Especializacao}.
+ * Esta classe implementa a lógica de validação para a anotação @ValidEspecializacao. Ela verifica se a especialização
+ * informada é um valor válido de {@link br.com.matheus.agendamentoconsultas.model.enums.Especializacao}.
  * </p>
  *
  * @author Matheus Paulino Ribeiro

@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ResponseStatus(HttpStatus.NOT_FOUND)
 public class MedicoNaoEncontradoException extends RuntimeException {
 
+    /**
+     * Construtor padrão que cria uma nova instância da exceção com a mensagem padrão "Médico não encontrado".
+     */
     public MedicoNaoEncontradoException() {
         super("Médico não encontrado");
     }

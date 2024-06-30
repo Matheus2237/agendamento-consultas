@@ -12,8 +12,8 @@ import java.util.stream.Stream;
  * Validador para o constraint {@link br.com.matheus.agendamentoconsultas.constraints.ValidDiaDaSemana}.
  * </p>
  * <p>
- * Esta classe implementa a lógica de validação para a anotação @ValidDiaDaSemana. Ela verifica
- * se o dia da semana informado é um valor válido de {@link DiaDaSemana}.
+ * Esta classe implementa a lógica de validação para a anotação @ValidDiaDaSemana. Ela verifica se o dia da semana
+ * informado é um valor válido de {@link br.com.matheus.agendamentoconsultas.model.enums.DiaDaSemana}.
  * </p>
  *
  * @author Matheus Paulino Ribeiro
