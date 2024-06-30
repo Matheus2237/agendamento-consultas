@@ -34,9 +34,9 @@ class ValidLocalTimeValidatorTest {
     void deveRetornarTrueAoReceberHorarioComFormatoValido() {
         assertAll("Horários válidos.",
                 () -> assertTrue(validator.isValid("00:00", contextMock), "00:00 deve ser válido."),
-                () -> assertTrue(validator.isValid("09:15", contextMock), "09:15 deve ser válido."),
+                () -> assertTrue(validator.isValid("09:30", contextMock), "09:30 deve ser válido."),
                 () -> assertTrue(validator.isValid("12:30", contextMock), "12:30 deve ser válido."),
-                () -> assertTrue(validator.isValid("23:59", contextMock), "23:59 deve ser válido.")
+                () -> assertTrue(validator.isValid("23:30", contextMock), "23:30 deve ser válido.")
         );
     }
 
@@ -60,6 +60,16 @@ class ValidLocalTimeValidatorTest {
                 () -> assertTrue(validator.isValid("", contextMock), "Falhou para horário com espaço em branco."),
                 () -> assertTrue(validator.isValid("", contextMock), "Falhou para horário vazio."),
                 () -> assertTrue(validator.isValid(null, contextMock), "Falhou para horário nulo.")
+        );
+    }
+
+    @Test
+    void deveRetornarFalseCasoOHorarioNaoTermineEmPontoOuEm30Minutos() {
+        assertAll("Horários inválidos.",
+                () -> assertFalse(validator.isValid("23:59", contextMock), "Falhou para o horário inválido: 23:59."),
+                () -> assertFalse(validator.isValid("00:01", contextMock), "Falhou para o horário inválido: 00:01."),
+                () -> assertFalse(validator.isValid("12:15", contextMock), "Falhou para o horário inválido: 12:15."),
+                () -> assertFalse(validator.isValid("14:37", contextMock), "Falhou para o horário inválido: 14:37.")
         );
     }
 }

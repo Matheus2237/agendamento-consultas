@@ -18,7 +18,7 @@ import static org.apache.commons.lang3.StringUtils.isBlank;
  * se o horário informado está no formato válido HH:mm.
  * </p>
  * <p>
- * O formato aceito é de 00:00 até 23:59.
+ * O formato aceito é de 00:00 até 23:30. Os horários devem ser marcados de 30 em 30 minutos.
  * </p>
  *
  * @author Matheus Paulino Ribeiro
@@ -26,7 +26,7 @@ import static org.apache.commons.lang3.StringUtils.isBlank;
  */
 public class ValidLocalTimeValidator implements ConstraintValidator<ValidLocalTime, String> {
 
-    private static final Pattern HH_MM_LOCAL_TIME_PATTERN = Pattern.compile("^([01]\\d|2[0-3]):([0-5]\\d)$");
+    private static final Pattern HH_MM_LOCAL_TIME_PATTERN = Pattern.compile("^([01]\\d|2[0-3]):(00|30)$");
 
     /**
      * Verifica se o horário informado está no formato válido HH:mm.
