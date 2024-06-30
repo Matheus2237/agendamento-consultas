@@ -8,6 +8,9 @@ import org.springframework.stereotype.Component;
 
 import java.util.regex.Pattern;
 
+import static java.util.Objects.isNull;
+import static org.apache.commons.lang3.StringUtils.isBlank;
+
 /**
  * <p>
  * Validador para o constraint {@link br.com.matheus.agendamentoconsultas.constraints.ValidTelefoneRequestDTO}.
@@ -48,8 +51,9 @@ public class ValidTelefoneRequestDTOValidator implements ConstraintValidator<Val
 	 * @return {@code true} se algum campo obrigatório é nulo ou vazio, {@code false} caso contrário.
 	 */
 	private boolean isSomeDataNullOrEmpty(TelefoneRequestDTO telefone) {
-		return telefone == null || telefone.ddd() == null || telefone.ddd().trim().isEmpty()
-				|| telefone.numero() == null || telefone.numero().trim().isEmpty();
+		return isNull(telefone)
+				|| isBlank(telefone.ddd())
+				|| isBlank(telefone.numero());
 	}
 
 	/**

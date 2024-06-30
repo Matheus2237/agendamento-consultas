@@ -7,6 +7,8 @@ import jakarta.validation.ConstraintValidatorContext;
 
 import java.util.stream.Stream;
 
+import static org.apache.commons.lang3.StringUtils.isBlank;
+
 /**
  * <p>
  * Validador para o constraint {@link br.com.matheus.agendamentoconsultas.constraints.ValidDiaDaSemana}.
@@ -30,7 +32,7 @@ public class ValidDiaDaSemanaValidator implements ConstraintValidator<ValidDiaDa
      */
     @Override
     public boolean isValid(String diaDaSemana, ConstraintValidatorContext context) {
-        return diaDaSemana == null || diaDaSemana.trim().isEmpty() || isDiaDaSemanaExistente(diaDaSemana);
+        return isBlank(diaDaSemana) || isDiaDaSemanaExistente(diaDaSemana);
     }
 
     /**

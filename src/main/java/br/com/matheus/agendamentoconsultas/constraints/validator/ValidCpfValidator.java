@@ -7,6 +7,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.regex.Pattern;
 
+import static org.apache.commons.lang3.StringUtils.isBlank;
+
 /**
  * <p>
  * Validador para o constraint {@link br.com.matheus.agendamentoconsultas.constraints.ValidCpf}.
@@ -33,6 +35,6 @@ public class ValidCpfValidator implements ConstraintValidator<ValidCpf, String> 
      */
     @Override
 	public boolean isValid(String cpf, ConstraintValidatorContext context) {
-        return cpf == null || cpf.trim().isEmpty() || CPF_PATTERN.matcher(cpf).matches();
+        return isBlank(cpf) || CPF_PATTERN.matcher(cpf).matches();
 	}
 }

@@ -8,6 +8,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.stream.Stream;
 
+import static org.apache.commons.lang3.StringUtils.isBlank;
+
 /**
  * <p>
  * Validador para o constraint {@link br.com.matheus.agendamentoconsultas.constraints.ValidEspecializacao}.
@@ -32,7 +34,7 @@ public class ValidEspecializacaoValidator implements ConstraintValidator<ValidEs
 	 */
 	@Override
 	public boolean isValid(String especializacao, ConstraintValidatorContext context) {
-		return especializacao == null || especializacao.trim().isEmpty() || isEspecializacaoExistente(especializacao);
+		return isBlank(especializacao) || isEspecializacaoExistente(especializacao);
 	}
 
 	/**

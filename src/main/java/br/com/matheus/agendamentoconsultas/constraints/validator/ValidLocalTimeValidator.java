@@ -3,8 +3,11 @@ package br.com.matheus.agendamentoconsultas.constraints.validator;
 import br.com.matheus.agendamentoconsultas.constraints.ValidLocalTime;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.regex.Pattern;
+
+import static org.apache.commons.lang3.StringUtils.isBlank;
 
 /**
  * <p>
@@ -34,6 +37,6 @@ public class ValidLocalTimeValidator implements ConstraintValidator<ValidLocalTi
      */
     @Override
     public boolean isValid(String horario, ConstraintValidatorContext context) {
-        return horario == null || horario.trim().isEmpty() || HH_MM_LOCAL_TIME_PATTERN.matcher(horario).matches();
+        return isBlank(horario) || HH_MM_LOCAL_TIME_PATTERN.matcher(horario).matches();
     }
 }

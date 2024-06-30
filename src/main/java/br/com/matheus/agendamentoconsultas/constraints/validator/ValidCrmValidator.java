@@ -7,6 +7,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.regex.Pattern;
 
+import static org.apache.commons.lang3.StringUtils.isBlank;
+
 /**
  * <p>
  * Validador para o constraint {@link br.com.matheus.agendamentoconsultas.constraints.ValidCrm}.
@@ -33,6 +35,6 @@ public class ValidCrmValidator implements ConstraintValidator<ValidCrm, String> 
 	 */
 	@Override
 	public boolean isValid(String crm, ConstraintValidatorContext context) {
-		return crm == null || crm.trim().isEmpty() || CRM_PATTERN.matcher(crm).matches();
+		return isBlank(crm) || CRM_PATTERN.matcher(crm).matches();
 	}
 }
