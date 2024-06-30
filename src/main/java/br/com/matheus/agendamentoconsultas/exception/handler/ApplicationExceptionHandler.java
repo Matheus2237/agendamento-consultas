@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -66,15 +65,22 @@ public class ApplicationExceptionHandler {
 	@Hidden
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(MethodArgumentNotValidException.class)
-	public List<String> handle(MethodArgumentNotValidException exception) {
-		List<String> listaDeErros = new ArrayList<>();
-		List<FieldError> fieldErrors = exception.getBindingResult().getFieldErrors();
-		fieldErrors.forEach(error -> {
-			String mensagem = messageSource.getMessage(error, LocaleContextHolder.getLocale());
-			FailedRequestValidationDTO erro = new FailedRequestValidationDTO(error.getField(), mensagem);
-			listaDeErros.add(erro.toString());
-		});
-		return listaDeErros;
+	public List<FailedRequestValidationDTO> handle(MethodArgumentNotValidException exception) {
+		List<FieldError> camposInvalidos = exception.getBindingResult().getFieldErrors();
+		return camposInvalidos.stream()
+				.map(this::getMensagemDeErroDeValidacaoDeCampoFormatada)
+				.toList();
+	}
+
+	/**
+	 * Cria um DTO de erro de validação a partir de um {@link FieldError} em um campo específco.
+	 *
+	 * @param campoInvalido O campo que está com erro.
+	 * @return Um DTO da mensagem de erro de validação.
+	 */
+	private FailedRequestValidationDTO getMensagemDeErroDeValidacaoDeCampoFormatada(FieldError campoInvalido) {
+		String mensagem = messageSource.getMessage(campoInvalido, LocaleContextHolder.getLocale());
+		return new FailedRequestValidationDTO(campoInvalido.getField(), mensagem);
 	}
 
 	/**
