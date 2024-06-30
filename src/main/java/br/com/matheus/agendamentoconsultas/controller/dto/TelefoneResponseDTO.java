@@ -6,11 +6,10 @@ import io.swagger.v3.oas.annotations.media.Schema;
 /**
  * DTO para resposta de telefone.
  *
+ * @param ddd    O DDD do telefone.
+ * @param numero O número do telefone.
  * @author Matheus Paulino Ribeiro
  * @since 1.0.0
- *
- * @param ddd O DDD do telefone.
- * @param numero O número do telefone.
  */
 @Schema(description = "DTO para resposta de telefone")
 public record TelefoneResponseDTO(

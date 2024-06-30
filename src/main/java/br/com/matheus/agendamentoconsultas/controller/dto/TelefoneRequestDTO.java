@@ -6,11 +6,10 @@ import jakarta.validation.constraints.NotBlank;
 /**
  * DTO para solicitação de telefone.
  *
+ * @param ddd    O DDD do telefone.
+ * @param numero O número do telefone.
  * @author Matheus Paulino Ribeiro
  * @since 1.0.0
- *
- * @param ddd O DDD do telefone.
- * @param numero O número do telefone.
  */
 @Schema(description = "DTO para solicitação de telefone")
 public record TelefoneRequestDTO(
@@ -22,4 +21,5 @@ public record TelefoneRequestDTO(
         @NotBlank(message = "O campo 'número' é obrigatório")
         @Schema(description = "Número do telefone", example = "987654321")
         String numero
-) {}
+) {
+}

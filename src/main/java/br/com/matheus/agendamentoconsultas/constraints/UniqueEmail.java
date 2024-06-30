@@ -27,11 +27,11 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface UniqueEmail {
 
-	String message() default "Email já registrado.";
+    String message() default "Email já registrado.";
 
-	Class<?>[] groups() default {};
+    Class<?>[] groups() default {};
 
-	Class<? extends Payload>[] payload() default {};
+    Class<? extends Payload>[] payload() default {};
 
-	Class<? extends JpaRepository<?, ?>> repository();
+    Class<? extends JpaRepository<?, ?>> repository();
 }

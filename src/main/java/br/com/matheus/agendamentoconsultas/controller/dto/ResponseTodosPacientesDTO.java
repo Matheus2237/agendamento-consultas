@@ -6,13 +6,12 @@ import io.swagger.v3.oas.annotations.media.Schema;
 /**
  * DTO para listar todos os pacientes.
  *
+ * @param id       O ID do paciente.
+ * @param nome     O nome do paciente.
+ * @param email    O email do paciente.
+ * @param telefone O telefone do paciente.
  * @author Matheus Paulino Ribeiro
  * @since 1.0.0
- *
- * @param id O ID do paciente.
- * @param nome O nome do paciente.
- * @param email O email do paciente.
- * @param telefone O telefone do paciente.
  */
 @Schema(description = "DTO para listar todos os pacientes")
 public record ResponseTodosPacientesDTO(

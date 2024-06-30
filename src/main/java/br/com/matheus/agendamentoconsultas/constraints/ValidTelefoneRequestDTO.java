@@ -25,9 +25,9 @@ import jakarta.validation.Payload;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ValidTelefoneRequestDTO {
 
-	String message() default "Telefone inválido.";
+    String message() default "Telefone inválido.";
 
-	Class<?>[] groups() default {};
+    Class<?>[] groups() default {};
 
-	Class<? extends Payload>[] payload() default {};
+    Class<? extends Payload>[] payload() default {};
 }

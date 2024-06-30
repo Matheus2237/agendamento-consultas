@@ -6,12 +6,11 @@ import io.swagger.v3.oas.annotations.media.Schema;
 /**
  * DTO para resposta de horário de atendimento.
  *
- * @author Matheus Paulino Ribeiro
- * @since 1.0.0
- *
  * @param diaDaSemana O dia da semana do horário de atendimento.
  * @param horaInicial A hora inicial do horário de atendimento.
- * @param horaFinal A hora final do horário de atendimento.
+ * @param horaFinal   A hora final do horário de atendimento.
+ * @author Matheus Paulino Ribeiro
+ * @since 1.0.0
  */
 @Schema(description = "DTO para resposta de horário de atendimento")
 public record HorarioAtendimentoResponseDTO(

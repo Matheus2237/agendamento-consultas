@@ -16,41 +16,41 @@ import static org.mockito.MockitoAnnotations.openMocks;
 
 class UniqueCpfValidatorTest {
 
-	@InjectMocks
-	private UniqueCpfValidator validator;
+    @InjectMocks
+    private UniqueCpfValidator validator;
 
-	@Mock
-	private PacienteRepository pacienteRepository;
+    @Mock
+    private PacienteRepository pacienteRepository;
 
-	@Mock
-	private ConstraintValidatorContext context;
+    @Mock
+    private ConstraintValidatorContext context;
 
-	private AutoCloseable mocks;
+    private AutoCloseable mocks;
 
-	private static final String CPF = "12345678900";
+    private static final String CPF = "12345678900";
 
-	@BeforeEach
-	void setUp() {
-		mocks = openMocks(this);
-	}
+    @BeforeEach
+    void setUp() {
+        mocks = openMocks(this);
+    }
 
-	@AfterEach
-	@SneakyThrows
-	void tearDown() {
-		mocks.close();
-	}
+    @AfterEach
+    @SneakyThrows
+    void tearDown() {
+        mocks.close();
+    }
 
-	@Test
-	void deveRetornarVerdadeiroAoPassarUmCpfUnicoNoSistema() {
-		when(pacienteRepository.existsByCpfValue(CPF)).thenReturn(false);
-		boolean isValid = validator.isValid(CPF, context);
-		assertTrue(isValid, "Deve retornar verdadeiro quando não existir esse cpf no sistema.");
-	}
+    @Test
+    void deveRetornarVerdadeiroAoPassarUmCpfUnicoNoSistema() {
+        when(pacienteRepository.existsByCpfValue(CPF)).thenReturn(false);
+        boolean isValid = validator.isValid(CPF, context);
+        assertTrue(isValid, "Deve retornar verdadeiro quando não existir esse cpf no sistema.");
+    }
 
-	@Test
-	void deveRetornarFalsoAoPassarUmCpfJaExistenteNoSistema() {
-		when(pacienteRepository.existsByCpfValue(CPF)).thenReturn(true);
-		boolean isValid = validator.isValid(CPF, context);
-		assertFalse(isValid, "Deve retornar falso ao existir um cpf no sistema.");
-	}
+    @Test
+    void deveRetornarFalsoAoPassarUmCpfJaExistenteNoSistema() {
+        when(pacienteRepository.existsByCpfValue(CPF)).thenReturn(true);
+        boolean isValid = validator.isValid(CPF, context);
+        assertFalse(isValid, "Deve retornar falso ao existir um cpf no sistema.");
+    }
 }

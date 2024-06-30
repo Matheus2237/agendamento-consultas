@@ -104,7 +104,7 @@ public class MedicoService {
     /**
      * Atualiza as informações de um médico existente com base no ID e nos dados fornecidos.
      *
-     * @param id O ID do médico a ser atualizado.
+     * @param id               O ID do médico a ser atualizado.
      * @param dadosAtualizacao Os novos dados a serem atualizados para o médico.
      * @return As informações atualizadas do médico.
      * @throws MedicoNaoEncontradoException Se o médico com o ID especificado não for encontrado.
@@ -137,7 +137,7 @@ public class MedicoService {
     /**
      * Atualiza os horários de atendimento de um médico existente com base no ID e nos novos horários fornecidos.
      *
-     * @param id O ID do médico cujos horários de atendimento devem ser atualizados.
+     * @param id                            O ID do médico cujos horários de atendimento devem ser atualizados.
      * @param horariosAtendimentoRequestDTO Os novos horários de atendimento a serem atualizados.
      * @return Um conjunto de DTOs de resposta dos horários de atendimento atualizados.
      * @throws MedicoNaoEncontradoException Se o médico com o ID especificado não for encontrado.

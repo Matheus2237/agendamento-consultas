@@ -132,12 +132,12 @@ public class PacienteController {
             responseCode = "404",
             description = "Paciente não encontrado",
             content = @Content(mediaType = "string"))
-	@PutMapping("/{id}")
-	public ResponseEntity<ResponsePacienteDTO> atualizar(@PathVariable Long id,
-            @RequestBody @Valid RequestAtualizacaoPacienteDTO requestAtualizacaoPacienteDTO) {
-		ResponsePacienteDTO pacienteAtualizado = this.pacienteService.atualizar(id, requestAtualizacaoPacienteDTO);
-		return ResponseEntity.ok(pacienteAtualizado);
-	}
+    @PutMapping("/{id}")
+    public ResponseEntity<ResponsePacienteDTO> atualizar(@PathVariable Long id,
+                                                         @RequestBody @Valid RequestAtualizacaoPacienteDTO requestAtualizacaoPacienteDTO) {
+        ResponsePacienteDTO pacienteAtualizado = this.pacienteService.atualizar(id, requestAtualizacaoPacienteDTO);
+        return ResponseEntity.ok(pacienteAtualizado);
+    }
 
     @Operation(
             summary = "Deletar paciente",

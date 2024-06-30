@@ -19,7 +19,7 @@ public interface EmailRepository {
     /**
      * Verifica se um e-mail já existe em um repositório específico.
      *
-     * @param email O endereço de e-mail a ser verificado.
+     * @param email      O endereço de e-mail a ser verificado.
      * @param repository O repositório específico a ser consultado. Deve herdar de JpaRepository.
      * @return {@code true} se o e-mail existir no repositório, {@code false} caso contrário.
      */

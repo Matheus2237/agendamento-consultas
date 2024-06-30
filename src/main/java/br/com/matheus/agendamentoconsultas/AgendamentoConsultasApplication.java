@@ -18,12 +18,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  */
 @SpringBootApplication
 @OpenAPIDefinition(info = @Info(
-		title = "Agendamento Consultas",
-		version = "1.0.0",
-		description = "API para agendamento de consultas médicas"))
+        title = "Agendamento Consultas",
+        version = "1.0.0",
+        description = "API para agendamento de consultas médicas"))
 public class AgendamentoConsultasApplication {
 
-	public static void main(String... args) {
-		SpringApplication.run(AgendamentoConsultasApplication.class, args);
-	}
+    public static void main(String... args) {
+        SpringApplication.run(AgendamentoConsultasApplication.class, args);
+    }
 }

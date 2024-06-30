@@ -27,36 +27,36 @@ import org.springframework.stereotype.Component;
 @Component
 public class UniqueEmailValidator implements ConstraintValidator<UniqueEmail, String> {
 
-	private final EmailRepository emailRepository;
-	private Class<? extends JpaRepository<?, ?>> repositoryClass;
-	private final ApplicationContext applicationContext;
+    private final EmailRepository emailRepository;
+    private Class<? extends JpaRepository<?, ?>> repositoryClass;
+    private final ApplicationContext applicationContext;
 
-	@Autowired
-	public UniqueEmailValidator(EmailRepository emailRepository, ApplicationContext applicationContext) {
+    @Autowired
+    public UniqueEmailValidator(EmailRepository emailRepository, ApplicationContext applicationContext) {
         this.emailRepository = emailRepository;
         this.applicationContext = applicationContext;
     }
 
-	/**
-	 * Inicializa o validador com a classe do repositório especificada na anotação.
-	 *
-	 * @param constraintAnnotation A anotação @UniqueEmail que contém a classe do repositório.
-	 */
-	@Override
-	public void initialize(UniqueEmail constraintAnnotation) {
-		repositoryClass = constraintAnnotation.repository();
-	}
+    /**
+     * Inicializa o validador com a classe do repositório especificada na anotação.
+     *
+     * @param constraintAnnotation A anotação @UniqueEmail que contém a classe do repositório.
+     */
+    @Override
+    public void initialize(UniqueEmail constraintAnnotation) {
+        repositoryClass = constraintAnnotation.repository();
+    }
 
-	/**
-	 * Verifica se o e-mail informado é único.
-	 *
-	 * @param email O e-mail que será validado.
-	 * @param context O contexto de validação.
-	 * @return {@code true} se o e-mail é único e não existe no banco de dados, {@code false} caso contrário.
-	 */
-	@Override
-	public boolean isValid(String email, ConstraintValidatorContext context) {
-		JpaRepository<?, ?> repository = applicationContext.getBean(repositoryClass);
-		return !emailRepository.existsByEmail(email, repository);
-	}
+    /**
+     * Verifica se o e-mail informado é único.
+     *
+     * @param email   O e-mail que será validado.
+     * @param context O contexto de validação.
+     * @return {@code true} se o e-mail é único e não existe no banco de dados, {@code false} caso contrário.
+     */
+    @Override
+    public boolean isValid(String email, ConstraintValidatorContext context) {
+        JpaRepository<?, ?> repository = applicationContext.getBean(repositoryClass);
+        return !emailRepository.existsByEmail(email, repository);
+    }
 }

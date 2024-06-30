@@ -25,9 +25,9 @@ import jakarta.validation.Payload;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ValidEspecializacao {
 
-	String message() default "Especialização não encontrada.";
+    String message() default "Especialização não encontrada.";
 
-	Class<?>[] groups() default {};
+    Class<?>[] groups() default {};
 
-	Class<? extends Payload>[] payload() default {};
+    Class<? extends Payload>[] payload() default {};
 }

@@ -132,7 +132,7 @@ public class MedicoController {
             content = @Content(mediaType = "string"))
     @PutMapping("/{id}")
     public ResponseEntity<ResponseMedicoDTO> atualizar(@PathVariable Long id,
-            @RequestBody @Valid RequestAtualizacaoMedicoDTO requestAtualizacaoMedicoDTO) {
+                                                       @RequestBody @Valid RequestAtualizacaoMedicoDTO requestAtualizacaoMedicoDTO) {
         ResponseMedicoDTO medicoAtualizado = this.medicoService.atualizar(id, requestAtualizacaoMedicoDTO);
         return ResponseEntity.ok(medicoAtualizado);
     }

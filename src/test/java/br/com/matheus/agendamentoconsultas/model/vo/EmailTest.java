@@ -15,7 +15,7 @@ class EmailTest {
 
     @Test
     void testGettersAndSetters() {
-            assertThat(Email.class, hasValidGettersAndSetters());
+        assertThat(Email.class, hasValidGettersAndSetters());
     }
 
     @Test

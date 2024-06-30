@@ -24,17 +24,17 @@ import static org.apache.commons.lang3.StringUtils.isBlank;
 @Component
 public class ValidCrmValidator implements ConstraintValidator<ValidCrm, String> {
 
-	private static final Pattern CRM_PATTERN = Pattern.compile("^(AC|AL|AM|AP|BA|CE|DF|ES|GO|MA|MG|MS|MT|PA|PB|PE|PI|PR|RJ|RN|RO|RR|RS|SC|SE|SP|TO)(\\d{6})$");
+    private static final Pattern CRM_PATTERN = Pattern.compile("^(AC|AL|AM|AP|BA|CE|DF|ES|GO|MA|MG|MS|MT|PA|PB|PE|PI|PR|RJ|RN|RO|RR|RS|SC|SE|SP|TO)(\\d{6})$");
 
-	/**
-	 * Verifica se o CRM informado está no formato válido.
-	 *
-	 * @param crm O CRM que será validado.
-	 * @param context O contexto de validação.
-	 * @return {@code true} se o CRM está no formato válido ou é nulo/vazio, {@code false} caso contrário.
-	 */
-	@Override
-	public boolean isValid(String crm, ConstraintValidatorContext context) {
-		return isBlank(crm) || CRM_PATTERN.matcher(crm).matches();
-	}
+    /**
+     * Verifica se o CRM informado está no formato válido.
+     *
+     * @param crm     O CRM que será validado.
+     * @param context O contexto de validação.
+     * @return {@code true} se o CRM está no formato válido ou é nulo/vazio, {@code false} caso contrário.
+     */
+    @Override
+    public boolean isValid(String crm, ConstraintValidatorContext context) {
+        return isBlank(crm) || CRM_PATTERN.matcher(crm).matches();
+    }
 }

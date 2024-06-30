@@ -29,42 +29,42 @@ import static org.apache.commons.lang3.StringUtils.isBlank;
 @Component
 public class ValidTelefoneRequestDTOValidator implements ConstraintValidator<ValidTelefoneRequestDTO, TelefoneRequestDTO> {
 
-	private static final Pattern DDD_PATTERN = Pattern.compile("^\\d{2}$");
-	private static final Pattern NUMERO_PATTERN = Pattern.compile("^\\d{9}$");
+    private static final Pattern DDD_PATTERN = Pattern.compile("^\\d{2}$");
+    private static final Pattern NUMERO_PATTERN = Pattern.compile("^\\d{9}$");
 
-	/**
-	 * Valida se os campos DDD e número de telefone estão preenchidos corretamente.
-	 *
-	 * @param telefone O DTO contendo as informações de telefone que serão validadas.
-	 * @param context  O contexto de validação.
-	 * @return {@code true} se os campos são válidos ou são nulos/vazios, {@code false} caso contrário.
-	 */
-	@Override
-	public boolean isValid(TelefoneRequestDTO telefone, ConstraintValidatorContext context) {
-		return isSomeDataNullOrEmpty(telefone) || isDDDOuNumeroValidos(telefone.ddd(), telefone.numero());
-	}
+    /**
+     * Valida se os campos DDD e número de telefone estão preenchidos corretamente.
+     *
+     * @param telefone O DTO contendo as informações de telefone que serão validadas.
+     * @param context  O contexto de validação.
+     * @return {@code true} se os campos são válidos ou são nulos/vazios, {@code false} caso contrário.
+     */
+    @Override
+    public boolean isValid(TelefoneRequestDTO telefone, ConstraintValidatorContext context) {
+        return isSomeDataNullOrEmpty(telefone) || isDDDOuNumeroValidos(telefone.ddd(), telefone.numero());
+    }
 
-	/**
-	 * Verifica se o DTO de telefone está nulo ou possui campos obrigatórios vazios.
-	 *
-	 * @param telefone O DTO contendo as informações de telefone que serão verificadas.
-	 * @return {@code true} se algum campo obrigatório é nulo ou vazio, {@code false} caso contrário.
-	 */
-	private boolean isSomeDataNullOrEmpty(TelefoneRequestDTO telefone) {
-		return isNull(telefone)
-				|| isBlank(telefone.ddd())
-				|| isBlank(telefone.numero());
-	}
+    /**
+     * Verifica se o DTO de telefone está nulo ou possui campos obrigatórios vazios.
+     *
+     * @param telefone O DTO contendo as informações de telefone que serão verificadas.
+     * @return {@code true} se algum campo obrigatório é nulo ou vazio, {@code false} caso contrário.
+     */
+    private boolean isSomeDataNullOrEmpty(TelefoneRequestDTO telefone) {
+        return isNull(telefone)
+                || isBlank(telefone.ddd())
+                || isBlank(telefone.numero());
+    }
 
-	/**
-	 * Verifica se o DDD e o número de telefone informados são válidos.
-	 *
-	 * @param ddd O DDD que será validado.
-	 * @param numero O número de telefone que será validado.
-	 * @return {@code true} se o DDD e número são válidos, {@code false} caso contrário.
-	 */
-	private boolean isDDDOuNumeroValidos(String ddd, String numero) {
-		return DDD_PATTERN.matcher(ddd).matches()
-				&& NUMERO_PATTERN.matcher(numero).matches();
-	}
+    /**
+     * Verifica se o DDD e o número de telefone informados são válidos.
+     *
+     * @param ddd    O DDD que será validado.
+     * @param numero O número de telefone que será validado.
+     * @return {@code true} se o DDD e número são válidos, {@code false} caso contrário.
+     */
+    private boolean isDDDOuNumeroValidos(String ddd, String numero) {
+        return DDD_PATTERN.matcher(ddd).matches()
+                && NUMERO_PATTERN.matcher(numero).matches();
+    }
 }

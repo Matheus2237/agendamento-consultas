@@ -23,11 +23,11 @@ import java.lang.annotation.Target;
 @Constraint(validatedBy = UniqueCrmValidator.class)
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface UniqueCrm{
+public @interface UniqueCrm {
 
-	String message() default "Crm já registrada.";
+    String message() default "Crm já registrada.";
 
-	Class<?>[] groups() default {};
+    Class<?>[] groups() default {};
 
-	Class<? extends Payload>[] payload() default {};
+    Class<? extends Payload>[] payload() default {};
 }

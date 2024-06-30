@@ -11,14 +11,13 @@ import jakarta.validation.constraints.NotNull;
 /**
  * DTO para solicitação de cadastro de paciente.
  *
- * @author Matheus Paulino Ribeiro
- * @since 1.0.0
- *
- * @param nome O nome do paciente. Não pode ser vazio ou nulo.
- * @param cpf O CPF do paciente. Não pode ser vazio ou nulo.
- * @param email O email do paciente. Não pode ser vazio ou nulo.
+ * @param nome     O nome do paciente. Não pode ser vazio ou nulo.
+ * @param cpf      O CPF do paciente. Não pode ser vazio ou nulo.
+ * @param email    O email do paciente. Não pode ser vazio ou nulo.
  * @param telefone O telefone do paciente. Não pode ser nulo.
  * @param endereco O endereço do paciente. Não pode ser nulo.
+ * @author Matheus Paulino Ribeiro
+ * @since 1.0.0
  */
 @Schema(description = "DTO para cadastro de paciente")
 public record RequestCadastroPacienteDTO(
@@ -50,4 +49,5 @@ public record RequestCadastroPacienteDTO(
         @ValidEnderecoRequestDTO
         @Schema(description = "Endereço do paciente")
         EnderecoRequestDTO endereco
-) {}
+) {
+}

@@ -25,27 +25,27 @@ import static org.apache.commons.lang3.StringUtils.isBlank;
 @Component
 public class ValidEspecializacaoValidator implements ConstraintValidator<ValidEspecializacao, String> {
 
-	/**
-	 * Verifica se a especialização informada é válida.
-	 *
-	 * @param especializacao A especialização que será validada.
-	 * @param context O contexto de validação.
-	 * @return {@code true} se a especialização é válida ou é nula/vazia, {@code false} caso contrário.
-	 */
-	@Override
-	public boolean isValid(String especializacao, ConstraintValidatorContext context) {
-		return isBlank(especializacao) || isEspecializacaoExistente(especializacao);
-	}
+    /**
+     * Verifica se a especialização informada é válida.
+     *
+     * @param especializacao A especialização que será validada.
+     * @param context        O contexto de validação.
+     * @return {@code true} se a especialização é válida ou é nula/vazia, {@code false} caso contrário.
+     */
+    @Override
+    public boolean isValid(String especializacao, ConstraintValidatorContext context) {
+        return isBlank(especializacao) || isEspecializacaoExistente(especializacao);
+    }
 
-	/**
-	 * Verifica se a especialização informada existe no enum {@link Especializacao}.
-	 *
-	 * @param especializacao A especialização que será verificada.
-	 * @return {@code true} se a especialização existe, {@code false} caso contrário.
-	 */
-	private boolean isEspecializacaoExistente(String especializacao) {
-		return Stream.of(Especializacao.values())
-				.map(Especializacao::toString)
-				.anyMatch(esp -> esp.equals(especializacao));
-	}
+    /**
+     * Verifica se a especialização informada existe no enum {@link Especializacao}.
+     *
+     * @param especializacao A especialização que será verificada.
+     * @return {@code true} se a especialização existe, {@code false} caso contrário.
+     */
+    private boolean isEspecializacaoExistente(String especializacao) {
+        return Stream.of(Especializacao.values())
+                .map(Especializacao::toString)
+                .anyMatch(esp -> esp.equals(especializacao));
+    }
 }

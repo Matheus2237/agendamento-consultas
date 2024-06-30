@@ -27,22 +27,22 @@ import lombok.*;
 @Table(name = "paciente")
 public class Paciente {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	@NotNull
-	private String nome;
+    @NotNull
+    private String nome;
 
-	@Embedded
-	private CPF cpf;
+    @Embedded
+    private CPF cpf;
 
-	@Embedded
-	private Email email;
+    @Embedded
+    private Email email;
 
-	@Embedded
-	private Telefone telefone;
+    @Embedded
+    private Telefone telefone;
 
-	@Embedded
-	private Endereco endereco;
+    @Embedded
+    private Endereco endereco;
 }

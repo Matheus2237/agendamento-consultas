@@ -16,9 +16,10 @@ import io.swagger.v3.oas.annotations.media.Schema;
 @Schema(description = "DTO para representar erros de validação de requisição")
 public record FailedRequestValidationDTO(
 
-		@Schema(description = "O campo que falhou na validação", example = "nome")
-		String campo,
+        @Schema(description = "O campo que falhou na validação", example = "nome")
+        String campo,
 
-		@Schema(description = "A mensagem de erro associada à falha", example = "O campo 'nome' é obrigatório")
-		String mensagem
-) {}
+        @Schema(description = "A mensagem de erro associada à falha", example = "O campo 'nome' é obrigatório")
+        String mensagem
+) {
+}

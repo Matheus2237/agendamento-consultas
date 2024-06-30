@@ -25,9 +25,9 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface UniqueCpf {
 
-	String message() default "Cpf já registrado.";
+    String message() default "Cpf já registrado.";
 
-	Class<?>[] groups() default {};
+    Class<?>[] groups() default {};
 
-	Class<? extends Payload>[] payload() default {};
+    Class<? extends Payload>[] payload() default {};
 }

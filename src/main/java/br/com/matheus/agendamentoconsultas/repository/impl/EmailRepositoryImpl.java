@@ -26,7 +26,7 @@ public class EmailRepositoryImpl implements EmailRepository {
     /**
      * Verifica se um determinado e-mail existe em um repositório específico.
      *
-     * @param email E-mail a ser verificado.
+     * @param email      E-mail a ser verificado.
      * @param repository Repositório de dados onde será realizada a verificação.
      * @return {@code true} se o e-mail existir no repositório especificado, {@code false} caso contrário.
      * @throws IllegalStateException se o tipo de repositório não for suportado pela aplicação.

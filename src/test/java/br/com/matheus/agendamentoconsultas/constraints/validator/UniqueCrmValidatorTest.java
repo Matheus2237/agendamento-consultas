@@ -16,41 +16,41 @@ import static org.mockito.MockitoAnnotations.openMocks;
 
 class UniqueCrmValidatorTest {
 
-	@InjectMocks
-	private UniqueCrmValidator validator;
+    @InjectMocks
+    private UniqueCrmValidator validator;
 
-	@Mock
-	private MedicoRepository medicoRepository;
+    @Mock
+    private MedicoRepository medicoRepository;
 
-	@Mock
-	private ConstraintValidatorContext context;
+    @Mock
+    private ConstraintValidatorContext context;
 
-	private AutoCloseable mocks;
+    private AutoCloseable mocks;
 
-	private static final String CRM = "SP123456";
+    private static final String CRM = "SP123456";
 
-	@BeforeEach
-	void setUp() {
-		mocks = openMocks(this);
-	}
+    @BeforeEach
+    void setUp() {
+        mocks = openMocks(this);
+    }
 
-	@AfterEach
-	@SneakyThrows
-	void tearDown() {
-		mocks.close();
-	}
+    @AfterEach
+    @SneakyThrows
+    void tearDown() {
+        mocks.close();
+    }
 
-	@Test
-	void deveRetornarVerdadeiroAoPassarUmCrmUnicoNoSistema() {
-		when(medicoRepository.existsByCrmValue(CRM)).thenReturn(false);
-		boolean isValid = validator.isValid(CRM, context);
-		assertTrue(isValid, "Deve retornar verdadeiro quando não existir esse crm no sistema.");
-	}
+    @Test
+    void deveRetornarVerdadeiroAoPassarUmCrmUnicoNoSistema() {
+        when(medicoRepository.existsByCrmValue(CRM)).thenReturn(false);
+        boolean isValid = validator.isValid(CRM, context);
+        assertTrue(isValid, "Deve retornar verdadeiro quando não existir esse crm no sistema.");
+    }
 
-	@Test
-	void deveRetornarFalsoAoPassarUmCrmJaExistenteNoSistema() {
-		when(medicoRepository.existsByCrmValue(CRM)).thenReturn(true);
-		boolean isValid = validator.isValid(CRM, context);
-		assertFalse(isValid, "Deve retornar falso ao existir um crm no sistema.");
-	}
+    @Test
+    void deveRetornarFalsoAoPassarUmCrmJaExistenteNoSistema() {
+        when(medicoRepository.existsByCrmValue(CRM)).thenReturn(true);
+        boolean isValid = validator.isValid(CRM, context);
+        assertFalse(isValid, "Deve retornar falso ao existir um crm no sistema.");
+    }
 }

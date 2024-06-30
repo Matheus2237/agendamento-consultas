@@ -6,15 +6,14 @@ import io.swagger.v3.oas.annotations.media.Schema;
 /**
  * DTO para resposta de endereço.
  *
+ * @param logradouro O logradouro do endereço.
+ * @param numero     O número do endereço.
+ * @param bairro     O bairro do endereço.
+ * @param cidade     A cidade do endereço.
+ * @param uf         A unidade federativa (UF) do endereço.
+ * @param cep        O CEP do endereço.
  * @author Matheus Paulino Ribeiro
  * @since 1.0.0
- *
- * @param logradouro O logradouro do endereço.
- * @param numero O número do endereço.
- * @param bairro O bairro do endereço.
- * @param cidade A cidade do endereço.
- * @param uf A unidade federativa (UF) do endereço.
- * @param cep O CEP do endereço.
  */
 @Schema(description = "DTO para resposta de endereço")
 public record EnderecoResponseDTO(

@@ -9,31 +9,31 @@ import jakarta.validation.Valid;
 /**
  * DTO para solicitação de atualização de médico.
  *
+ * @param nome           O nome do médico.
+ * @param especializacao A especialização do médico.
+ * @param telefone       O telefone do médico.
+ * @param endereco       O endereço do médico.
  * @author Matheus Paulino Ribeiro
  * @since 1.0.0
- *
- * @param nome O nome do médico.
- * @param especializacao A especialização do médico.
- * @param telefone O telefone do médico.
- * @param endereco O endereço do médico.
  */
 @Schema(description = "DTO para atualização de médico")
 public record RequestAtualizacaoMedicoDTO(
 
-		@Schema(description = "Nome do médico", example = "Dr. João Silva")
-    	String nome,
+        @Schema(description = "Nome do médico", example = "Dr. João Silva")
+        String nome,
 
-		@ValidEspecializacao
-		@Schema(description = "Especialização do médico", example = "CARDIOLOGIA")
-		String especializacao,
+        @ValidEspecializacao
+        @Schema(description = "Especialização do médico", example = "CARDIOLOGIA")
+        String especializacao,
 
-		@Valid
-		@ValidTelefoneRequestDTO
-		@Schema(description = "Telefone do médico")
-		TelefoneRequestDTO telefone,
+        @Valid
+        @ValidTelefoneRequestDTO
+        @Schema(description = "Telefone do médico")
+        TelefoneRequestDTO telefone,
 
-		@Valid
-		@ValidEnderecoRequestDTO
-		@Schema(description = "Endereço do médico")
-		EnderecoRequestDTO endereco
-) {}
+        @Valid
+        @ValidEnderecoRequestDTO
+        @Schema(description = "Endereço do médico")
+        EnderecoRequestDTO endereco
+) {
+}

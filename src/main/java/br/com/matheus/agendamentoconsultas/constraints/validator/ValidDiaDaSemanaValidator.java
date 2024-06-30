@@ -27,7 +27,7 @@ public class ValidDiaDaSemanaValidator implements ConstraintValidator<ValidDiaDa
      * Verifica se o dia da semana informado é válido.
      *
      * @param diaDaSemana O dia da semana que será validado.
-     * @param context O contexto de validação.
+     * @param context     O contexto de validação.
      * @return {@code true} se o dia da semana é válido ou é nulo/vazio, {@code false} caso contrário.
      */
     @Override

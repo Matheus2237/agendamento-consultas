@@ -86,7 +86,7 @@ public class PacienteService {
     /**
      * Atualiza as informações de um paciente existente com base no ID e nos dados fornecidos.
      *
-     * @param id O ID do paciente a ser atualizado.
+     * @param id               O ID do paciente a ser atualizado.
      * @param dadosAtualizacao Os novos dados a serem atualizados para o paciente.
      * @return As informações atualizadas do paciente.
      * @throws PacienteNaoEncontradoException Se o paciente com o ID especificado não for encontrado.

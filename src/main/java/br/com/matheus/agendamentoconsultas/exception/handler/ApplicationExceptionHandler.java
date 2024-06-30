@@ -44,68 +44,68 @@ import java.util.List;
 @RestControllerAdvice
 public class ApplicationExceptionHandler {
 
-	private final MessageSource messageSource;
+    private final MessageSource messageSource;
 
-	/**
-	 * Construtor para criar uma instância de {@code ApplicationExceptionHandler}.
-	 *
-	 * @param messageSource A fonte de mensagens para internacionalização.
-	 */
-	@Autowired
+    /**
+     * Construtor para criar uma instância de {@code ApplicationExceptionHandler}.
+     *
+     * @param messageSource A fonte de mensagens para internacionalização.
+     */
+    @Autowired
     public ApplicationExceptionHandler(MessageSource messageSource) {
         this.messageSource = messageSource;
     }
 
-	/**
-	 * Handler para {@link org.springframework.web.bind.MethodArgumentNotValidException}.
-	 *
-	 * @param exception A exceção lançada quando argumentos de método não são válidos.
-	 * @return Uma lista de mensagens de erro de validação.
-	 */
-	@Hidden
-	@ResponseStatus(HttpStatus.BAD_REQUEST)
-	@ExceptionHandler(MethodArgumentNotValidException.class)
-	public List<FailedRequestValidationDTO> handle(MethodArgumentNotValidException exception) {
-		List<FieldError> camposInvalidos = exception.getBindingResult().getFieldErrors();
-		return camposInvalidos.stream()
-				.map(this::getMensagemDeErroDeValidacaoDeCampoFormatada)
-				.toList();
-	}
+    /**
+     * Handler para {@link org.springframework.web.bind.MethodArgumentNotValidException}.
+     *
+     * @param exception A exceção lançada quando argumentos de método não são válidos.
+     * @return Uma lista de mensagens de erro de validação.
+     */
+    @Hidden
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public List<FailedRequestValidationDTO> handle(MethodArgumentNotValidException exception) {
+        List<FieldError> camposInvalidos = exception.getBindingResult().getFieldErrors();
+        return camposInvalidos.stream()
+                .map(this::getMensagemDeErroDeValidacaoDeCampoFormatada)
+                .toList();
+    }
 
-	/**
-	 * Cria um DTO de erro de validação a partir de um {@link FieldError} em um campo específco.
-	 *
-	 * @param campoInvalido O campo que está com erro.
-	 * @return Um DTO da mensagem de erro de validação.
-	 */
-	private FailedRequestValidationDTO getMensagemDeErroDeValidacaoDeCampoFormatada(FieldError campoInvalido) {
-		String mensagem = messageSource.getMessage(campoInvalido, LocaleContextHolder.getLocale());
-		return new FailedRequestValidationDTO(campoInvalido.getField(), mensagem);
-	}
+    /**
+     * Cria um DTO de erro de validação a partir de um {@link FieldError} em um campo específco.
+     *
+     * @param campoInvalido O campo que está com erro.
+     * @return Um DTO da mensagem de erro de validação.
+     */
+    private FailedRequestValidationDTO getMensagemDeErroDeValidacaoDeCampoFormatada(FieldError campoInvalido) {
+        String mensagem = messageSource.getMessage(campoInvalido, LocaleContextHolder.getLocale());
+        return new FailedRequestValidationDTO(campoInvalido.getField(), mensagem);
+    }
 
-	/**
-	 * Handler para {@link br.com.matheus.agendamentoconsultas.exception.MedicoNaoEncontradoException}.
-	 *
-	 * @param exception A exceção lançada quando um médico não é encontrado.
-	 * @return A mensagem de erro da exceção.
-	 */
-	@Hidden
-	@ResponseStatus(HttpStatus.NOT_FOUND)
-	@ExceptionHandler(MedicoNaoEncontradoException.class)
-	public String handle(MedicoNaoEncontradoException exception) {
-		return exception.getMessage();
-	}
+    /**
+     * Handler para {@link br.com.matheus.agendamentoconsultas.exception.MedicoNaoEncontradoException}.
+     *
+     * @param exception A exceção lançada quando um médico não é encontrado.
+     * @return A mensagem de erro da exceção.
+     */
+    @Hidden
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(MedicoNaoEncontradoException.class)
+    public String handle(MedicoNaoEncontradoException exception) {
+        return exception.getMessage();
+    }
 
-	/**
-	 * Handler para {@link br.com.matheus.agendamentoconsultas.exception.PacienteNaoEncontradoException}.
-	 *
-	 * @param exception A exceção lançada quando um paciente não é encontrado.
-	 * @return A mensagem de erro da exceção.
-	 */
-	@Hidden
-	@ResponseStatus(HttpStatus.NOT_FOUND)
-	@ExceptionHandler(PacienteNaoEncontradoException.class)
-	public String handle(PacienteNaoEncontradoException exception) {
-		return exception.getMessage();
-	}
+    /**
+     * Handler para {@link br.com.matheus.agendamentoconsultas.exception.PacienteNaoEncontradoException}.
+     *
+     * @param exception A exceção lançada quando um paciente não é encontrado.
+     * @return A mensagem de erro da exceção.
+     */
+    @Hidden
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(PacienteNaoEncontradoException.class)
+    public String handle(PacienteNaoEncontradoException exception) {
+        return exception.getMessage();
+    }
 }

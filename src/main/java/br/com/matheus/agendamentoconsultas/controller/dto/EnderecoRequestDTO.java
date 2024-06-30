@@ -6,15 +6,14 @@ import jakarta.validation.constraints.NotBlank;
 /**
  * DTO para solicitação de endereço.
  *
+ * @param logradouro O logradouro do endereço. Não pode ser vazio ou nulo.
+ * @param numero     O número do endereço. Não pode ser vazio ou nulo.
+ * @param bairro     O bairro do endereço. Não pode ser vazio ou nulo.
+ * @param cidade     A cidade do endereço. Não pode ser vazio ou nulo.
+ * @param uf         A unidade federativa (UF) do endereço. Não pode ser vazio ou nulo.
+ * @param cep        O CEP do endereço. Não pode ser vazio ou nulo.
  * @author Matheus Paulino Ribeiro
  * @since 1.0.0
- *
- * @param logradouro O logradouro do endereço. Não pode ser vazio ou nulo.
- * @param numero O número do endereço. Não pode ser vazio ou nulo.
- * @param bairro O bairro do endereço. Não pode ser vazio ou nulo.
- * @param cidade A cidade do endereço. Não pode ser vazio ou nulo.
- * @param uf A unidade federativa (UF) do endereço. Não pode ser vazio ou nulo.
- * @param cep O CEP do endereço. Não pode ser vazio ou nulo.
  */
 @Schema(description = "DTO para solicitação de endereço")
 public record EnderecoRequestDTO(
@@ -42,4 +41,5 @@ public record EnderecoRequestDTO(
         @NotBlank(message = "O campo 'cep' é obrigatório")
         @Schema(description = "CEP do endereço", example = "11222123")
         String cep
-) {}
+) {
+}

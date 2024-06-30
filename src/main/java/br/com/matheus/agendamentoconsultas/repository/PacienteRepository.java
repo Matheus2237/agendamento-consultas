@@ -19,19 +19,19 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PacienteRepository extends JpaRepository<Paciente, Long> {
 
-	/**
-	 * Verifica se existe um paciente com o CPF especificado.
-	 *
-	 * @param cpf O CPF do paciente
-	 * @return {@code true} se existir um paciente com o CPF especificado, caso contrário {@code false}
-	 */
-	boolean existsByCpfValue(String cpf);
+    /**
+     * Verifica se existe um paciente com o CPF especificado.
+     *
+     * @param cpf O CPF do paciente
+     * @return {@code true} se existir um paciente com o CPF especificado, caso contrário {@code false}
+     */
+    boolean existsByCpfValue(String cpf);
 
-	/**
-	 * Verifica se existe um paciente com o e-mail especificado.
-	 *
-	 * @param email O e-mail do paciente
-	 * @return {@code true} se existir um paciente com o e-mail especificado, caso contrário {@code false}
-	 */
-	boolean existsByEmailValue(String email);
+    /**
+     * Verifica se existe um paciente com o e-mail especificado.
+     *
+     * @param email O e-mail do paciente
+     * @return {@code true} se existir um paciente com o e-mail especificado, caso contrário {@code false}
+     */
+    boolean existsByEmailValue(String email);
 }

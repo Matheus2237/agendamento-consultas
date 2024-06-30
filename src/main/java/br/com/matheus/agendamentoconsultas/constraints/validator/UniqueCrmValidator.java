@@ -22,22 +22,22 @@ import org.springframework.stereotype.Component;
 @Component
 public class UniqueCrmValidator implements ConstraintValidator<UniqueCrm, String> {
 
-	private final MedicoRepository medicoRepository;
+    private final MedicoRepository medicoRepository;
 
-	@Autowired
+    @Autowired
     public UniqueCrmValidator(MedicoRepository medicoRepository) {
         this.medicoRepository = medicoRepository;
     }
 
-	/**
-	 * Verifica se o CRM informado é único.
-	 *
-	 * @param crm O CRM que será validado.
-	 * @param context O contexto de validação.
-	 * @return {@code true} se o CRM é único e não existe no banco de dados, {@code false} caso contrário.
-	 */
+    /**
+     * Verifica se o CRM informado é único.
+     *
+     * @param crm     O CRM que será validado.
+     * @param context O contexto de validação.
+     * @return {@code true} se o CRM é único e não existe no banco de dados, {@code false} caso contrário.
+     */
     @Override
-	public boolean isValid(String crm, ConstraintValidatorContext context) {
-		return !medicoRepository.existsByCrmValue(crm);
-	}
+    public boolean isValid(String crm, ConstraintValidatorContext context) {
+        return !medicoRepository.existsByCrmValue(crm);
+    }
 }

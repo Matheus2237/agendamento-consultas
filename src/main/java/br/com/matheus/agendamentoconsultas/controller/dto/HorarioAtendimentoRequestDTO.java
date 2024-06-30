@@ -8,12 +8,11 @@ import jakarta.validation.constraints.NotBlank;
 /**
  * DTO para solicitação de horário de atendimento.
  *
- * @author Matheus Paulino Ribeiro
- * @since 1.0.0
- *
  * @param diaDaSemana O dia da semana do horário de atendimento. Não pode ser vazio ou nulo.
  * @param horaInicial A hora inicial do horário de atendimento. Não pode ser vazio ou nulo.
- * @param horaFinal A hora final do horário de atendimento. Não pode ser vazio ou nulo.
+ * @param horaFinal   A hora final do horário de atendimento. Não pode ser vazio ou nulo.
+ * @author Matheus Paulino Ribeiro
+ * @since 1.0.0
  */
 @Schema(description = "DTO para solicitação de horário de atendimento")
 public record HorarioAtendimentoRequestDTO(
@@ -32,4 +31,5 @@ public record HorarioAtendimentoRequestDTO(
         @NotBlank(message = "O campo 'horaFinal' é obrigatório")
         @Schema(description = "Hora final do atendimento", example = "12:00")
         String horaFinal
-) {}
+) {
+}
