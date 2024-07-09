@@ -1,7 +1,9 @@
 package br.com.matheus.agendamentoconsultas.exception.handler;
 
+import br.com.matheus.agendamentoconsultas.exception.ConsultaNaoPodeSerMarcadaException;
 import br.com.matheus.agendamentoconsultas.exception.MedicoNaoEncontradoException;
 import br.com.matheus.agendamentoconsultas.exception.PacienteNaoEncontradoException;
+import br.com.matheus.agendamentoconsultas.exception.handler.dto.ConsultaNaoAgendadaDTO;
 import br.com.matheus.agendamentoconsultas.exception.handler.dto.FailedRequestValidationDTO;
 import io.swagger.v3.oas.annotations.Hidden;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.List;
+
+import static org.springframework.http.HttpStatus.*;
 
 /**
  * <p>
@@ -63,7 +67,7 @@ public class ApplicationExceptionHandler {
      * @return Uma lista de mensagens de erro de validação.
      */
     @Hidden
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseStatus(BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public List<FailedRequestValidationDTO> handle(MethodArgumentNotValidException exception) {
         List<FieldError> camposInvalidos = exception.getBindingResult().getFieldErrors();
@@ -90,7 +94,7 @@ public class ApplicationExceptionHandler {
      * @return A mensagem de erro da exceção.
      */
     @Hidden
-    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseStatus(NOT_FOUND)
     @ExceptionHandler(MedicoNaoEncontradoException.class)
     public String handle(MedicoNaoEncontradoException exception) {
         return exception.getMessage();
@@ -103,9 +107,16 @@ public class ApplicationExceptionHandler {
      * @return A mensagem de erro da exceção.
      */
     @Hidden
-    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseStatus(NOT_FOUND)
     @ExceptionHandler(PacienteNaoEncontradoException.class)
     public String handle(PacienteNaoEncontradoException exception) {
         return exception.getMessage();
+    }
+
+    @Hidden
+    @ResponseStatus(UNPROCESSABLE_ENTITY)
+    @ExceptionHandler(ConsultaNaoPodeSerMarcadaException.class)
+    public ConsultaNaoAgendadaDTO handle(ConsultaNaoPodeSerMarcadaException exception) {
+        return new ConsultaNaoAgendadaDTO(exception.getMessage());
     }
 }

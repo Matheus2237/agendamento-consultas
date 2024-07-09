@@ -1,9 +1,12 @@
 package br.com.matheus.agendamentoconsultas.repository;
 
 import br.com.matheus.agendamentoconsultas.model.HorarioAtendimento;
+import br.com.matheus.agendamentoconsultas.model.enums.DiaDaSemana;
 import br.com.matheus.agendamentoconsultas.model.pk.HorarioAtendimentoPK;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+
+import java.util.Optional;
 
 /**
  * <p>
@@ -26,4 +29,6 @@ public interface HorarioAtendimentoRepository extends JpaRepository<HorarioAtend
      * @param id O ID do médico cujos horários de atendimento serão excluídos
      */
     void deleteByMedicoId(Long id);
+
+    Optional<HorarioAtendimento> findByPrimaryKeyMedicoIdAndPrimaryKeyDiaDaSemana(Long medicoId, DiaDaSemana diaDaSemana);
 }
