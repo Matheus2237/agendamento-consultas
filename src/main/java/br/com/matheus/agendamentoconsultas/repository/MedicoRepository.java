@@ -42,7 +42,7 @@ public interface MedicoRepository extends JpaRepository<Medico, Long> {
      */
     boolean existsByEmailValue(String email);
 
-    default Optional<Medico> findRandomAvailableMedicoToTheSpecifiedDate (LocalDate data, LocalTime horario) {
+    default Optional<Medico> findRandomAvailableMedicoToTheSpecifiedDate(LocalDate data, LocalTime horario) {
         String diaDaSemana = DiaDaSemana.getDiaDaSemanaPelaData(data).toString();
         return findRandomAvailableMedicoToTheSpecifiedDate(data, horario, diaDaSemana);
     }
