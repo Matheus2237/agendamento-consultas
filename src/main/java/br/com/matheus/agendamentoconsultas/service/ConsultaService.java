@@ -2,7 +2,6 @@ package br.com.matheus.agendamentoconsultas.service;
 
 import br.com.matheus.agendamentoconsultas.controller.dto.ConsultaAgendadaDTO;
 import br.com.matheus.agendamentoconsultas.controller.dto.ConsultaRequestDTO;
-import br.com.matheus.agendamentoconsultas.exception.ConsultaNaoPodeSerMarcadaException;
 import br.com.matheus.agendamentoconsultas.exception.MedicoNaoEncontradoException;
 import br.com.matheus.agendamentoconsultas.exception.PacienteNaoEncontradoException;
 import br.com.matheus.agendamentoconsultas.model.Consulta;
