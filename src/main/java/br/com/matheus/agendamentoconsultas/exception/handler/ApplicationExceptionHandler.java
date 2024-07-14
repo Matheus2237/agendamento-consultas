@@ -113,6 +113,12 @@ public class ApplicationExceptionHandler {
         return exception.getMessage();
     }
 
+    /**
+     * Handler para {@link br.com.matheus.agendamentoconsultas.exception.ConsultaNaoPodeSerMarcadaException}.
+     *
+     * @param exception A exceção lançada quando uma consulta não pode ser agendada.
+     * @return Um {@link ConsultaNaoAgendadaDTO} com o motivo da consulta não agendada.
+     */
     @Hidden
     @ResponseStatus(UNPROCESSABLE_ENTITY)
     @ExceptionHandler(ConsultaNaoPodeSerMarcadaException.class)

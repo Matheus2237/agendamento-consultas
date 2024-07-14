@@ -10,6 +10,10 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+/**
+ * Implementação da interface {@link ValidacaoAgendamentoConsulta} que verifica se já existe uma consulta agendada
+ * para o mesmo médico no mesmo horário.
+ */
 @Order(3)
 @Component
 public class ValidacaoConsultaNaoAgendadaParaMesmoMedicoNoMesmoHorario implements ValidacaoAgendamentoConsulta {
@@ -21,6 +25,13 @@ public class ValidacaoConsultaNaoAgendadaParaMesmoMedicoNoMesmoHorario implement
         this.consultaRepository = consultaRepository;
     }
 
+    /**
+     * Valida se a consulta pode ser agendada verificando se já existe uma consulta agendada
+     * para o mesmo médico no mesmo horário.
+     *
+     * @param consulta a consulta a ser validada
+     * @throws ConsultaNaoPodeSerMarcadaException se já existir uma consulta agendada para o mesmo médico no mesmo horário
+     */
     @Override
     public void validar(Consulta consulta) {
         Long medicoId = consulta.getMedico().getId();

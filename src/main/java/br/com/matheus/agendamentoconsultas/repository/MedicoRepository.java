@@ -42,11 +42,27 @@ public interface MedicoRepository extends JpaRepository<Medico, Long> {
      */
     boolean existsByEmailValue(String email);
 
+    /**
+     * Encontra um médico disponível de forma aleatória para uma data e horário especificados.
+     *
+     * @param data A data da consulta
+     * @param horario O horário da consulta
+     * @return Um {@link Optional} contendo um médico disponível, se encontrado
+     */
     default Optional<Medico> findRandomAvailableMedicoToTheSpecifiedDate(LocalDate data, LocalTime horario) {
         String diaDaSemana = DiaDaSemana.getDiaDaSemanaPelaData(data).toString();
         return findRandomAvailableMedicoToTheSpecifiedDate(data, horario, diaDaSemana);
     }
 
+    /**
+     * Encontra um médico disponível de forma aleatória para uma data e horário
+     * especificados, considerando o dia da semana.
+     *
+     * @param data A data da consulta
+     * @param horario O horário da consulta
+     * @param diaDaSemana O dia da semana da consulta
+     * @return Um {@link Optional} contendo um médico disponível, se encontrado
+     */
     @Query(
             nativeQuery = true,
             value = """

@@ -9,6 +9,10 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 
+/**
+ * Implementação da interface {@link ValidacaoAgendamentoConsulta} que verifica se o médico possui no máximo
+ * doze consultas agendadas no mesmo dia.
+ */
 @Order(4)
 @Component
 public class ValidacaoMaximoDeDozeConsultasPorDiaPorMedico implements ValidacaoAgendamentoConsulta {
@@ -20,6 +24,12 @@ public class ValidacaoMaximoDeDozeConsultasPorDiaPorMedico implements ValidacaoA
         this.consultaRepository = consultaRepository;
     }
 
+    /**
+     * Valida se a consulta pode ser agendada verificando se o médico já possui doze consultas agendadas no mesmo dia.
+     *
+     * @param consulta a consulta a ser validada
+     * @throws ConsultaNaoPodeSerMarcadaException se o médico já tiver doze consultas agendadas no mesmo dia
+     */
     @Override
     public void validar(Consulta consulta) {
         Long medicoId = consulta.getMedico().getId();

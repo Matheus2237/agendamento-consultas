@@ -30,5 +30,12 @@ public interface HorarioAtendimentoRepository extends JpaRepository<HorarioAtend
      */
     void deleteByMedicoId(Long id);
 
+    /**
+     * Encontra um horário de atendimento pelo ID do médico e dia da semana.
+     *
+     * @param medicoId O ID do médico
+     * @param diaDaSemana O dia da semana
+     * @return Um {@link Optional} contendo o horário de atendimento, se encontrado
+     */
     Optional<HorarioAtendimento> findByPrimaryKeyMedicoIdAndPrimaryKeyDiaDaSemana(Long medicoId, DiaDaSemana diaDaSemana);
 }

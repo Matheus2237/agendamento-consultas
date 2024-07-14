@@ -13,6 +13,10 @@ import java.time.LocalTime;
 
 import static br.com.matheus.agendamentoconsultas.model.enums.DiaDaSemana.getDiaDaSemanaPelaData;
 
+/**
+ * Implementação da interface {@link ValidacaoAgendamentoConsulta} que verifica se a consulta está dentro
+ * do horário de atendimento do médico.
+ */
 @Order(1)
 @Component
 public class ValidacaoHorarioConsultaDentroDoHorarioDeAtendimento implements ValidacaoAgendamentoConsulta {
@@ -24,6 +28,12 @@ public class ValidacaoHorarioConsultaDentroDoHorarioDeAtendimento implements Val
         this.horarioAtendimentoRepository = horarioAtendimentoRepository;
     }
 
+    /**
+     * Valida se a consulta pode ser agendada verificando se está dentro do horário de atendimento do médico.
+     *
+     * @param consulta a consulta a ser validada
+     * @throws ConsultaNaoPodeSerMarcadaException se a consulta estiver fora do horário de atendimento do médico
+     */
     @Override
     public void validar(Consulta consulta) {
         Long medicoId = consulta.getMedico().getId();
@@ -39,6 +49,14 @@ public class ValidacaoHorarioConsultaDentroDoHorarioDeAtendimento implements Val
         }
     }
 
+    /**
+     * Verifica se o horário da consulta é compatível com o horário de atendimento.
+     *
+     * @param horarioConsulta o horário da consulta
+     * @param horaInicial a hora inicial do atendimento
+     * @param horaFinal a hora final do atendimento
+     * @return true se o horário da consulta for compatível com o horário de atendimento, caso contrário false
+     */
     private boolean isHorarioRequeridoCompativelComHorarioDeAtendimento(LocalTime horarioConsulta,
             LocalTime horaInicial, LocalTime horaFinal) {
         return horarioConsulta.equals(horaInicial) || horarioConsulta.isAfter(horaInicial)

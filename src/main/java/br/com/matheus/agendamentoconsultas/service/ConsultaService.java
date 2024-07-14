@@ -19,6 +19,18 @@ import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * <p>
+ * Serviço para operações relacionadas a consultas médicas.
+ * </p>
+ * <p>
+ * Este serviço gerencia operações de agendamento, cancelamento e geração de relatórios
+ * de consultas médicas.
+ * </p>
+ *
+ * @author Matheus Paulino Ribeiro
+ * @since 1.0.0
+ */
 @Service
 public class ConsultaService {
 
@@ -36,6 +48,12 @@ public class ConsultaService {
         this.validacoesAgendamentoConsulta = validacoesAgendamentoConsulta;
     }
 
+    /**
+     * Agenda uma nova consulta com base nos dados fornecidos.
+     *
+     * @param consultaRequestDTO Os dados da consulta a ser agendada
+     * @return A consulta agendada
+     */
     public ConsultaAgendadaDTO agendar(ConsultaRequestDTO consultaRequestDTO) {
         Consulta consulta = obterEntidadeConsulta(consultaRequestDTO);
         for (ValidacaoAgendamentoConsulta validacaoAgendamentoConsulta : validacoesAgendamentoConsulta) {
@@ -45,6 +63,12 @@ public class ConsultaService {
         return new ConsultaAgendadaDTO(consulta);
     }
 
+    /**
+     * Obtém a entidade de consulta com base nos dados fornecidos.
+     *
+     * @param consultaRequestDTO Os dados da consulta
+     * @return A entidade de consulta
+     */
     private Consulta obterEntidadeConsulta(ConsultaRequestDTO consultaRequestDTO) {
         final LocalDate data = LocalDate.parse(consultaRequestDTO.data());
         final LocalTime horario = LocalTime.parse(consultaRequestDTO.horario());
@@ -60,14 +84,43 @@ public class ConsultaService {
                 .build();
     }
 
+    /**
+     * Obtém o paciente com base no ID fornecido.
+     *
+     * @param pacienteId O ID do paciente
+     * @return O paciente encontrado
+     * @throws PacienteNaoEncontradoException Se o paciente com o ID especificado não for encontrado
+     */
     private Paciente obterPacientePeloId(Long pacienteId) {
         return pacienteRepository.findById(pacienteId).orElseThrow(PacienteNaoEncontradoException::new);
     }
 
+    /**
+     * Obtém o médico com base no ID fornecido.
+     *
+     * @param medicoId O ID do médico
+     * @return O médico encontrado
+     * @throws MedicoNaoEncontradoException Se o médico com o ID especificado não for encontrado
+     */
     private Medico obterMedicoPeloId(Long medicoId) {
         return medicoRepository.findById(medicoId).orElseThrow(MedicoNaoEncontradoException::new);
     }
 
+    /**
+     * <p>
+ *     Obtém um médico aleatório disponível para a data e horário solicitados.
+     * </p>
+     * <p>
+     * Traz apenas um resultado dentro das regras de agendamento. Considera apenas os médicos que
+     * não estão com doze ou mais consultas agendadas para aquele dia e que também está com
+     * disponibilidade para atender no horário solicitado.
+     * </p>
+     *
+     * @param data    A data da consulta
+     * @param horario O horário da consulta
+     * @return Um médico disponível
+     * @throws MedicoNaoEncontradoException Se nenhum médico disponível for encontrado para a data e horário especificados
+     */
     private Medico obterMedicoAleatorioDisponivelParaDataEHorarioDeterminado(LocalDate data, LocalTime horario) {
         Optional<Medico> medicoOptional = medicoRepository.findRandomAvailableMedicoToTheSpecifiedDate(data, horario);
         return medicoOptional.orElseThrow(MedicoNaoEncontradoException::new);

@@ -9,6 +9,17 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+/**
+ * <p>
+ * Anotação de validação para garantir que uma data é futura.
+ * </p>
+ * <p>
+ * Esta anotação é usada para validar se a data anotada é uma data futura.
+ * </p>
+ *
+ * @author Matheus Paulino Ribeiro
+ * @since 1.0.0
+ */
 @Constraint(validatedBy = ValidDataFuturaValidator.class)
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)

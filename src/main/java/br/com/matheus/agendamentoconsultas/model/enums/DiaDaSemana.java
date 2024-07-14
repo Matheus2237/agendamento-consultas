@@ -23,6 +23,13 @@ public enum DiaDaSemana {
     SEXTA,
     SABADO;
 
+    /**
+     * Obtém o dia da semana para a data especificada.
+     *
+     * @param data A data para a qual se deseja obter o dia da semana
+     * @return O dia da semana correspondente à data fornecida
+     * @throws IllegalArgumentException Se a data fornecida for nula
+     */
     public static DiaDaSemana getDiaDaSemanaPelaData(final LocalDate data) {
         if (data == null) {
             throw new IllegalArgumentException("Data com valor nulo");
@@ -31,6 +38,14 @@ public enum DiaDaSemana {
         return getDiaDaSemanaPeloValorNumerico(valorDiaDaSemana);
     }
 
+    /**
+ *     Obtém o dia da semana com base no valor numérico correspondente
+     * (1 para SEGUNDA, 2 para TERCA, ..., 7 para DOMINGO).
+     *
+     * @param valorNumerico O valor numérico representando o dia da semana
+     * @return O dia da semana correspondente ao valor numérico fornecido
+     * @throws IllegalArgumentException Se o valor numérico não corresponder a nenhum dia da semana válido
+     */
     public static DiaDaSemana getDiaDaSemanaPeloValorNumerico(final int valorNumerico) {
         return switch (valorNumerico) {
             case 1 -> SEGUNDA;
