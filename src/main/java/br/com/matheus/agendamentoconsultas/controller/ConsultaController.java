@@ -14,10 +14,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
@@ -47,17 +44,6 @@ public class ConsultaController {
         this.consultaService = consultaService;
     }
 
-    /**
-     * <p>
-     * Endpoint para agendar uma consulta.
-     * </p>
-     * <p>
-     * Este endpoint permite agendar uma nova consulta no sistema.
-     * </p>
-     *
-     * @param consultaRequestDTO Objeto contendo as informações da consulta a ser agendada.
-     * @return Objeto contendo as informações da consulta agendada.
-     */
     @Operation(
             summary = "Agendar consulta",
             description = "Agenda uma nova consulta no sistema.")
@@ -95,5 +81,21 @@ public class ConsultaController {
         URI uri = uriComponentsBuilder.path("/consulta/{id}").buildAndExpand(consultaAgendada.getId()).toUri();
         ConsultaAgendadaDTO consultaAgendadaDTO = new ConsultaAgendadaDTO(consultaAgendada);
         return ResponseEntity.created(uri).body(consultaAgendadaDTO);
+    }
+
+    @Operation(
+            summary = "Cancelar consulta",
+            description = "Remove um consulta existente pelo seu ID")
+    @ApiResponse(
+            responseCode = "200",
+            description = "Consulta cancelada")
+    @ApiResponse(
+            responseCode = "404",
+            description = "Consulta não encontrada",
+            content = @Content(mediaType = "string"))
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> cancelar(@PathVariable Long id) {
+        consultaService.cancelar(id);
+        return ResponseEntity.ok().build();
     }
 }

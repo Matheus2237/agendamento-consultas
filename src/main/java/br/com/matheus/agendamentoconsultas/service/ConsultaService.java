@@ -2,6 +2,7 @@ package br.com.matheus.agendamentoconsultas.service;
 
 import br.com.matheus.agendamentoconsultas.controller.dto.ConsultaAgendadaDTO;
 import br.com.matheus.agendamentoconsultas.controller.dto.ConsultaRequestDTO;
+import br.com.matheus.agendamentoconsultas.exception.ConsultaNaoEncontradaException;
 import br.com.matheus.agendamentoconsultas.exception.MedicoNaoEncontradoException;
 import br.com.matheus.agendamentoconsultas.exception.PacienteNaoEncontradoException;
 import br.com.matheus.agendamentoconsultas.model.Consulta;
@@ -123,5 +124,17 @@ public class ConsultaService {
     private Medico obterMedicoAleatorioDisponivelParaDataEHorarioDeterminado(LocalDate data, LocalTime horario) {
         Optional<Medico> medicoOptional = medicoRepository.findRandomAvailableMedicoToTheSpecifiedDate(data, horario);
         return medicoOptional.orElseThrow(MedicoNaoEncontradoException::new);
+    }
+
+    /**
+     * Cancela uma consulta com base no ID fornecido.
+     *
+     * @param id O ID da consulta a ser cancelada.
+     * @throws ConsultaNaoEncontradaException Se o paciente com o ID especificado não for encontrado.
+     */
+    public void cancelar(Long id) {
+        Long idConsultaEncontrada = consultaRepository.findById(id)
+                .orElseThrow(ConsultaNaoEncontradaException::new).getId();
+        consultaRepository.deleteById(idConsultaEncontrada);
     }
 }

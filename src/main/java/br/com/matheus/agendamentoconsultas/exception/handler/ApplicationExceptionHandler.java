@@ -1,5 +1,6 @@
 package br.com.matheus.agendamentoconsultas.exception.handler;
 
+import br.com.matheus.agendamentoconsultas.exception.ConsultaNaoEncontradaException;
 import br.com.matheus.agendamentoconsultas.exception.ConsultaNaoPodeSerMarcadaException;
 import br.com.matheus.agendamentoconsultas.exception.MedicoNaoEncontradoException;
 import br.com.matheus.agendamentoconsultas.exception.PacienteNaoEncontradoException;
@@ -110,6 +111,19 @@ public class ApplicationExceptionHandler {
     @ResponseStatus(NOT_FOUND)
     @ExceptionHandler(PacienteNaoEncontradoException.class)
     public String handle(PacienteNaoEncontradoException exception) {
+        return exception.getMessage();
+    }
+
+    /**
+     * Handler para {@link br.com.matheus.agendamentoconsultas.exception.ConsultaNaoEncontradaException}.
+     *
+     * @param exception A exceção lançada quando um paciente não é encontrado.
+     * @return A mensagem de erro da exceção.
+     */
+    @Hidden
+    @ResponseStatus(NOT_FOUND)
+    @ExceptionHandler(ConsultaNaoEncontradaException.class)
+    public String handle(ConsultaNaoEncontradaException exception) {
         return exception.getMessage();
     }
 

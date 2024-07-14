@@ -2,6 +2,7 @@ package br.com.matheus.agendamentoconsultas.service;
 
 import br.com.matheus.agendamentoconsultas.controller.dto.ConsultaAgendadaDTO;
 import br.com.matheus.agendamentoconsultas.controller.dto.ConsultaRequestDTO;
+import br.com.matheus.agendamentoconsultas.exception.ConsultaNaoEncontradaException;
 import br.com.matheus.agendamentoconsultas.exception.ConsultaNaoPodeSerMarcadaException;
 import br.com.matheus.agendamentoconsultas.exception.MedicoNaoEncontradoException;
 import br.com.matheus.agendamentoconsultas.exception.PacienteNaoEncontradoException;
@@ -64,6 +65,7 @@ class ConsultaServiceTest {
 
     private List<ValidacaoAgendamentoConsulta> validacoesMock;
 
+    private final Long consultaId = 1L;
     private final Long pacienteId = 1L;
     private final Long medicoId = 1L;
     private final String pacienteNome = "Matheus";
@@ -201,6 +203,30 @@ class ConsultaServiceTest {
         doThrow(ConsultaNaoPodeSerMarcadaException.class).when(validacaoMaximoDeDozeConsultasPorDiaPorMedicoMock).validar(any(Consulta.class));
         assertThrows(ConsultaNaoPodeSerMarcadaException.class, () -> consultaService.agendar(consultaRequestDTO),
                 "Deve lançar uma ConsultaNaoPodeSerMarcadaException.");
+    }
+
+    @Test
+    void deveCancelarUmaConsultaPeloSeuId() {
+        Consulta consulta = getConsulta();
+        when(consultaRepositoryMock.findById(consultaId)).thenReturn(Optional.of(consulta));
+        consultaService.cancelar(consultaId);
+        verify(consultaRepositoryMock).deleteById(consultaId);
+    }
+
+    @Test
+    void deveRetornarUmaConsultaNaoEncontradoExceptionAoTentarCancelarUmaConsultaNaoExistenteNoBancoDeDados() {
+        when(consultaRepositoryMock.findById(consultaId)).thenReturn(Optional.empty());
+        assertThrows(ConsultaNaoEncontradaException.class, () -> consultaService.cancelar(consultaId));
+    }
+
+    private Consulta getConsulta() {
+        return Consulta.builder()
+                .id(consultaId)
+                .medico(medicoMock)
+                .paciente(pacienteMock)
+                .data(LocalDate.parse(data))
+                .horario(LocalTime.parse(horario))
+                .build();
     }
 
     private ConsultaRequestDTO getConsultaRequestDTO() {
