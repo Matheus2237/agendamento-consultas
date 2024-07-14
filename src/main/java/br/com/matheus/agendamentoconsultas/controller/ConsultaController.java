@@ -4,6 +4,7 @@ import br.com.matheus.agendamentoconsultas.controller.dto.ConsultaAgendadaDTO;
 import br.com.matheus.agendamentoconsultas.controller.dto.ConsultaRequestDTO;
 import br.com.matheus.agendamentoconsultas.exception.handler.dto.ConsultaNaoAgendadaDTO;
 import br.com.matheus.agendamentoconsultas.exception.handler.dto.FailedRequestValidationDTO;
+import br.com.matheus.agendamentoconsultas.model.Consulta;
 import br.com.matheus.agendamentoconsultas.service.ConsultaService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -17,6 +18,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
+
+import java.net.URI;
 
 /**
  * <p>
@@ -58,7 +62,7 @@ public class ConsultaController {
             summary = "Agendar consulta",
             description = "Agenda uma nova consulta no sistema.")
     @ApiResponse(
-            responseCode = "200",
+            responseCode = "201",
             description = "Consulta agendada com sucesso",
             content = @Content(
                     mediaType = "application/json",
@@ -84,8 +88,12 @@ public class ConsultaController {
                     mediaType = "application/json",
                     schema = @Schema(implementation = ConsultaNaoAgendadaDTO.class)))
     @PostMapping("/agendamento")
-    public ResponseEntity<ConsultaAgendadaDTO> agendar(@Valid @RequestBody ConsultaRequestDTO consultaRequestDTO) {
-        ConsultaAgendadaDTO consultaAgendadaDTO = consultaService.agendar(consultaRequestDTO);
-        return ResponseEntity.ok(consultaAgendadaDTO);
+    public ResponseEntity<ConsultaAgendadaDTO> agendar(
+            @Valid @RequestBody ConsultaRequestDTO consultaRequestDTO,
+            UriComponentsBuilder uriComponentsBuilder) {
+        Consulta consultaAgendada = consultaService.agendar(consultaRequestDTO);
+        URI uri = uriComponentsBuilder.path("/consulta/{id}").buildAndExpand(consultaAgendada.getId()).toUri();
+        ConsultaAgendadaDTO consultaAgendadaDTO = new ConsultaAgendadaDTO(consultaAgendada);
+        return ResponseEntity.created(uri).body(consultaAgendadaDTO);
     }
 }

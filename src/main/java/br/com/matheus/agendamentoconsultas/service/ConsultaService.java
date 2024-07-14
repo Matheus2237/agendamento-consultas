@@ -54,13 +54,12 @@ public class ConsultaService {
      * @param consultaRequestDTO Os dados da consulta a ser agendada
      * @return A consulta agendada
      */
-    public ConsultaAgendadaDTO agendar(ConsultaRequestDTO consultaRequestDTO) {
+    public Consulta agendar(ConsultaRequestDTO consultaRequestDTO) {
         Consulta consulta = obterEntidadeConsulta(consultaRequestDTO);
         for (ValidacaoAgendamentoConsulta validacaoAgendamentoConsulta : validacoesAgendamentoConsulta) {
             validacaoAgendamentoConsulta.validar(consulta);
         }
-        consultaRepository.save(consulta);
-        return new ConsultaAgendadaDTO(consulta);
+        return consultaRepository.save(consulta);
     }
 
     /**

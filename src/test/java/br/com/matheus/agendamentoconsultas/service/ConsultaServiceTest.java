@@ -100,6 +100,7 @@ class ConsultaServiceTest {
     void deveAgendarUmaConsultaComDadosValidos() {
         when(pacienteRepositoryMock.findById(pacienteId)).thenReturn(Optional.of(pacienteMock));
         when(medicoRepositoryMock.findById(medicoId)).thenReturn(Optional.of(medicoMock));
+        when(consultaRepositoryMock.save(any(Consulta.class))).thenAnswer(i -> i.getArgument(0));
         when(pacienteMock.getNome()).thenReturn(pacienteNome);
         when(medicoMock.getNome()).thenReturn(medicoNome);
         doNothing().when(validacaoHorarioConsultaDentroDoHorarioDeAtendimentoMock).validar(any(Consulta.class));
@@ -107,12 +108,12 @@ class ConsultaServiceTest {
         doNothing().when(validacaoConsultaNaoAgendadaParaMesmoMedicoNoMesmoHorarioMock).validar(any(Consulta.class));
         doNothing().when(validacaoMaximoDeDozeConsultasPorDiaPorMedicoMock).validar(any(Consulta.class));
         ConsultaRequestDTO consultaRequestDTO = getConsultaRequestDTO();
-        ConsultaAgendadaDTO consultaAgendada = consultaService.agendar(consultaRequestDTO);
+        Consulta consultaAgendada = consultaService.agendar(consultaRequestDTO);
         assertAll("Dados da consulta agendada devem ser consistente com o que foi solicitado.",
-                () -> assertEquals(pacienteNome, consultaAgendada.pacienteNome(), "Nome do paciente deve ser consistente com o id."),
-                () -> assertEquals(medicoNome, consultaAgendada.medicoNome(), "Nome do medico deve ser consistente com o id."),
-                () -> assertEquals(data, consultaAgendada.data(), "Data da consulta deve ser a mesmo."),
-                () -> assertEquals(horario, consultaAgendada.horario(), "Horario da consulta deve ser a mesmo.")
+                () -> assertEquals(pacienteNome, consultaAgendada.getPaciente().getNome(), "Nome do paciente deve ser consistente com o id."),
+                () -> assertEquals(medicoNome, consultaAgendada.getMedico().getNome(), "Nome do medico deve ser consistente com o id."),
+                () -> assertEquals(data, consultaAgendada.getData().toString(), "Data da consulta deve ser a mesmo."),
+                () -> assertEquals(horario, consultaAgendada.getHorario().toString(), "Horario da consulta deve ser a mesmo.")
         );
     }
 
@@ -120,6 +121,7 @@ class ConsultaServiceTest {
     void deveAgendarUmaConsultaComDadosValidosEMedicoDefinidoPeloSistema() {
         when(pacienteRepositoryMock.findById(pacienteId)).thenReturn(Optional.of(pacienteMock));
         when(medicoRepositoryMock.findRandomAvailableMedicoToTheSpecifiedDate(LocalDate.parse(data), LocalTime.parse(horario))).thenReturn(Optional.of(medicoMock));
+        when(consultaRepositoryMock.save(any(Consulta.class))).thenAnswer(i -> i.getArgument(0));
         when(pacienteMock.getNome()).thenReturn(pacienteNome);
         when(medicoMock.getNome()).thenReturn(medicoNome);
         doNothing().when(validacaoHorarioConsultaDentroDoHorarioDeAtendimentoMock).validar(any(Consulta.class));
@@ -127,12 +129,12 @@ class ConsultaServiceTest {
         doNothing().when(validacaoConsultaNaoAgendadaParaMesmoMedicoNoMesmoHorarioMock).validar(any(Consulta.class));
         doNothing().when(validacaoMaximoDeDozeConsultasPorDiaPorMedicoMock).validar(any(Consulta.class));
         ConsultaRequestDTO consultaRequestDTO = new ConsultaRequestDTO(pacienteId, 0L, data, horario);
-        ConsultaAgendadaDTO consultaAgendada = consultaService.agendar(consultaRequestDTO);
+        Consulta consultaAgendada = consultaService.agendar(consultaRequestDTO);
         assertAll("Dados da consulta agendada devem ser consistente com o que foi solicitado.",
-                () -> assertEquals(pacienteNome, consultaAgendada.pacienteNome(), "Nome do paciente deve ser consistente com o id."),
-                () -> assertEquals(medicoNome, consultaAgendada.medicoNome(), "Nome do medico deve ser consistente com o id."),
-                () -> assertEquals(data, consultaAgendada.data(), "Data da consulta deve ser a mesmo."),
-                () -> assertEquals(horario, consultaAgendada.horario(), "Horario da consulta deve ser a mesmo.")
+                () -> assertEquals(pacienteNome, consultaAgendada.getPaciente().getNome(), "Nome do paciente deve ser consistente com o id."),
+                () -> assertEquals(medicoNome, consultaAgendada.getMedico().getNome(), "Nome do medico deve ser consistente com o id."),
+                () -> assertEquals(data, consultaAgendada.getData().toString(), "Data da consulta deve ser a mesmo."),
+                () -> assertEquals(horario, consultaAgendada.getHorario().toString(), "Horario da consulta deve ser a mesmo.")
         );
     }
 
