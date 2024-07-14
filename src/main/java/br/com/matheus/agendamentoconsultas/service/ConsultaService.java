@@ -74,8 +74,8 @@ public class ConsultaService {
         final LocalTime horario = LocalTime.parse(consultaRequestDTO.horario());
         final Paciente paciente = obterPacientePeloId(consultaRequestDTO.pacienteId());
         final Medico medico = consultaRequestDTO.medicoId() != 0
-                ? obterMedicoPeloId(consultaRequestDTO.medicoId()) :
-                obterMedicoAleatorioDisponivelParaDataEHorarioDeterminado(data, horario);
+                ? obterMedicoPeloId(consultaRequestDTO.medicoId())
+                : obterMedicoAleatorioDisponivelParaDataEHorarioDeterminado(data, horario);
         return Consulta.builder()
                 .paciente(paciente)
                 .medico(medico)
