@@ -1,7 +1,7 @@
 package br.com.matheus.agendamentoconsultas.controller;
 
 import br.com.matheus.agendamentoconsultas.controller.dto.*;
-import br.com.matheus.agendamentoconsultas.exception.handler.dto.FailedRequestValidationDTO;
+import br.com.matheus.agendamentoconsultas.exception.handler.dto.FailedFieldRequestValidationDTO;
 import br.com.matheus.agendamentoconsultas.model.Medico;
 import br.com.matheus.agendamentoconsultas.service.MedicoService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -17,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -36,6 +37,7 @@ import java.util.Set;
 @Tag(
         name = "Médico",
         description = "Serviço para gerenciar informações dos médicos.")
+@Validated
 @RestController
 @RequestMapping("/medico")
 public class MedicoController {
@@ -82,7 +84,7 @@ public class MedicoController {
             description = "Requisição inválida",
             content = @Content(
                     mediaType = "application/json",
-                    schema = @Schema(implementation = FailedRequestValidationDTO.class)))
+                    schema = @Schema(implementation = FailedFieldRequestValidationDTO.class)))
     @PostMapping
     public ResponseEntity<ResponseMedicoDTO> cadastrar(
             @RequestBody @Valid RequestCadastroMedicoDTO requestCadastroMedicoDTO,
@@ -125,7 +127,7 @@ public class MedicoController {
             description = "Requisição inválida",
             content = @Content(
                     mediaType = "application/json",
-                    schema = @Schema(implementation = FailedRequestValidationDTO.class)))
+                    schema = @Schema(implementation = FailedFieldRequestValidationDTO.class)))
     @ApiResponse(
             responseCode = "404",
             description = "Médico não encontrado",

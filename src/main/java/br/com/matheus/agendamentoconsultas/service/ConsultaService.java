@@ -13,6 +13,8 @@ import br.com.matheus.agendamentoconsultas.repository.MedicoRepository;
 import br.com.matheus.agendamentoconsultas.repository.PacienteRepository;
 import br.com.matheus.agendamentoconsultas.service.consulta.validations.ValidacaoAgendamentoConsulta;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -136,5 +138,17 @@ public class ConsultaService {
         Long idConsultaEncontrada = consultaRepository.findById(id)
                 .orElseThrow(ConsultaNaoEncontradaException::new).getId();
         consultaRepository.deleteById(idConsultaEncontrada);
+    }
+
+    /**
+     * Busca uma página de consultas agendadas para uma data específica.
+     *
+     * @param data a data das consultas a serem buscadas no formato YYYY-MM-DD.
+     * @param pageable o objeto de paginação que especifica a página, o tamanho da página e a ordenação.
+     * @return uma página de {@link ConsultaAgendadaDTO} que representa as consultas agendadas na data especificada.
+     */
+    public Page<ConsultaAgendadaDTO> visualizarConsultasDoDia(String data, Pageable pageable) {
+        Page<Consulta> consultas = consultaRepository.findByData(LocalDate.parse(data), pageable);
+        return consultas.map(ConsultaAgendadaDTO::new);
     }
 }

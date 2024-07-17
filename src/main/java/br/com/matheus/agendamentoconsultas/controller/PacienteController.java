@@ -4,7 +4,7 @@ import br.com.matheus.agendamentoconsultas.controller.dto.RequestAtualizacaoPaci
 import br.com.matheus.agendamentoconsultas.controller.dto.RequestCadastroPacienteDTO;
 import br.com.matheus.agendamentoconsultas.controller.dto.ResponsePacienteDTO;
 import br.com.matheus.agendamentoconsultas.controller.dto.ResponseTodosPacientesDTO;
-import br.com.matheus.agendamentoconsultas.exception.handler.dto.FailedRequestValidationDTO;
+import br.com.matheus.agendamentoconsultas.exception.handler.dto.FailedFieldRequestValidationDTO;
 import br.com.matheus.agendamentoconsultas.model.Paciente;
 import br.com.matheus.agendamentoconsultas.service.PacienteService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -20,6 +20,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -38,6 +39,7 @@ import java.net.URI;
 @Tag(
         name = "Paciente",
         description = "Serviço para gerenciar informações dos pacientes.")
+@Validated
 @RestController
 @RequestMapping("/paciente")
 public class PacienteController {
@@ -84,7 +86,7 @@ public class PacienteController {
             description = "Requisição inválida",
             content = @Content(
                     mediaType = "application/json",
-                    schema = @Schema(implementation = FailedRequestValidationDTO.class)))
+                    schema = @Schema(implementation = FailedFieldRequestValidationDTO.class)))
     @PostMapping
     public ResponseEntity<ResponsePacienteDTO> cadastrar(
             @RequestBody @Valid RequestCadastroPacienteDTO requestCadastroPacienteDTO,
@@ -127,7 +129,7 @@ public class PacienteController {
             description = "Requisição inválida",
             content = @Content(
                     mediaType = "application/json",
-                    schema = @Schema(implementation = FailedRequestValidationDTO.class)))
+                    schema = @Schema(implementation = FailedFieldRequestValidationDTO.class)))
     @ApiResponse(
             responseCode = "404",
             description = "Paciente não encontrado",

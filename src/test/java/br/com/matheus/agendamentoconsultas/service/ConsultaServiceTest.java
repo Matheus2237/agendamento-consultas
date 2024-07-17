@@ -19,10 +19,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -64,6 +68,9 @@ class ConsultaServiceTest {
     private ValidacaoMaximoDeDozeConsultasPorDiaPorMedico validacaoMaximoDeDozeConsultasPorDiaPorMedicoMock;
 
     private List<ValidacaoAgendamentoConsulta> validacoesMock;
+
+    @Mock
+    private Pageable pageableMock;
 
     private final Long consultaId = 1L;
     private final Long pacienteId = 1L;
@@ -217,6 +224,20 @@ class ConsultaServiceTest {
     void deveRetornarUmaConsultaNaoEncontradoExceptionAoTentarCancelarUmaConsultaNaoExistenteNoBancoDeDados() {
         when(consultaRepositoryMock.findById(consultaId)).thenReturn(Optional.empty());
         assertThrows(ConsultaNaoEncontradaException.class, () -> consultaService.cancelar(consultaId));
+    }
+
+    @Test
+    void deveRetornarUmaPaginaDeConsultasAgendadasParaUmDiaEspecifico() {
+        List<Consulta> consultas = Collections.singletonList(getConsulta());
+        Page<Consulta> consultasPage = new PageImpl<>(consultas, pageableMock, consultas.size());
+        when(consultaRepositoryMock.findByData(LocalDate.parse(data), pageableMock)).thenReturn(consultasPage);
+        Page<ConsultaAgendadaDTO> consultasAgendadasPage = consultaService.visualizarConsultasDoDia(data, pageableMock);
+        assertAll("Retorno deve ser uma paginação válida.",
+                () -> assertNotNull(consultasAgendadasPage, "Paginação não é nula."),
+                () -> assertNotNull(consultasAgendadasPage.getContent().getFirst(), "O conteúdo da paginação não é nulo"),
+                () -> assertEquals(1, consultasAgendadasPage.getTotalElements(), "O número total de elementos deve ser um."),
+                () -> assertInstanceOf(ConsultaAgendadaDTO.class, consultasAgendadasPage.getContent().getFirst(), "O elemento da paginação é uma instância de um ResponseTodosPacientes DTO.")
+        );
     }
 
     private Consulta getConsulta() {

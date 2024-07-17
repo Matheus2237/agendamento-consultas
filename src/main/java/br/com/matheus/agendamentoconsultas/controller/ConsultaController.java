@@ -1,23 +1,31 @@
 package br.com.matheus.agendamentoconsultas.controller;
 
+import br.com.matheus.agendamentoconsultas.constraints.ValidDataRequisicaoConsulta;
 import br.com.matheus.agendamentoconsultas.controller.dto.ConsultaAgendadaDTO;
 import br.com.matheus.agendamentoconsultas.controller.dto.ConsultaRequestDTO;
 import br.com.matheus.agendamentoconsultas.exception.handler.dto.ConsultaNaoAgendadaDTO;
-import br.com.matheus.agendamentoconsultas.exception.handler.dto.FailedRequestValidationDTO;
+import br.com.matheus.agendamentoconsultas.exception.handler.dto.FailedFieldRequestValidationDTO;
 import br.com.matheus.agendamentoconsultas.model.Consulta;
 import br.com.matheus.agendamentoconsultas.service.ConsultaService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
+
+import static org.springframework.data.domain.Sort.Direction.ASC;
 
 /**
  * <p>
@@ -33,6 +41,7 @@ import java.net.URI;
 @Tag(
         name = "Consulta",
         description = "Serviço para gerenciar agendamentos de consultas.")
+@Validated
 @RestController
 @RequestMapping("/consulta")
 public class ConsultaController {
@@ -58,7 +67,7 @@ public class ConsultaController {
             description = "Requisição inválida",
             content = @Content(
                     mediaType = "application/json",
-                    schema = @Schema(implementation = FailedRequestValidationDTO.class)))
+                    schema = @Schema(implementation = FailedFieldRequestValidationDTO.class)))
     @ApiResponse(
             responseCode = "404",
             description = "Médico não encontrado",
@@ -97,5 +106,27 @@ public class ConsultaController {
     public ResponseEntity<Void> cancelar(@PathVariable Long id) {
         consultaService.cancelar(id);
         return ResponseEntity.ok().build();
+    }
+
+    @Operation(
+            summary = "Relatório de consultas no dia.",
+            description = "Retorna uma lista paginada de todas as consultas agendadas para um dia espeífico")
+    @ApiResponse(
+            responseCode = "200",
+            description = "Sucesso",
+            content = @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = ConsultaAgendadaDTO.class)))
+    @GetMapping
+    public ResponseEntity<Page<ConsultaAgendadaDTO>> visualizarConsultasDoDia(
+            @RequestParam @ValidDataRequisicaoConsulta(message = "Data inválida.") String dia,
+            @Parameter(
+                    description = "Informações de paginação e ordenação.",
+                    schema = @Schema(
+                            implementation = Pageable.class,
+                            example = "{ \"page\": 0, \"size\": 20, \"sort\": [\"medico.nome\", \"horario\"] }"))
+            @PageableDefault(size = 20, sort = {"medico.nome", "horario"}, direction = ASC) Pageable pageable) {
+        Page<ConsultaAgendadaDTO> consultasNoDia = consultaService.visualizarConsultasDoDia(dia, pageable);
+        return ResponseEntity.ok().body(consultasNoDia);
     }
 }

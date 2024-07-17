@@ -21,7 +21,7 @@ import java.lang.annotation.Target;
  * @since 1.0.0
  */
 @Constraint(validatedBy = ValidDataRequisicaoConsultaValidator.class)
-@Target(ElementType.FIELD)
+@Target({ElementType.PARAMETER, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ValidDataRequisicaoConsulta {
 

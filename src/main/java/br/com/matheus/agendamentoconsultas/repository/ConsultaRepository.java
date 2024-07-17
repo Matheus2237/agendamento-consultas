@@ -1,6 +1,8 @@
 package br.com.matheus.agendamentoconsultas.repository;
 
 import br.com.matheus.agendamentoconsultas.model.Consulta;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -73,4 +75,14 @@ public interface ConsultaRepository extends JpaRepository<Consulta, Long> {
     )
     Long existsMoreThanTwelveConsultationsForAnSpecifiedDayAndDoctor(@Param("medicoId") Long medicoId,
                                                                         @Param("data") String data);
+
+
+    /**
+     * Busca uma página de consultas para uma data específica.
+     *
+     * @param data a data das consultas a serem buscadas.
+     * @param pageable o objeto de paginação que especifica a página, o tamanho da página e a ordenação.
+     * @return uma página de consultas que ocorrem na data especificada.
+     */
+    Page<Consulta> findByData(LocalDate data, Pageable pageable);
 }

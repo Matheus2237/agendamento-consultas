@@ -5,12 +5,13 @@ import br.com.matheus.agendamentoconsultas.exception.ConsultaNaoPodeSerMarcadaEx
 import br.com.matheus.agendamentoconsultas.exception.MedicoNaoEncontradoException;
 import br.com.matheus.agendamentoconsultas.exception.PacienteNaoEncontradoException;
 import br.com.matheus.agendamentoconsultas.exception.handler.dto.ConsultaNaoAgendadaDTO;
-import br.com.matheus.agendamentoconsultas.exception.handler.dto.FailedRequestValidationDTO;
+import br.com.matheus.agendamentoconsultas.exception.handler.dto.FailedFieldRequestValidationDTO;
+import br.com.matheus.agendamentoconsultas.exception.handler.dto.FailedParameterRequestValidationDTO;
 import io.swagger.v3.oas.annotations.Hidden;
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -33,9 +34,9 @@ import static org.springframework.http.HttpStatus.*;
  * <p>
  * As exceções tratadas incluem:
  * <ul>
- *   <li>{@link org.springframework.web.bind.MethodArgumentNotValidException}</li>
- *   <li>{@link br.com.matheus.agendamentoconsultas.exception.MedicoNaoEncontradoException}</li>
- *   <li>{@link br.com.matheus.agendamentoconsultas.exception.PacienteNaoEncontradoException}</li>
+ *   <li>{@link MethodArgumentNotValidException}</li>
+ *   <li>{@link MedicoNaoEncontradoException}</li>
+ *   <li>{@link PacienteNaoEncontradoException}</li>
  * </ul>
  * </p>
  *
@@ -62,7 +63,7 @@ public class ApplicationExceptionHandler {
     }
 
     /**
-     * Handler para {@link org.springframework.web.bind.MethodArgumentNotValidException}.
+     * Handler para {@link MethodArgumentNotValidException}.
      *
      * @param exception A exceção lançada quando argumentos de método não são válidos.
      * @return Uma lista de mensagens de erro de validação.
@@ -70,10 +71,10 @@ public class ApplicationExceptionHandler {
     @Hidden
     @ResponseStatus(BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public List<FailedRequestValidationDTO> handle(MethodArgumentNotValidException exception) {
+    public List<FailedFieldRequestValidationDTO> handle(MethodArgumentNotValidException exception) {
         List<FieldError> camposInvalidos = exception.getBindingResult().getFieldErrors();
         return camposInvalidos.stream()
-                .map(this::getMensagemDeErroDeValidacaoDeCampoFormatada)
+                .map(this::getMensagemFormatadaDeErroDeValidacaoDeCampo)
                 .toList();
     }
 
@@ -83,13 +84,30 @@ public class ApplicationExceptionHandler {
      * @param campoInvalido O campo que está com erro.
      * @return Um DTO da mensagem de erro de validação.
      */
-    private FailedRequestValidationDTO getMensagemDeErroDeValidacaoDeCampoFormatada(FieldError campoInvalido) {
+    private FailedFieldRequestValidationDTO getMensagemFormatadaDeErroDeValidacaoDeCampo(FieldError campoInvalido) {
         String mensagem = messageSource.getMessage(campoInvalido, LocaleContextHolder.getLocale());
-        return new FailedRequestValidationDTO(campoInvalido.getField(), mensagem);
+        return new FailedFieldRequestValidationDTO(campoInvalido.getField(), mensagem);
     }
 
     /**
-     * Handler para {@link br.com.matheus.agendamentoconsultas.exception.MedicoNaoEncontradoException}.
+     * Handler para {@link ConstraintViolationException}.
+     *
+     * @param exception A exceção lançada quando parâmetros de consultas não são válidos.
+     * @return Uma lista de mensagens de erro de validação.
+     */
+    @Hidden
+    @ResponseStatus(BAD_REQUEST)
+    @ExceptionHandler(ConstraintViolationException.class)
+    public List<FailedParameterRequestValidationDTO> handle(ConstraintViolationException exception) {
+        return exception.getConstraintViolations().stream()
+                .map(constraintViolation -> new FailedParameterRequestValidationDTO(
+                        constraintViolation.getPropertyPath().toString(),
+                        constraintViolation.getMessage()))
+                .toList();
+    }
+
+    /**
+     * Handler para {@link MedicoNaoEncontradoException}.
      *
      * @param exception A exceção lançada quando um médico não é encontrado.
      * @return A mensagem de erro da exceção.
@@ -102,7 +120,7 @@ public class ApplicationExceptionHandler {
     }
 
     /**
-     * Handler para {@link br.com.matheus.agendamentoconsultas.exception.PacienteNaoEncontradoException}.
+     * Handler para {@link PacienteNaoEncontradoException}.
      *
      * @param exception A exceção lançada quando um paciente não é encontrado.
      * @return A mensagem de erro da exceção.
@@ -115,7 +133,7 @@ public class ApplicationExceptionHandler {
     }
 
     /**
-     * Handler para {@link br.com.matheus.agendamentoconsultas.exception.ConsultaNaoEncontradaException}.
+     * Handler para {@link ConsultaNaoEncontradaException}.
      *
      * @param exception A exceção lançada quando um paciente não é encontrado.
      * @return A mensagem de erro da exceção.
@@ -128,7 +146,7 @@ public class ApplicationExceptionHandler {
     }
 
     /**
-     * Handler para {@link br.com.matheus.agendamentoconsultas.exception.ConsultaNaoPodeSerMarcadaException}.
+     * Handler para {@link ConsultaNaoPodeSerMarcadaException}.
      *
      * @param exception A exceção lançada quando uma consulta não pode ser agendada.
      * @return Um {@link ConsultaNaoAgendadaDTO} com o motivo da consulta não agendada.

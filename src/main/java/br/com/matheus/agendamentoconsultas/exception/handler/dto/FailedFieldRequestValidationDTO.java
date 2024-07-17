@@ -4,7 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * <p>
- * DTO para representar erros de validação de requisição.
+ * DTO para representar erros de validação de campos da requisição.
  * </p>
  * <p>
  * Este DTO contém o campo que falhou na validação e a mensagem de erro associada.
@@ -13,8 +13,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
  * @author Matheus Paulino Ribeiro
  * @since 1.0.0
  */
-@Schema(description = "DTO para representar erros de validação de requisição")
-public record FailedRequestValidationDTO(
+@Schema(description = "DTO para representar erros de validação de campos da requisição")
+public record FailedFieldRequestValidationDTO(
 
         @Schema(description = "O campo que falhou na validação", example = "nome")
         String campo,
