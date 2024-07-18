@@ -240,6 +240,22 @@ class ConsultaServiceTest {
         );
     }
 
+    @Test
+    void deveRetornarUmaPaginaDeConsultasAgendadasParaUmMesEspecifico() {
+        final int mes = 1;
+        final int ano = 2024;
+        List<Consulta> consultas = Collections.singletonList(getConsulta());
+        Page<Consulta> consultasPage = new PageImpl<>(consultas, pageableMock, consultas.size());
+        when(consultaRepositoryMock.findAllByMonthAndYear(mes, ano, pageableMock)).thenReturn(consultasPage);
+        Page<ConsultaAgendadaDTO> consultasAgendadasPage = consultaService.visualizarConsultasDoMes(mes, ano, pageableMock);
+        assertAll("Retorno deve ser uma paginação válida.",
+                () -> assertNotNull(consultasAgendadasPage, "Paginação não é nula."),
+                () -> assertNotNull(consultasAgendadasPage.getContent().getFirst(), "O conteúdo da paginação não é nulo"),
+                () -> assertEquals(1, consultasAgendadasPage.getTotalElements(), "O número total de elementos deve ser um."),
+                () -> assertInstanceOf(ConsultaAgendadaDTO.class, consultasAgendadasPage.getContent().getFirst(), "O elemento da paginação é uma instância de um ResponseTodosPacientes DTO.")
+        );
+    }
+
     private Consulta getConsulta() {
         return Consulta.builder()
                 .id(consultaId)

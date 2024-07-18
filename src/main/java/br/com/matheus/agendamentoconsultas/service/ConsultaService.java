@@ -151,4 +151,17 @@ public class ConsultaService {
         Page<Consulta> consultas = consultaRepository.findByData(LocalDate.parse(data), pageable);
         return consultas.map(ConsultaAgendadaDTO::new);
     }
+
+    /**
+     * Busca uma página de consultas agendadas em um mês específico.
+     *
+     * @param mes a mês das consultas a serem buscadas.
+     * @param ano o ano das consultas a serem buscadas.
+     * @param pageable o objeto de paginação que especifica a página, o tamanho da página e a ordenação.
+     * @return uma página de {@link ConsultaAgendadaDTO} que representa as consultas agendadas para o mês especificado.
+     */
+    public Page<ConsultaAgendadaDTO> visualizarConsultasDoMes(int mes, int ano, Pageable pageable) {
+        Page<Consulta> consultas = consultaRepository.findAllByMonthAndYear(mes, ano, pageable);
+        return consultas.map(ConsultaAgendadaDTO::new);
+    }
 }

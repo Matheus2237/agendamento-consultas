@@ -14,6 +14,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -104,6 +105,24 @@ public class ApplicationExceptionHandler {
                         constraintViolation.getPropertyPath().toString(),
                         constraintViolation.getMessage()))
                 .toList();
+    }
+
+    /**
+     * Handler para {@link MissingServletRequestParameterException}.
+     *
+     * @param exception A exceção lançada quando um parâmetro da consulta não está presente.
+     * @return Uma mensagem de erro de validação.
+     */
+    @Hidden
+    @ResponseStatus(BAD_REQUEST)
+    @ExceptionHandler(MissingServletRequestParameterException.class)
+    public Object handle(MissingServletRequestParameterException exception) {
+        String nomeParametro = exception.getParameterName();
+        String mensagemErro = "O parâmetro ".concat(nomeParametro).concat(" é obrigatório.");
+        return new FailedParameterRequestValidationDTO(
+                nomeParametro,
+                mensagemErro
+        );
     }
 
     /**

@@ -76,7 +76,6 @@ public interface ConsultaRepository extends JpaRepository<Consulta, Long> {
     Long existsMoreThanTwelveConsultationsForAnSpecifiedDayAndDoctor(@Param("medicoId") Long medicoId,
                                                                         @Param("data") String data);
 
-
     /**
      * Busca uma página de consultas para uma data específica.
      *
@@ -85,4 +84,24 @@ public interface ConsultaRepository extends JpaRepository<Consulta, Long> {
      * @return uma página de consultas que ocorrem na data especificada.
      */
     Page<Consulta> findByData(LocalDate data, Pageable pageable);
+
+    /**
+     * Recupera uma página ordenada de Consultas para um mês e ano específicos.
+     *
+     * @param mes o mês para filtrar. (1-12)
+     * @param ano o ano para filtrar.
+     * @param pageable o objeto de paginação que especifica a página, o tamanho da página e a ordenação.
+     * @return uma página de Consultas para o mês e ano especificados
+     */
+    @Query(
+            value = """
+                    SELECT c
+                    FROM Consulta c
+                        JOIN c.medico m
+                    WHERE FUNCTION('MONTH', c.data) = :mes
+                        AND FUNCTION('YEAR', c.data) = :ano
+                    ORDER BY m.nome ASC, c.data ASC, c.horario ASC
+                    """
+    )
+    Page<Consulta> findAllByMonthAndYear(@Param("mes") int mes, @Param("ano") int ano, Pageable pageable);
 }

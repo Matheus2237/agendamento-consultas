@@ -5,6 +5,7 @@ import br.com.matheus.agendamentoconsultas.controller.dto.ConsultaAgendadaDTO;
 import br.com.matheus.agendamentoconsultas.controller.dto.ConsultaRequestDTO;
 import br.com.matheus.agendamentoconsultas.exception.handler.dto.ConsultaNaoAgendadaDTO;
 import br.com.matheus.agendamentoconsultas.exception.handler.dto.FailedFieldRequestValidationDTO;
+import br.com.matheus.agendamentoconsultas.exception.handler.dto.FailedParameterRequestValidationDTO;
 import br.com.matheus.agendamentoconsultas.model.Consulta;
 import br.com.matheus.agendamentoconsultas.service.ConsultaService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -14,6 +15,9 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -117,7 +121,13 @@ public class ConsultaController {
             content = @Content(
                     mediaType = "application/json",
                     schema = @Schema(implementation = ConsultaAgendadaDTO.class)))
-    @GetMapping
+    @ApiResponse(
+            responseCode = "400",
+            description = "Requisição inválida",
+            content = @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = FailedParameterRequestValidationDTO.class)))
+    @GetMapping("/dia")
     public ResponseEntity<Page<ConsultaAgendadaDTO>> visualizarConsultasDoDia(
             @RequestParam @ValidDataRequisicaoConsulta(message = "Data inválida.") String dia,
             @Parameter(
@@ -128,5 +138,41 @@ public class ConsultaController {
             @PageableDefault(size = 20, sort = {"medico.nome", "horario"}, direction = ASC) Pageable pageable) {
         Page<ConsultaAgendadaDTO> consultasNoDia = consultaService.visualizarConsultasDoDia(dia, pageable);
         return ResponseEntity.ok().body(consultasNoDia);
+    }
+
+    @Operation(
+            summary = "Relatório de consultas no mês.",
+            description = "Retorna uma lista paginada de todas as consultas agendadas para um mês espeífico")
+    @ApiResponse(
+            responseCode = "200",
+            description = "Sucesso",
+            content = @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = ConsultaAgendadaDTO.class)))
+    @ApiResponse(
+            responseCode = "400",
+            description = "Requisição inválida",
+            content = @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = FailedParameterRequestValidationDTO.class)))
+    @GetMapping("/mes")
+    public ResponseEntity<Page<ConsultaAgendadaDTO>> visualizarConsultasDoMes(
+            @RequestParam
+            @Min(value = 1, message = "O valor do mês deve ser maior ou igual a 1")
+            @Max(value = 12, message = "O valor do mês deve ser menor ou igual a 12")
+            int mes,
+            @RequestParam
+            @Min(value = 1900, message = "O valor do ano deve ser maior ou igual a 1900")
+            @Max(value = 9999, message = "O valor do ano deve ser menor ou igual a 9999")
+            int ano,
+            @Parameter(
+                    description = "Informações de paginação e ordenação.",
+                    schema = @Schema(
+                            implementation = Pageable.class,
+                            example = "{ \"page\": 0, \"size\": 20, \"sort\": [\"medico.nome\", \"horario\"] }"))
+            @PageableDefault(size = 20, sort = {"medico.nome", "horario"}, direction = ASC)
+            Pageable pageable) {
+        Page<ConsultaAgendadaDTO> consultasNoMes = consultaService.visualizarConsultasDoMes(mes, ano, pageable);
+        return ResponseEntity.ok().body(consultasNoMes);
     }
 }
