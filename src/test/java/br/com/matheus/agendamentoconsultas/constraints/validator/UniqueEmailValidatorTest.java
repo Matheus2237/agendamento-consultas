@@ -1,5 +1,6 @@
 package br.com.matheus.agendamentoconsultas.constraints.validator;
 
+import br.com.matheus.agendamentoconsultas.base.MockedUnitTest;
 import br.com.matheus.agendamentoconsultas.constraints.UniqueEmail;
 import br.com.matheus.agendamentoconsultas.repository.EmailRepository;
 import jakarta.validation.ConstraintValidatorContext;
@@ -17,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.openMocks;
 
-class UniqueEmailValidatorTest {
+class UniqueEmailValidatorTest extends MockedUnitTest {
 
     @InjectMocks
     private UniqueEmailValidator validator;
@@ -39,20 +40,11 @@ class UniqueEmailValidatorTest {
 
     private static final String EMAIL = "exemplo@email.com";
 
-    private AutoCloseable mocks;
-
     @BeforeEach
     void setUp() {
-        mocks = openMocks(this);
         when(uniqueEmailMock.repository()).thenAnswer(invocation -> JpaRepository.class);
         when(applicationContextMock.getBean(JpaRepository.class)).thenReturn(jpaRepositoryMock);
         validator.initialize(uniqueEmailMock);
-    }
-
-    @AfterEach
-    @SneakyThrows
-    void tearDown() {
-        mocks.close();
     }
 
     @Test

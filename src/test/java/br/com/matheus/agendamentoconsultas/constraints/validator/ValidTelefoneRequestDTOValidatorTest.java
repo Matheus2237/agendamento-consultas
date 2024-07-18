@@ -1,5 +1,6 @@
 package br.com.matheus.agendamentoconsultas.constraints.validator;
 
+import br.com.matheus.agendamentoconsultas.base.MockedUnitTest;
 import br.com.matheus.agendamentoconsultas.controller.dto.TelefoneRequestDTO;
 import jakarta.validation.ConstraintValidatorContext;
 import lombok.SneakyThrows;
@@ -12,26 +13,13 @@ import org.mockito.MockitoAnnotations;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ValidTelefoneRequestDTOValidatorTest {
+class ValidTelefoneRequestDTOValidatorTest extends MockedUnitTest {
 
     @InjectMocks
     private ValidTelefoneRequestDTOValidator validator;
 
     @Mock
     private ConstraintValidatorContext contextMock;
-
-    private AutoCloseable mocks;
-
-    @BeforeEach
-    void setUp() {
-        mocks = MockitoAnnotations.openMocks(this);
-    }
-
-    @AfterEach
-    @SneakyThrows
-    void tearDown() {
-        mocks.close();
-    }
 
     @Test
     void deveRetornarTrueQuandoOFormatoDoTelefoneEstiverValido() {

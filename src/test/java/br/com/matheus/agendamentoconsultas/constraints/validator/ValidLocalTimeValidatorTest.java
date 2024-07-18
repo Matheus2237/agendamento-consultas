@@ -1,5 +1,6 @@
 package br.com.matheus.agendamentoconsultas.constraints.validator;
 
+import br.com.matheus.agendamentoconsultas.base.MockedUnitTest;
 import jakarta.validation.ConstraintValidatorContext;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,25 +11,13 @@ import org.mockito.MockitoAnnotations;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ValidLocalTimeValidatorTest {
+class ValidLocalTimeValidatorTest extends MockedUnitTest {
 
     @InjectMocks
     private ValidLocalTimeValidator validator;
 
     @Mock
     private ConstraintValidatorContext contextMock;
-
-    private AutoCloseable mocks;
-
-    @BeforeEach
-    void setUp() {
-        mocks = MockitoAnnotations.openMocks(this);
-    }
-
-    @AfterEach
-    void tearDown() throws Exception {
-        mocks.close();
-    }
 
     @Test
     void deveRetornarTrueAoReceberHorarioComFormatoValido() {

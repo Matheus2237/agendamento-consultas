@@ -1,5 +1,6 @@
 package br.com.matheus.agendamentoconsultas.service;
 
+import br.com.matheus.agendamentoconsultas.base.MockedUnitTest;
 import br.com.matheus.agendamentoconsultas.controller.dto.*;
 import br.com.matheus.agendamentoconsultas.exception.PacienteNaoEncontradoException;
 import br.com.matheus.agendamentoconsultas.model.Endereco;
@@ -28,7 +29,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.openMocks;
 
-class PacienteServiceTest {
+class PacienteServiceTest extends MockedUnitTest {
 
     @InjectMocks
     private PacienteService pacienteService;
@@ -51,19 +52,6 @@ class PacienteServiceTest {
     private final String cidade = "Cidade";
     private final String uf = "MG";
     private final String cep = "11111111";
-
-    private AutoCloseable mocks;
-
-    @BeforeEach
-    void setUp() {
-        mocks = openMocks(this);
-    }
-
-    @AfterEach
-    @SneakyThrows
-    void tearDown() {
-        mocks.close();
-    }
 
     @Test
     void deveRetornarUmaPaginaDePacientesCadastrados() {

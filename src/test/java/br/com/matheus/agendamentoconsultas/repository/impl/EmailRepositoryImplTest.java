@@ -1,5 +1,6 @@
 package br.com.matheus.agendamentoconsultas.repository.impl;
 
+import br.com.matheus.agendamentoconsultas.base.MockedUnitTest;
 import br.com.matheus.agendamentoconsultas.repository.MedicoRepository;
 import br.com.matheus.agendamentoconsultas.repository.PacienteRepository;
 import lombok.SneakyThrows;
@@ -14,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.openMocks;
 
-class EmailRepositoryImplTest {
+class EmailRepositoryImplTest extends MockedUnitTest {
 
     @InjectMocks
     private EmailRepositoryImpl emailRepository;
@@ -29,19 +30,6 @@ class EmailRepositoryImplTest {
     private MedicoRepository medicoRepositoryMock;
 
     private static final String EMAIL = "exemplo@email.com";
-
-    private AutoCloseable mocks;
-
-    @BeforeEach
-    void setUp() {
-        mocks = openMocks(this);
-    }
-
-    @AfterEach
-    @SneakyThrows
-    void tearDown() {
-        mocks.close();
-    }
 
     @Test
     void deveRetornarTrueSeOEmailExistirNaTabelaDeMedicos() {

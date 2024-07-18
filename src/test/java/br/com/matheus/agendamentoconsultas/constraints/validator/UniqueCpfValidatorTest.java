@@ -1,5 +1,6 @@
 package br.com.matheus.agendamentoconsultas.constraints.validator;
 
+import br.com.matheus.agendamentoconsultas.base.MockedUnitTest;
 import br.com.matheus.agendamentoconsultas.repository.PacienteRepository;
 import jakarta.validation.ConstraintValidatorContext;
 import lombok.SneakyThrows;
@@ -14,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.openMocks;
 
-class UniqueCpfValidatorTest {
+class UniqueCpfValidatorTest extends MockedUnitTest {
 
     @InjectMocks
     private UniqueCpfValidator validator;
@@ -25,20 +26,7 @@ class UniqueCpfValidatorTest {
     @Mock
     private ConstraintValidatorContext context;
 
-    private AutoCloseable mocks;
-
     private static final String CPF = "12345678900";
-
-    @BeforeEach
-    void setUp() {
-        mocks = openMocks(this);
-    }
-
-    @AfterEach
-    @SneakyThrows
-    void tearDown() {
-        mocks.close();
-    }
 
     @Test
     void deveRetornarVerdadeiroAoPassarUmCpfUnicoNoSistema() {

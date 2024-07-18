@@ -1,37 +1,21 @@
 package br.com.matheus.agendamentoconsultas.constraints.validator;
 
+import br.com.matheus.agendamentoconsultas.base.MockedUnitTest;
 import br.com.matheus.agendamentoconsultas.controller.dto.EnderecoRequestDTO;
 import jakarta.validation.ConstraintValidatorContext;
-import lombok.SneakyThrows;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ValidEnderecoRequestDTOValidatorTest {
+class ValidEnderecoRequestDTOValidatorTest extends MockedUnitTest {
 
     @InjectMocks
     private ValidEnderecoRequestDTOValidator validator;
 
     @Mock
     private ConstraintValidatorContext contextMock;
-
-    private AutoCloseable mocks;
-
-    @BeforeEach
-    void setUp() {
-        mocks = MockitoAnnotations.openMocks(this);
-    }
-
-    @AfterEach
-    @SneakyThrows
-    void tearDown() {
-        mocks.close();
-    }
 
     @Test
     void deveRetornarTrueQuandoUmEnderecoTiverUFECEPInconsistentes() {

@@ -1,5 +1,6 @@
 package br.com.matheus.agendamentoconsultas.constraints.validator;
 
+import br.com.matheus.agendamentoconsultas.base.MockedUnitTest;
 import jakarta.validation.ConstraintValidatorContext;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.AfterEach;
@@ -11,26 +12,13 @@ import org.mockito.MockitoAnnotations;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ValidEspecializacaoValidatorTest {
+class ValidEspecializacaoValidatorTest extends MockedUnitTest {
 
     @InjectMocks
     private ValidEspecializacaoValidator validator;
 
     @Mock
     private ConstraintValidatorContext contextMock;
-
-    private AutoCloseable mocks;
-
-    @BeforeEach
-    void setUp() {
-        mocks = MockitoAnnotations.openMocks(this);
-    }
-
-    @AfterEach
-    @SneakyThrows
-    void tearDown() {
-        mocks.close();
-    }
 
     @Test
     void deveRetornarTrueAoReceberUmaEspecializacaoValidaEmUpperCase() {

@@ -1,5 +1,6 @@
 package br.com.matheus.agendamentoconsultas.service;
 
+import br.com.matheus.agendamentoconsultas.base.MockedUnitTest;
 import br.com.matheus.agendamentoconsultas.controller.dto.ConsultaAgendadaDTO;
 import br.com.matheus.agendamentoconsultas.controller.dto.ConsultaRequestDTO;
 import br.com.matheus.agendamentoconsultas.exception.ConsultaNaoEncontradaException;
@@ -33,9 +34,8 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
-import static org.mockito.MockitoAnnotations.openMocks;
 
-class ConsultaServiceTest {
+class ConsultaServiceTest extends MockedUnitTest {
 
     @InjectMocks
     private ConsultaService consultaService;
@@ -67,8 +67,6 @@ class ConsultaServiceTest {
     @Mock
     private ValidacaoMaximoDeDozeConsultasPorDiaPorMedico validacaoMaximoDeDozeConsultasPorDiaPorMedicoMock;
 
-    private List<ValidacaoAgendamentoConsulta> validacoesMock;
-
     @Mock
     private Pageable pageableMock;
 
@@ -80,12 +78,9 @@ class ConsultaServiceTest {
     private final String data = LocalDate.now().plusDays(1).toString();
     private final String horario = "14:00";
 
-    private AutoCloseable mocks;
-
     @BeforeEach
     void setUp() {
-        mocks = openMocks(this);
-        validacoesMock = Arrays.asList(
+        List<ValidacaoAgendamentoConsulta> validacoesMock = Arrays.asList(
                 validacaoHorarioConsultaDentroDoHorarioDeAtendimentoMock,
                 validacaoUmaConsultaPorDiaPorPacienteMock,
                 validacaoConsultaNaoAgendadaParaMesmoMedicoNoMesmoHorarioMock,
@@ -97,12 +92,6 @@ class ConsultaServiceTest {
                 medicoRepositoryMock,
                 validacoesMock
         );
-    }
-
-    @AfterEach
-    @SneakyThrows
-    void tearDown() {
-        mocks.close();
     }
 
     @Test

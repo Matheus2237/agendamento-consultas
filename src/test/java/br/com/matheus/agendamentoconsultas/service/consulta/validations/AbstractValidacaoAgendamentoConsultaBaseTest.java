@@ -1,5 +1,6 @@
 package br.com.matheus.agendamentoconsultas.service.consulta.validations;
 
+import br.com.matheus.agendamentoconsultas.base.MockedUnitTest;
 import br.com.matheus.agendamentoconsultas.model.Consulta;
 import br.com.matheus.agendamentoconsultas.model.Medico;
 import br.com.matheus.agendamentoconsultas.model.Paciente;
@@ -15,7 +16,7 @@ import java.time.LocalTime;
 import static br.com.matheus.agendamentoconsultas.model.enums.DiaDaSemana.getDiaDaSemanaPelaData;
 import static org.mockito.MockitoAnnotations.openMocks;
 
-abstract class AbstractValidacaoAgendamentoConsultaBaseTest {
+abstract class AbstractValidacaoAgendamentoConsultaBaseTest extends MockedUnitTest {
 
     protected static Long medicoId;
     protected static Long pacienteId;
@@ -24,8 +25,6 @@ abstract class AbstractValidacaoAgendamentoConsultaBaseTest {
     protected static LocalDate data;
     protected static LocalTime horarioConsulta;
     protected static DiaDaSemana diaDaSemana;
-
-    protected AutoCloseable mocks;
 
     @BeforeAll
     static void setUpBeforeAll() {
@@ -36,17 +35,6 @@ abstract class AbstractValidacaoAgendamentoConsultaBaseTest {
         data = LocalDate.now().plusDays(1);
         horarioConsulta = LocalTime.parse("10:00");
         diaDaSemana = getDiaDaSemanaPelaData(data);
-    }
-
-    @BeforeEach
-    void setUp() {
-        mocks = openMocks(this);
-    }
-
-    @AfterEach
-    @SneakyThrows
-    void tearDown() {
-        mocks.close();
     }
 
     protected Consulta getEntidadeConsulta() {
