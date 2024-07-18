@@ -4,10 +4,11 @@ import br.com.matheus.agendamentoconsultas.constraints.validator.ValidLocalTimeV
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 
-import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+
+import static java.lang.annotation.ElementType.FIELD;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
  * <p>
@@ -21,8 +22,8 @@ import java.lang.annotation.Target;
  * @since 1.0.0
  */
 @Constraint(validatedBy = ValidLocalTimeValidator.class)
-@Target(ElementType.FIELD)
-@Retention(RetentionPolicy.RUNTIME)
+@Target(FIELD)
+@Retention(RUNTIME)
 public @interface ValidLocalTime {
 
     String message();

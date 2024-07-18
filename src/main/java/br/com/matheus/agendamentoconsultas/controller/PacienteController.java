@@ -17,7 +17,6 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -25,6 +24,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
+
+import static org.springframework.data.domain.Sort.Direction.ASC;
 
 /**
  * <p>
@@ -67,7 +68,7 @@ public class PacienteController {
                     schema = @Schema(
                             implementation = Pageable.class,
                             example = "{ \"page\": 0, \"size\": 20, \"sort\": \"nome,ASC\" }"))
-            @PageableDefault(size = 20, sort = "nome", direction = Direction.ASC) Pageable pageable) {
+            @PageableDefault(size = 20, sort = "nome", direction = ASC) Pageable pageable) {
         Page<ResponseTodosPacientesDTO> pacientes = this.pacienteService.visualizarTodos(pageable);
         return ResponseEntity.ok().body(pacientes);
     }

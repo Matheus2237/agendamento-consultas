@@ -1,7 +1,8 @@
 package br.com.matheus.agendamentoconsultas.exception;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
+
+import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
 
 /**
  * <p>
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  * @author Matheus Paulino Ribeiro
  * @since 1.0.0
  */
-@ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+@ResponseStatus(UNPROCESSABLE_ENTITY)
 public class ConsultaNaoPodeSerMarcadaException extends RuntimeException {
 
     /**

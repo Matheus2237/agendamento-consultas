@@ -19,7 +19,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 @Schema(description = "DTO para representar detalhes de uma consulta que não pode ser agendada")
 public record ConsultaNaoAgendadaDTO(
 
-        @Schema(description = "O motivo pelo qual a consulta não pôde ser agendada", example = "Não há horários disponíveis para o médico nesta data e horário")
+        @Schema(description = "O motivo pelo qual a consulta não pôde ser agendada",
+                example = "Não há horários disponíveis para o médico nesta data e horário")
         String motivo
 ) {
 }

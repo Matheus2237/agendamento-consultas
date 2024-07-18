@@ -4,10 +4,11 @@ import br.com.matheus.agendamentoconsultas.constraints.validator.ValidDataFutura
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 
-import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+
+import static java.lang.annotation.ElementType.FIELD;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
  * <p>
@@ -21,8 +22,8 @@ import java.lang.annotation.Target;
  * @since 1.0.0
  */
 @Constraint(validatedBy = ValidDataFuturaValidator.class)
-@Target(ElementType.FIELD)
-@Retention(RetentionPolicy.RUNTIME)
+@Target(FIELD)
+@Retention(RUNTIME)
 public @interface ValidDataFutura {
 
     String message() default "Data da solicitação já passada.";
