@@ -5,6 +5,9 @@ import jakarta.validation.ConstraintValidatorContext;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.NullAndEmptySource;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -19,46 +22,34 @@ class ValidLocalTimeValidatorTest extends MockedUnitTest {
     @Mock
     private ConstraintValidatorContext contextMock;
 
-    @Test
-    void deveRetornarTrueAoReceberHorarioComFormatoValido() {
-        assertAll("Horários válidos.",
-                () -> assertTrue(validator.isValid("00:00", contextMock), "00:00 deve ser válido."),
-                () -> assertTrue(validator.isValid("09:30", contextMock), "09:30 deve ser válido."),
-                () -> assertTrue(validator.isValid("12:30", contextMock), "12:30 deve ser válido."),
-                () -> assertTrue(validator.isValid("23:30", contextMock), "23:30 deve ser válido.")
-        );
+    @ParameterizedTest
+    @ValueSource(strings = {
+            "00:00", "09:30", "12:30", "23:30"
+    })
+    void deveRetornarTrueAoReceberHorarioComFormatoValido(String horario) {
+        assertTrue(validator.isValid(horario, contextMock), horario.concat(" deve ser válido."));
     }
 
-    @Test
-    void deveRetornarFalseCasoOHorarioEstejaEmFormatoInvalido() {
-        assertAll("Horários inválidos.",
-                () -> assertFalse(validator.isValid("24:00", contextMock), "Falhou para o horário inválido: 24:00."),
-                () -> assertFalse(validator.isValid("12:60", contextMock), "Falhou para o horário inválido: 12:60."),
-                () -> assertFalse(validator.isValid("1:00", contextMock), "Falhou para o horário inválido: 1:00."),
-                () -> assertFalse(validator.isValid("09:5", contextMock), "Falhou para o horário inválido: 09:5."),
-                () -> assertFalse(validator.isValid("25:00", contextMock), "Falhou para o horário inválido: 25:00."),
-                () -> assertFalse(validator.isValid("23:59:59", contextMock), "Falhou para o horário inválido: 23:59:59."),
-                () -> assertFalse(validator.isValid("abcd", contextMock), "Falhou para o horário inválido: abcd."),
-                () -> assertFalse(validator.isValid("12-30", contextMock), "Falhou para o horário inválido: 12-30.")
-        );
+    @ParameterizedTest
+    @ValueSource(strings = {
+            "24:00", "12:60", "1:00", "09:5",
+            "25:00", "23:59:59", "abcd", "12-30"
+    })
+    void deveRetornarFalseCasoOHorarioEstejaEmFormatoInvalido(String horario) {
+        assertFalse(validator.isValid(horario, contextMock), "Horário inválido: ".concat(horario));
     }
 
-    @Test
-    void deveRetornarTrueCasoOHorarioSejaNuloOuVazio() {
-        assertAll("Horários vazios ou nulos",
-                () -> assertTrue(validator.isValid("", contextMock), "Falhou para horário com espaço em branco."),
-                () -> assertTrue(validator.isValid("", contextMock), "Falhou para horário vazio."),
-                () -> assertTrue(validator.isValid(null, contextMock), "Falhou para horário nulo.")
-        );
+    @ParameterizedTest
+    @ValueSource(strings = {
+            "23:59", "00:01", "12:15", "14:37"
+    })
+    void deveRetornarFalseCasoOHorarioNaoTermineEmPontoOuEm30Minutos(String horario) {
+        assertFalse(validator.isValid(horario, contextMock), "Horário não termina em 00 ou 30 minutos.");
     }
 
-    @Test
-    void deveRetornarFalseCasoOHorarioNaoTermineEmPontoOuEm30Minutos() {
-        assertAll("Horários inválidos.",
-                () -> assertFalse(validator.isValid("23:59", contextMock), "Falhou para o horário inválido: 23:59."),
-                () -> assertFalse(validator.isValid("00:01", contextMock), "Falhou para o horário inválido: 00:01."),
-                () -> assertFalse(validator.isValid("12:15", contextMock), "Falhou para o horário inválido: 12:15."),
-                () -> assertFalse(validator.isValid("14:37", contextMock), "Falhou para o horário inválido: 14:37.")
-        );
+    @ParameterizedTest
+    @NullAndEmptySource
+    void deveRetornarTrueCasoOHorarioSejaNuloOuVazio(String horario) {
+        assertTrue(validator.isValid(horario, contextMock));
     }
 }

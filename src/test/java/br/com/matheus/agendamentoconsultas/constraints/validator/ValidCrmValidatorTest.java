@@ -6,6 +6,9 @@ import lombok.SneakyThrows;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.NullAndEmptySource;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -20,78 +23,47 @@ class ValidCrmValidatorTest extends MockedUnitTest {
     @Mock
     private ConstraintValidatorContext contextMock;
 
-    @Test
-    void deveRetornarTrueCasoOCRMEstejaValido() {
-        assertAll("CRM válido de todas as UFs",
-                () -> assertTrue(validator.isValid("AC123456", contextMock), "AC123456 deve ser válido."),
-                () -> assertTrue(validator.isValid("AL123456", contextMock), "AL123456 deve ser válido."),
-                () -> assertTrue(validator.isValid("AP123456", contextMock), "AP123456 deve ser válido."),
-                () -> assertTrue(validator.isValid("AM123456", contextMock), "AM123456 deve ser válido."),
-                () -> assertTrue(validator.isValid("BA123456", contextMock), "BA123456 deve ser válido."),
-                () -> assertTrue(validator.isValid("CE123456", contextMock), "CE123456 deve ser válido."),
-                () -> assertTrue(validator.isValid("DF123456", contextMock), "DF123456 deve ser válido."),
-                () -> assertTrue(validator.isValid("ES123456", contextMock), "ES123456 deve ser válido."),
-                () -> assertTrue(validator.isValid("GO123456", contextMock), "GO123456 deve ser válido."),
-                () -> assertTrue(validator.isValid("MA123456", contextMock), "MA123456 deve ser válido."),
-                () -> assertTrue(validator.isValid("MT123456", contextMock), "MT123456 deve ser válido."),
-                () -> assertTrue(validator.isValid("MS123456", contextMock), "MS123456 deve ser válido."),
-                () -> assertTrue(validator.isValid("MG123456", contextMock), "MG123456 deve ser válido."),
-                () -> assertTrue(validator.isValid("PA123456", contextMock), "PA123456 deve ser válido."),
-                () -> assertTrue(validator.isValid("PB123456", contextMock), "PB123456 deve ser válido."),
-                () -> assertTrue(validator.isValid("PR123456", contextMock), "PR123456 deve ser válido."),
-                () -> assertTrue(validator.isValid("PE123456", contextMock), "PE123456 deve ser válido."),
-                () -> assertTrue(validator.isValid("PI123456", contextMock), "PI123456 deve ser válido."),
-                () -> assertTrue(validator.isValid("RJ123456", contextMock), "RJ123456 deve ser válido."),
-                () -> assertTrue(validator.isValid("RN123456", contextMock), "RN123456 deve ser válido."),
-                () -> assertTrue(validator.isValid("RS123456", contextMock), "RS123456 deve ser válido."),
-                () -> assertTrue(validator.isValid("RO123456", contextMock), "RO123456 deve ser válido."),
-                () -> assertTrue(validator.isValid("RR123456", contextMock), "RR123456 deve ser válido."),
-                () -> assertTrue(validator.isValid("SC123456", contextMock), "SC123456 deve ser válido."),
-                () -> assertTrue(validator.isValid("SP123456", contextMock), "SP123456 deve ser válido."),
-                () -> assertTrue(validator.isValid("SE123456", contextMock), "SE123456 deve ser válido."),
-                () -> assertTrue(validator.isValid("TO123456", contextMock), "TO123456 deve ser válido.")
-        );
+    @ParameterizedTest
+    @ValueSource(strings = {
+            "AC123456", "AL123456", "AP123456", "AM123456", "BA123456",
+            "CE123456", "DF123456", "ES123456", "GO123456", "MA123456",
+            "MT123456", "MS123456", "MG123456", "PA123456", "PB123456",
+            "PR123456", "PE123456", "PI123456", "RJ123456", "RN123456",
+            "RS123456", "RO123456", "RR123456", "SC123456", "SP123456",
+            "SE123456", "TO123456"
+    })
+    void deveRetornarTrueCasoOCRMEstejaValido(String crm) {
+        assertTrue(validator.isValid(crm, contextMock), crm.concat(" deve ser válido."));
     }
 
-    @Test
-    void deveRetornarTrueCasoOCRMPossuaUFEDigitosValidos() {
-        assertAll("CRM válido.",
-                () -> assertTrue(validator.isValid("SP123456", contextMock), "SP123456 deve ser válido."),
-                () -> assertTrue(validator.isValid("RJ654321", contextMock), "RJ654321 deve ser válido."),
-                () -> assertTrue(validator.isValid("MG000001", contextMock), "MG000001 deve ser válido."),
-                () -> assertTrue(validator.isValid("RS999999", contextMock), "RS999999 deve ser válido.")
-        );
+    @ParameterizedTest
+    @ValueSource(strings = {
+            "SP123456", "RJ654321", "MG000001", "RS999999"
+    })
+    void deveRetornarTrueCasoOCRMPossuaUFEDigitosValidos(String crm) {
+        assertTrue(validator.isValid(crm, contextMock), crm.concat(" deve ser válido."));
     }
 
-    @Test
-    void deveRetornarFalseCasoOFormatoDoCPFEstiverInconsistente() {
-        assertAll("CRM inválido.",
-                () -> assertFalse(validator.isValid("XX123456", contextMock), "XX123456 deve ser inválido."),
-                () -> assertFalse(validator.isValid("SP12345", contextMock), "SP12345 deve ser inválido."),
-                () -> assertFalse(validator.isValid("SP1234567", contextMock), "SP1234567 deve ser inválido."),
-                () -> assertFalse(validator.isValid("123456SP", contextMock), "123456SP deve ser inválido."),
-                () -> assertFalse(validator.isValid("SP1234A6", contextMock), "SP1234A6 deve ser inválido."),
-                () -> assertFalse(validator.isValid("SP12 3456", contextMock), "SP12 3456 deve ser inválido."),
-                () -> assertFalse(validator.isValid("SP 123456", contextMock), "SP 123456 deve ser inválido.")
-        );
+    @ParameterizedTest
+    @ValueSource(strings = {
+            "XX123456", "SP12345", "SP1234567", "123456SP",
+            "SP1234A6", "SP12 3456", "SP 123456"
+    })
+    void deveRetornarFalseCasoOFormatoDoCPFEstiverInconsistente(String crm) {
+        assertFalse(validator.isValid(crm, contextMock), crm.concat(" deve ser inválido."));
     }
 
-    @Test
-    void deveRetornarTrueCasoOCRMSejaNuloOuVazio() {
-        assertAll("CRM nulo e vazio.",
-                () -> assertTrue(validator.isValid(null, contextMock), "Nulo deve ser válido."),
-                () -> assertTrue(validator.isValid("", contextMock), "Vazio deve ser válido."),
-                () -> assertTrue(validator.isValid("   ", contextMock), "Espaço em branco deve ser válido.")
-        );
+    @ParameterizedTest
+    @NullAndEmptySource
+    void deveRetornarTrueCasoOCRMSejaNuloOuVazio(String crm) {
+        assertTrue(validator.isValid(crm, contextMock));
     }
 
-    @Test
-    void deveRetornarFalseCasoOCRMTenhaAUFEmLowerCase() {
-        assertAll("CRM com UF em minúsculas.",
-                () -> assertFalse(validator.isValid("sp123456", contextMock), "sp123456 deve ser inválido."),
-                () -> assertFalse(validator.isValid("rj654321", contextMock), "rj654321 deve ser inválido."),
-                () -> assertFalse(validator.isValid("mg000001", contextMock), "mg000001 deve ser inválido."),
-                () -> assertFalse(validator.isValid("rs999999", contextMock), "rs999999 deve ser inválido.")
-        );
+    @ParameterizedTest
+    @ValueSource(strings = {
+            "sp123456", "rj654321", "mg000001", "rs999999"
+    })
+    void deveRetornarFalseCasoOCRMTenhaAUFEmLowerCase(String crm) {
+        assertFalse(validator.isValid(crm, contextMock), crm.concat(" deve ser inválido."));
     }
 }

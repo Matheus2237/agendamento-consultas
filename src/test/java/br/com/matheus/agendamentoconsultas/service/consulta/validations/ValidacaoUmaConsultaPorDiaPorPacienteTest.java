@@ -1,5 +1,6 @@
 package br.com.matheus.agendamentoconsultas.service.consulta.validations;
 
+import br.com.matheus.agendamentoconsultas.base.AbstractValidacaoAgendamentoConsultaBaseTest;
 import br.com.matheus.agendamentoconsultas.exception.ConsultaNaoPodeSerMarcadaException;
 import br.com.matheus.agendamentoconsultas.model.Consulta;
 import br.com.matheus.agendamentoconsultas.repository.ConsultaRepository;

@@ -1,30 +1,42 @@
 package br.com.matheus.agendamentoconsultas.model.enums;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.time.LocalDate;
+import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static br.com.matheus.agendamentoconsultas.model.enums.DiaDaSemana.getDiaDaSemanaPelaData;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class DiaDaSemanaTest {
 
-    @Test
-    void deveRetornarODiaDaSemanaDeUmaDeterminadaData() {
-        assertAll("Dias da semana para determinadas datas.",
-                () -> assertEquals(DiaDaSemana.DOMINGO, DiaDaSemana.getDiaDaSemanaPelaData(LocalDate.of(2023, 7, 2)), "Falhou para a data: 2023-07-02."),
-                () -> assertEquals(DiaDaSemana.SEGUNDA, DiaDaSemana.getDiaDaSemanaPelaData(LocalDate.of(2023, 7, 3)), "Falhou para a data: 2023-07-03."),
-                () -> assertEquals(DiaDaSemana.TERCA, DiaDaSemana.getDiaDaSemanaPelaData(LocalDate.of(2023, 7, 4)), "Falhou para a data: 2023-07-04."),
-                () -> assertEquals(DiaDaSemana.QUARTA, DiaDaSemana.getDiaDaSemanaPelaData(LocalDate.of(2023, 7, 5)), "Falhou para a data: 2023-07-05."),
-                () -> assertEquals(DiaDaSemana.QUINTA, DiaDaSemana.getDiaDaSemanaPelaData(LocalDate.of(2023, 7, 6)), "Falhou para a data: 2023-07-06."),
-                () -> assertEquals(DiaDaSemana.SEXTA, DiaDaSemana.getDiaDaSemanaPelaData(LocalDate.of(2023, 7, 7)), "Falhou para a data: 2023-07-07."),
-                () -> assertEquals(DiaDaSemana.SABADO, DiaDaSemana.getDiaDaSemanaPelaData(LocalDate.of(2023, 7, 8)), "Falhou para a data: 2023-07-08.")
+    @ParameterizedTest
+    @MethodSource("provisionaDiasDaSemana")
+    void deveRetornarODiaDaSemanaDeUmaDeterminadaData(DiaDaSemana diaDaSemana, int ano, int mes, int dia) {
+        LocalDate data = LocalDate.of(ano, mes, dia);
+        assertEquals(diaDaSemana, getDiaDaSemanaPelaData(data));
+    }
+
+    public static Stream<Arguments> provisionaDiasDaSemana() {
+        return Stream.of(
+                Arguments.of(DiaDaSemana.DOMINGO, 2023, 7, 2),
+                Arguments.of(DiaDaSemana.SEGUNDA, 2023, 7, 3),
+                Arguments.of(DiaDaSemana.TERCA, 2023, 7, 4),
+                Arguments.of(DiaDaSemana.QUARTA, 2023, 7, 5),
+                Arguments.of(DiaDaSemana.QUINTA, 2023, 7, 6),
+                Arguments.of(DiaDaSemana.SEXTA, 2023, 7, 7),
+                Arguments.of(DiaDaSemana.SABADO, 2023, 7, 8)
         );
     }
 
     @Test
     void deveLancarUmaIllegalArgumentExceptionParaUmaDataNula() {
         assertThrows(IllegalArgumentException.class, () -> {
-            DiaDaSemana.getDiaDaSemanaPelaData(null);
+            getDiaDaSemanaPelaData(null);
         }, "Deveria ter lançado IllegalArgumentException para data nula.");
     }
 
@@ -32,6 +44,6 @@ class DiaDaSemanaTest {
     void deveLancarUmaIllegalArgumentExceptionParaUmValorDeDiaDaSemanaQueNaoExiste() {
         assertThrows(IllegalArgumentException.class, () -> {
             DiaDaSemana.getDiaDaSemanaPeloValorNumerico(8);
-        }, "Deveria ter lançado IllegalArgumentException para o valor 8.");
+        }, "Deve lançar uma IllegalArgumentException para valores maiores que 7.");
     }
 }

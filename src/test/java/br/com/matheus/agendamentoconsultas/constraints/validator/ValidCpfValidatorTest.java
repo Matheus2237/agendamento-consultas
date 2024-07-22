@@ -6,6 +6,9 @@ import lombok.SneakyThrows;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -26,23 +29,21 @@ class ValidCpfValidatorTest extends MockedUnitTest {
         assertTrue(validator.isValid(cpf, contextMock), "CPF válido.");
     }
 
-    @Test
-    void deveRetornarFalseCasoOFormatoDoCPFEstiverInconsistente() {
-        assertAll("CPF - Valores inválidos",
-                () -> assertFalse(validator.isValid("1234567890a", contextMock), "CPF contém letras."),
-                () -> assertFalse(validator.isValid("1234567890@", contextMock), "CPF contém caracteres especiais."),
-                () -> assertFalse(validator.isValid("123 4567890", contextMock), "CPF contém espaços."),
-                () -> assertFalse(validator.isValid("123456789001", contextMock), "CPF contém mais que 11 dígitos."),
-                () -> assertFalse(validator.isValid("1234567890", contextMock), "CPF contém menos que 11 dígitos.")
-        );
+    @ParameterizedTest
+    @CsvSource({
+            "1234567890a, CPF contém letras.",
+            "1234567890@, CPF contém caracteres especiais.",
+            "123 4567890, CPF contém espaços.",
+            "123456789001, CPF contém mais que 11 dígitos.",
+            "1234567890, CPF contém menos que 11 dígitos."
+    })
+    void deveRetornarFalseCasoOFormatoDoCPFEstiverInconsistente(String cpf, String motivoInconsistencia) {
+        assertFalse(validator.isValid(cpf, contextMock), motivoInconsistencia);
     }
 
-    @Test
-    void deveRetornarTrueCasoOCPFSejaNuloOuEmBranco() {
-        assertAll("CPF - Valores brancos",
-                () -> assertTrue(validator.isValid(null, contextMock), "CPF nulo."),
-                () -> assertTrue(validator.isValid("", contextMock), "CPF vazio."),
-                () -> assertTrue(validator.isValid(" ", contextMock), "CPF em branco.")
-        );
+    @ParameterizedTest
+    @NullAndEmptySource
+    void deveRetornarTrueCasoOCPFSejaNuloOuEmBranco(String cpf) {
+         assertTrue(validator.isValid(cpf, contextMock));
     }
 }
