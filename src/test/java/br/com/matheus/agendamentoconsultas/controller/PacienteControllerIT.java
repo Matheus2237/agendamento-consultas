@@ -1,27 +1,89 @@
 package br.com.matheus.agendamentoconsultas.controller;
 
-//@SpringBootTest
-//@AutoConfigureMockMvc
-//@ActiveProfiles("test")
-class PacienteControllerIT {
+import br.com.matheus.agendamentoconsultas.base.DatabaseProvidedIntegrationTest;
+import br.com.matheus.agendamentoconsultas.base.json.HttpBodyJsonSource;
+import lombok.SneakyThrows;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.jdbc.Sql;
+import org.springframework.test.context.jdbc.SqlConfig;
+import org.springframework.test.web.servlet.MockMvc;
 
-//	@Autowired
-//	private PacienteRepository pacienteRepository;
-//
-//	@Autowired
-//	private MockMvc mockMvc;
-	
-//	@BeforeEach
-//	public void popularUmBancoDeDadosComORegistroDeUmPaciente() throws Exception {
-//		String nome = "Matheus Paulino Ribeiro";
-//		String email = "emaildeteste@email.com";
-//		String telefone = "16988776655";
-//		String cpf = "12345678910";
-//		String endereco = "Rua Professor Matheus Paulino, 360, bl4, apto101, Jardim das Orquídeas, Sertãozinho, SP, 14169-777";
-//		Paciente paciente = new Paciente(nome, email, telefone, cpf, endereco);
-//		pacienteRepository.save(paciente);
-//	}
-	
+import static org.hamcrest.core.StringContains.containsString;
+import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
+import static org.springframework.test.context.jdbc.SqlConfig.TransactionMode.ISOLATED;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
+class PacienteControllerIT extends DatabaseProvidedIntegrationTest {
+
+    private static final String PACIENTE_INSERT_SCRIPT = "classpath:sql/paciente/insert.sql";
+
+    private final MockMvc mockMvc;
+
+    @Autowired
+    PacienteControllerIT(MockMvc mockMvc) {
+        this.mockMvc = mockMvc;
+    }
+
+    @ParameterizedTest
+    @HttpBodyJsonSource("json_source/paciente/cadastro_sucesso.json")
+    @SneakyThrows
+    void deveRetornar201AoCadastrarUmPacienteComSucesso(String request, String expectedResponse){
+        final String createdURI = "/paciente/1";
+        mockMvc.perform(
+                post("/paciente")
+                                .contentType(APPLICATION_JSON)
+                                .content(request))
+                .andExpect(status().isCreated())
+                .andExpect(header().string("Location", containsString(createdURI)))
+                .andExpect(content().json(expectedResponse));
+    }
+
+    @ParameterizedTest
+    @HttpBodyJsonSource("json_source/paciente/cadastro_informacoes_faltantes.json")
+    @SneakyThrows
+    void deveRetornar400AoTentarCadastrarUmPacienteComAlgumDadoFaltanteOuEmBranco(String request, String expectedResponse) {
+        mockMvc.perform(
+                post("/paciente")
+                        .contentType(APPLICATION_JSON)
+                        .content(request))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().json(expectedResponse));
+    }
+
+    @ParameterizedTest
+    @HttpBodyJsonSource("json_source/paciente/cadastro_cpf_email_repetidos.json")
+    @Sql(scripts = PACIENTE_INSERT_SCRIPT, executionPhase = BEFORE_TEST_METHOD, config = @SqlConfig(transactionMode = ISOLATED))
+    @SneakyThrows
+    void deveRetornar400AoTentarCadastrarUmPacienteComCPFOuEmailJaExistentesNoBancoDeDados(String request, String expectedResponse) {
+        mockMvc.perform(
+                post("/paciente")
+                        .contentType(APPLICATION_JSON)
+                        .content(request))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().json(expectedResponse));
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //	@Test
 //	public void deveriaDevolverCodigo200AoEnviarUmaRequisicaoGetParaRetornarTodosOsPacientesCadastrados() throws Exception {
 //		URI uri = new URI("/paciente");

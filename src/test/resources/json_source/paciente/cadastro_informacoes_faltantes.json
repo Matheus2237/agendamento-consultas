@@ -1,0 +1,583 @@
+[
+  {
+    "request": {
+      "cpf": "12345678900",
+      "email": "maria.souza@exemplo.com",
+      "telefone": {
+        "ddd": "11",
+        "numero": "987654321"
+      },
+      "endereco": {
+        "logradouro": "Rua Exemplo",
+        "numero": "123",
+        "bairro": "Bairro Exemplo",
+        "cidade": "Cidade Exemplo",
+        "uf": "SP",
+        "cep": "12345678"
+      }
+    },
+    "expectedResponse": [
+      {
+        "campo": "nome",
+        "mensagem": "O campo nome é obrigatório"
+      }
+    ]
+  },
+  {
+    "request": {
+      "nome": " ",
+      "cpf": "12345678900",
+      "email": "maria.souza@exemplo.com",
+      "telefone": {
+        "ddd": "11",
+        "numero": "987654321"
+      },
+      "endereco": {
+        "logradouro": "Rua Exemplo",
+        "numero": "123",
+        "bairro": "Bairro Exemplo",
+        "cidade": "Cidade Exemplo",
+        "uf": "SP",
+        "cep": "12345678"
+      }
+    },
+    "expectedResponse": [
+      {
+        "campo": "nome",
+        "mensagem": "O campo nome é obrigatório"
+      }
+    ]
+  },
+  {
+    "request": {
+      "nome": "Maria Souza",
+      "email": "maria.souza@exemplo.com",
+      "telefone": {
+        "ddd": "11",
+        "numero": "987654321"
+      },
+      "endereco": {
+        "logradouro": "Rua Exemplo",
+        "numero": "123",
+        "bairro": "Bairro Exemplo",
+        "cidade": "Cidade Exemplo",
+        "uf": "SP",
+        "cep": "12345678"
+      }
+    },
+    "expectedResponse": [
+      {
+        "campo": "cpf",
+        "mensagem": "O campo cpf é obrigatório"
+      }
+    ]
+  },
+  {
+    "request": {
+      "nome": "Maria Souza",
+      "cpf": " ",
+      "email": "maria.souza@exemplo.com",
+      "telefone": {
+        "ddd": "11",
+        "numero": "987654321"
+      },
+      "endereco": {
+        "logradouro": "Rua Exemplo",
+        "numero": "123",
+        "bairro": "Bairro Exemplo",
+        "cidade": "Cidade Exemplo",
+        "uf": "SP",
+        "cep": "12345678"
+      }
+    },
+    "expectedResponse": [
+      {
+        "campo": "cpf",
+        "mensagem": "O campo cpf é obrigatório"
+      }
+    ]
+  },
+  {
+    "request": {
+      "nome": "Maria Souza",
+      "cpf": "12345678900",
+      "telefone": {
+        "ddd": "11",
+        "numero": "987654321"
+      },
+      "endereco": {
+        "logradouro": "Rua Exemplo",
+        "numero": "123",
+        "bairro": "Bairro Exemplo",
+        "cidade": "Cidade Exemplo",
+        "uf": "SP",
+        "cep": "12345678"
+      }
+    },
+    "expectedResponse": [
+      {
+        "campo": "email",
+        "mensagem": "O campo email é obrigatório"
+      }
+    ]
+  },
+  {
+    "request": {
+      "nome": "Maria Souza",
+      "cpf": "12345678900",
+      "email": " ",
+      "telefone": {
+        "ddd": "11",
+        "numero": "987654321"
+      },
+      "endereco": {
+        "logradouro": "Rua Exemplo",
+        "numero": "123",
+        "bairro": "Bairro Exemplo",
+        "cidade": "Cidade Exemplo",
+        "uf": "SP",
+        "cep": "12345678"
+      }
+    },
+    "expectedResponse": [
+      {
+        "campo": "email",
+        "mensagem": "deve ser um endereço de e-mail bem formado"
+      },
+      {
+        "campo": "email",
+        "mensagem": "O campo email é obrigatório"
+      }
+    ]
+  },
+  {
+    "request": {
+      "nome": "Maria Souza",
+      "cpf": "12345678900",
+      "email": "maria.souza@exemplo.com",
+      "endereco": {
+        "logradouro": "Rua Exemplo",
+        "numero": "123",
+        "bairro": "Bairro Exemplo",
+        "cidade": "Cidade Exemplo",
+        "uf": "SP",
+        "cep": "12345678"
+      }
+    },
+    "expectedResponse": [
+      {
+        "campo": "telefone",
+        "mensagem": "O campo telefone é obrigatório"
+      }
+    ]
+  },
+  {
+    "request": {
+      "nome": "Maria Souza",
+      "cpf": "12345678900",
+      "email": "maria.souza@exemplo.com",
+      "telefone": {
+        "numero": "987654321"
+      },
+      "endereco": {
+        "logradouro": "Rua Exemplo",
+        "numero": "123",
+        "bairro": "Bairro Exemplo",
+        "cidade": "Cidade Exemplo",
+        "uf": "SP",
+        "cep": "12345678"
+      }
+    },
+    "expectedResponse": [
+      {
+        "campo": "telefone.ddd",
+        "mensagem": "O campo ddd é obrigatório"
+      }
+    ]
+  },
+  {
+    "request": {
+      "nome": "Maria Souza",
+      "cpf": "12345678900",
+      "email": "maria.souza@exemplo.com",
+      "telefone": {
+        "ddd": " ",
+        "numero": "987654321"
+      },
+      "endereco": {
+        "logradouro": "Rua Exemplo",
+        "numero": "123",
+        "bairro": "Bairro Exemplo",
+        "cidade": "Cidade Exemplo",
+        "uf": "SP",
+        "cep": "12345678"
+      }
+    },
+    "expectedResponse": [
+      {
+        "campo": "telefone.ddd",
+        "mensagem": "O campo ddd é obrigatório"
+      }
+    ]
+  },
+  {
+    "request": {
+      "nome": "Maria Souza",
+      "cpf": "12345678900",
+      "email": "maria.souza@exemplo.com",
+      "telefone": {
+        "ddd": "11"
+      },
+      "endereco": {
+        "logradouro": "Rua Exemplo",
+        "numero": "123",
+        "bairro": "Bairro Exemplo",
+        "cidade": "Cidade Exemplo",
+        "uf": "SP",
+        "cep": "12345678"
+      }
+    },
+    "expectedResponse": [
+      {
+        "campo": "telefone.numero",
+        "mensagem": "O campo número é obrigatório"
+      }
+    ]
+  },
+  {
+    "request": {
+      "nome": "Maria Souza",
+      "cpf": "12345678900",
+      "email": "maria.souza@exemplo.com",
+      "telefone": {
+        "ddd": "11",
+        "numero": " "
+      },
+      "endereco": {
+        "logradouro": "Rua Exemplo",
+        "numero": "123",
+        "bairro": "Bairro Exemplo",
+        "cidade": "Cidade Exemplo",
+        "uf": "SP",
+        "cep": "12345678"
+      }
+    },
+    "expectedResponse": [
+      {
+        "campo": "telefone.numero",
+        "mensagem": "O campo número é obrigatório"
+      }
+    ]
+  },
+  {
+    "request": {
+      "nome": "Maria Souza",
+      "cpf": "12345678900",
+      "email": "maria.souza@exemplo.com",
+      "telefone": {
+        "ddd": "11",
+        "numero": "987654321"
+      }
+    },
+    "expectedResponse": [
+      {
+        "campo": "endereco",
+        "mensagem": "O campo endereco é obrigatório"
+      }
+    ]
+  },
+  {
+    "request": {
+      "nome": "Maria Souza",
+      "cpf": "12345678900",
+      "email": "maria.souza@exemplo.com",
+      "telefone": {
+        "ddd": "11",
+        "numero": "987654321"
+      },
+      "endereco": {
+        "numero": "123",
+        "bairro": "Bairro Exemplo",
+        "cidade": "Cidade Exemplo",
+        "uf": "SP",
+        "cep": "12345678"
+      }
+    },
+    "expectedResponse": [
+      {
+        "campo": "endereco.logradouro",
+        "mensagem": "O campo logradouro é obrigatório"
+      }
+    ]
+  },
+  {
+    "request": {
+      "nome": "Maria Souza",
+      "cpf": "12345678900",
+      "email": "maria.souza@exemplo.com",
+      "telefone": {
+        "ddd": "11",
+        "numero": "987654321"
+      },
+      "endereco": {
+        "logradouro": " ",
+        "numero": "123",
+        "bairro": "Bairro Exemplo",
+        "cidade": "Cidade Exemplo",
+        "uf": "SP",
+        "cep": "12345678"
+      }
+    },
+    "expectedResponse": [
+      {
+        "campo": "endereco.logradouro",
+        "mensagem": "O campo logradouro é obrigatório"
+      }
+    ]
+  },
+  {
+    "request": {
+      "nome": "Maria Souza",
+      "cpf": "12345678900",
+      "email": "maria.souza@exemplo.com",
+      "telefone": {
+        "ddd": "11",
+        "numero": "987654321"
+      },
+      "endereco": {
+        "logradouro": "Rua Exemplo",
+        "bairro": "Bairro Exemplo",
+        "cidade": "Cidade Exemplo",
+        "uf": "SP",
+        "cep": "12345678"
+      }
+    },
+    "expectedResponse": [
+      {
+        "campo": "endereco.numero",
+        "mensagem": "O campo numero é obrigatório"
+      }
+    ]
+  },
+  {
+    "request": {
+      "nome": "Maria Souza",
+      "cpf": "12345678900",
+      "email": "maria.souza@exemplo.com",
+      "telefone": {
+        "ddd": "11",
+        "numero": "987654321"
+      },
+      "endereco": {
+        "logradouro": "Rua Exemplo",
+        "numero": " ",
+        "bairro": "Bairro Exemplo",
+        "cidade": "Cidade Exemplo",
+        "uf": "SP",
+        "cep": "12345678"
+      }
+    },
+    "expectedResponse": [
+      {
+        "campo": "endereco.numero",
+        "mensagem": "O campo numero é obrigatório"
+      }
+    ]
+  },
+  {
+    "request": {
+      "nome": "Maria Souza",
+      "cpf": "12345678900",
+      "email": "maria.souza@exemplo.com",
+      "telefone": {
+        "ddd": "11",
+        "numero": "987654321"
+      },
+      "endereco": {
+        "logradouro": "Rua Exemplo",
+        "numero": "123",
+        "cidade": "Cidade Exemplo",
+        "uf": "SP",
+        "cep": "12345678"
+      }
+    },
+    "expectedResponse": [
+      {
+        "campo": "endereco.bairro",
+        "mensagem": "O campo bairro é obrigatório"
+      }
+    ]
+  },
+  {
+    "request": {
+      "nome": "Maria Souza",
+      "cpf": "12345678900",
+      "email": "maria.souza@exemplo.com",
+      "telefone": {
+        "ddd": "11",
+        "numero": "987654321"
+      },
+      "endereco": {
+        "logradouro": "Rua Exemplo",
+        "numero": "123",
+        "bairro": " ",
+        "cidade": "Cidade Exemplo",
+        "uf": "SP",
+        "cep": "12345678"
+      }
+    },
+    "expectedResponse": [
+      {
+        "campo": "endereco.bairro",
+        "mensagem": "O campo bairro é obrigatório"
+      }
+    ]
+  },
+  {
+    "request": {
+      "nome": "Maria Souza",
+      "cpf": "12345678900",
+      "email": "maria.souza@exemplo.com",
+      "telefone": {
+        "ddd": "11",
+        "numero": "987654321"
+      },
+      "endereco": {
+        "logradouro": "Rua Exemplo",
+        "numero": "123",
+        "bairro": "Bairro Exemplo",
+        "uf": "SP",
+        "cep": "12345678"
+      }
+    },
+    "expectedResponse": [
+      {
+        "campo": "endereco.cidade",
+        "mensagem": "O campo cidade é obrigatório"
+      }
+    ]
+  },
+  {
+    "request": {
+      "nome": "Maria Souza",
+      "cpf": "12345678900",
+      "email": "maria.souza@exemplo.com",
+      "telefone": {
+        "ddd": "11",
+        "numero": "987654321"
+      },
+      "endereco": {
+        "logradouro": "Rua Exemplo",
+        "numero": "123",
+        "bairro": "Bairro Exemplo",
+        "cidade": " ",
+        "uf": "SP",
+        "cep": "12345678"
+      }
+    },
+    "expectedResponse": [
+      {
+        "campo": "endereco.cidade",
+        "mensagem": "O campo cidade é obrigatório"
+      }
+    ]
+  },
+  {
+    "request": {
+      "nome": "Maria Souza",
+      "cpf": "12345678900",
+      "email": "maria.souza@exemplo.com",
+      "telefone": {
+        "ddd": "11",
+        "numero": "987654321"
+      },
+      "endereco": {
+        "logradouro": "Rua Exemplo",
+        "numero": "123",
+        "bairro": "Bairro Exemplo",
+        "cidade": "Cidade Exemplo",
+        "cep": "12345678"
+      }
+    },
+    "expectedResponse": [
+      {
+        "campo": "endereco.uf",
+        "mensagem": "O campo uf é obrigatório"
+      }
+    ]
+  },
+  {
+    "request": {
+      "nome": "Maria Souza",
+      "cpf": "12345678900",
+      "email": "maria.souza@exemplo.com",
+      "telefone": {
+        "ddd": "11",
+        "numero": "987654321"
+      },
+      "endereco": {
+        "logradouro": "Rua Exemplo",
+        "numero": "123",
+        "bairro": "Bairro Exemplo",
+        "cidade": "Cidade Exemplo",
+        "uf": " ",
+        "cep": "12345678"
+      }
+    },
+    "expectedResponse": [
+      {
+        "campo": "endereco.uf",
+        "mensagem": "O campo uf é obrigatório"
+      }
+    ]
+  },
+  {
+    "request": {
+      "nome": "Maria Souza",
+      "cpf": "12345678900",
+      "email": "maria.souza@exemplo.com",
+      "telefone": {
+        "ddd": "11",
+        "numero": "987654321"
+      },
+      "endereco": {
+        "logradouro": "Rua Exemplo",
+        "numero": "123",
+        "bairro": "Bairro Exemplo",
+        "cidade": "Cidade Exemplo",
+        "uf": "SP"
+      }
+    },
+    "expectedResponse": [
+      {
+        "campo": "endereco.cep",
+        "mensagem": "O campo cep é obrigatório"
+      }
+    ]
+  },
+  {
+    "request": {
+      "nome": "Maria Souza",
+      "cpf": "12345678900",
+      "email": "maria.souza@exemplo.com",
+      "telefone": {
+        "ddd": "11",
+        "numero": "987654321"
+      },
+      "endereco": {
+        "logradouro": "Rua Exemplo",
+        "numero": "123",
+        "bairro": "Bairro Exemplo",
+        "cidade": "Cidade Exemplo",
+        "uf": "SP",
+        "cep": " "
+      }
+    },
+    "expectedResponse": [
+      {
+        "campo": "endereco.cep",
+        "mensagem": "O campo cep é obrigatório"
+      }
+    ]
+  }
+]

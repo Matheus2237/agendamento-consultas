@@ -1,0 +1,39 @@
+[
+  {
+    "request": {
+      "nome": "Maria Souza",
+      "cpf": "12345678900",
+      "email": "maria.souza@exemplo.com",
+      "telefone": {
+        "ddd": "11",
+        "numero": "987654321"
+      },
+      "endereco": {
+        "logradouro": "Rua Exemplo",
+        "numero": "123",
+        "bairro": "Bairro Exemplo",
+        "cidade": "Cidade Exemplo",
+        "uf": "SP",
+        "cep": "12345678"
+      }
+    },
+    "expectedResponse": {
+      "id": 1,
+      "nome": "Maria Souza",
+      "cpf": "12345678900",
+      "email": "maria.souza@exemplo.com",
+      "telefone": {
+        "ddd": "11",
+        "numero": "987654321"
+      },
+      "endereco": {
+        "logradouro": "Rua Exemplo",
+        "numero": "123",
+        "bairro": "Bairro Exemplo",
+        "cidade": "Cidade Exemplo",
+        "uf": "SP",
+        "cep": "12345678"
+      }
+    }
+  }
+]

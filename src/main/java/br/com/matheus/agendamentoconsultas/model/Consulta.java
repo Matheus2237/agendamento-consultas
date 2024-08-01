@@ -25,6 +25,7 @@ import java.time.LocalTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "consulta")
 public class Consulta {
 
     @Id

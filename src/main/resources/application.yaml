@@ -14,7 +14,7 @@ spring:
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: ${HIBERNATE_DDL_AUTO:update}
   http:
     encoding:
       charset: UTF-8
