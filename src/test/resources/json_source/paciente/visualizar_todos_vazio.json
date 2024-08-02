@@ -1,0 +1,33 @@
+[
+  {
+    "url": "/paciente",
+    "expectedResponse": {
+      "content": [],
+      "pageable": {
+        "pageNumber": 0,
+        "pageSize": 20,
+        "sort": {
+          "sorted": true,
+          "unsorted": false,
+          "empty": false
+        },
+        "offset": 0,
+        "paged": true,
+        "unpaged": false
+      },
+      "totalPages": 0,
+      "totalElements": 0,
+      "last": true,
+      "first": true,
+      "size": 20,
+      "number": 0,
+      "sort": {
+        "sorted": true,
+        "unsorted": false,
+        "empty": false
+      },
+      "numberOfElements": 0,
+      "empty": true
+    }
+  }
+]

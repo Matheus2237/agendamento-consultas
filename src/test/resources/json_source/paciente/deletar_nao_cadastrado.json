@@ -1,0 +1,8 @@
+[
+  {
+    "url": "/paciente/1",
+    "expectedResponse": {
+      "mensagem": "Paciente não encontrado"
+    }
+  }
+]

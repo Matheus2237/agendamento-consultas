@@ -2,7 +2,9 @@ package br.com.matheus.agendamentoconsultas.controller;
 
 import br.com.matheus.agendamentoconsultas.base.DatabaseProvidedIntegrationTest;
 import br.com.matheus.agendamentoconsultas.base.json.HttpBodyJsonSource;
+import br.com.matheus.agendamentoconsultas.base.json.HttpUrlParamJsonSource;
 import lombok.SneakyThrows;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.jdbc.Sql;
@@ -13,7 +15,7 @@ import static org.hamcrest.core.StringContains.containsString;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
 import static org.springframework.test.context.jdbc.SqlConfig.TransactionMode.ISOLATED;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 class PacienteControllerIT extends DatabaseProvidedIntegrationTest {
@@ -25,6 +27,25 @@ class PacienteControllerIT extends DatabaseProvidedIntegrationTest {
     @Autowired
     PacienteControllerIT(MockMvc mockMvc) {
         this.mockMvc = mockMvc;
+    }
+
+    @ParameterizedTest
+    @HttpUrlParamJsonSource("json_source/paciente/visualizar_todos_cadastrado.json")
+    @Sql(scripts = PACIENTE_INSERT_SCRIPT, executionPhase = BEFORE_TEST_METHOD, config = @SqlConfig(transactionMode = ISOLATED))
+    @SneakyThrows
+    void deveRetornar200AoVisualizarTodosOsPacientesCadastradosNoSistema(String url, String expectedResponse) {
+        mockMvc.perform(get(url))
+                .andExpect(status().isOk())
+                .andExpect(content().json(expectedResponse));
+    }
+
+    @ParameterizedTest
+    @HttpUrlParamJsonSource("json_source/paciente/visualizar_todos_vazio.json")
+    @SneakyThrows
+    void deveRetornar200AoTentarVisualizarTodosOsPacientesQuandoNaoHouverNenhumCadastrado(String url, String expectedResponse) {
+        mockMvc.perform(get(url))
+                .andExpect(status().isOk())
+                .andExpect(content().json(expectedResponse));
     }
 
     @ParameterizedTest
@@ -66,177 +87,78 @@ class PacienteControllerIT extends DatabaseProvidedIntegrationTest {
                 .andExpect(content().json(expectedResponse));
     }
 
+    @ParameterizedTest
+    @HttpUrlParamJsonSource("json_source/paciente/visualizacao_detalhes_cadastrados.json")
+    @Sql(scripts = PACIENTE_INSERT_SCRIPT, executionPhase = BEFORE_TEST_METHOD, config = @SqlConfig(transactionMode = ISOLATED))
+    @SneakyThrows
+    void deveRetornar200AoVisualizarOsDetalhesDeUmPacienteJaCadastradoNaAplicacao(String url, String expectedResponse) {
+        mockMvc.perform(get(url))
+                .andExpect(status().isOk())
+                .andExpect(content().json(expectedResponse));
+    }
 
+    @ParameterizedTest
+    @HttpUrlParamJsonSource("json_source/paciente/visualizacao_detalhes_nao_cadastrados.json")
+    @SneakyThrows
+    void deveRetornar404AoSolicitarAVisualizacaoDosDetalhesDeUmPacienteNaoExistenteNoSistema(String url, String expectedResponse) {
+        mockMvc.perform(get(url))
+                .andExpect(status().isNotFound())
+                .andExpect(content().string(expectedResponse));
+    }
 
+    @ParameterizedTest
+    @HttpBodyJsonSource("json_source/paciente/atualizacao_cadastrado.json")
+    @Sql(scripts = PACIENTE_INSERT_SCRIPT, executionPhase = BEFORE_TEST_METHOD, config = @SqlConfig(transactionMode = ISOLATED))
+    @SneakyThrows
+    void deveRetornar200AoTentarAtualizarComDadosValidosUmPacienteCadastradoNoSistema(String request, String expectedResponse) {
+        mockMvc.perform(
+                put("/paciente/1")
+                        .contentType(APPLICATION_JSON)
+                        .content(request))
+                .andExpect(status().isOk())
+                .andExpect(content().json(expectedResponse));
+    }
 
+    @ParameterizedTest
+    @HttpBodyJsonSource("json_source/paciente/atualizacao_dados_invalidos.json")
+    @Sql(scripts = PACIENTE_INSERT_SCRIPT, executionPhase = BEFORE_TEST_METHOD, config = @SqlConfig(transactionMode = ISOLATED))
+    @SneakyThrows
+    void deveRetornar400AoTentarAtualizarComDadosInvalidosUmPaciente(String request, String expectedResponse) {
+        mockMvc.perform(
+                put("/paciente/1")
+                        .contentType(APPLICATION_JSON)
+                        .content(request))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().json(expectedResponse));
+    }
 
+    @ParameterizedTest
+    @HttpBodyJsonSource("json_source/paciente/atualizacao_nao_cadastrado.json")
+    @SneakyThrows
+    void deveRetornar404AoTentarAtualizarUmPacienteNaoCadastradoNoSistema(String request, String expectedResponse) {
+        mockMvc.perform(
+                put("/paciente/1")
+                        .contentType(APPLICATION_JSON)
+                        .content(request))
+                .andExpect(status().isNotFound())
+                .andExpect(content().json(expectedResponse));
+    }
 
+    @Test
+    @Sql(scripts = PACIENTE_INSERT_SCRIPT, executionPhase = BEFORE_TEST_METHOD, config = @SqlConfig(transactionMode = ISOLATED))
+    @SneakyThrows
+    void deveRetornar200AoDeletarUmPacientePreviamenteCadastradoNoSistema() {
+        String url = "/paciente/1";
+        mockMvc.perform(delete(url))
+                .andExpect(status().isOk());
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-//	@Test
-//	public void deveriaDevolverCodigo200AoEnviarUmaRequisicaoGetParaRetornarTodosOsPacientesCadastrados() throws Exception {
-//		URI uri = new URI("/paciente");
-//		mockMvc
-//		.perform(MockMvcRequestBuilders
-//				.get(uri))
-//		.andExpect(MockMvcResultMatchers
-//				.status()
-//				.is(200));
-//	}
-//
-//	@Test
-//	public void deveriaDevolverCodigo404AoEnviarUmaRequisicaoGetParaUmaURINaoExistente() throws Exception {
-//		URI uri = new URI("uriquenaoexiste");
-//		mockMvc
-//		.perform(MockMvcRequestBuilders
-//				.get(uri))
-//		.andExpect(MockMvcResultMatchers
-//				.status()
-//				.is(404));
-//	}
-//
-//	@Test
-//	public void deveriaDevolverCodigo200AoEnviarUmaRequisicaoGetParaRetornarUmPacienteEspeficoAPartirDoSeuId() throws Exception {
-//		URI uri = new URI("/paciente/1");
-//		mockMvc
-//		.perform(MockMvcRequestBuilders
-//				.get(uri))
-//		.andExpect(MockMvcResultMatchers
-//				.status()
-//				.is(200));
-//	}
-//
-//	@Test
-//	public void deveriaDevolverCodigo404AoEnviarUmaRequisicaoGetParaRetornarUmPacienteEspeficoAPartirDeUmIdNaoExistente() throws Exception {
-//		URI uri = new URI("/paciente/100");
-//		mockMvc
-//		.perform(MockMvcRequestBuilders
-//				.get(uri))
-//		.andExpect(MockMvcResultMatchers
-//				.status()
-//				.is(404));
-//	}
-//
-//	@Test
-//	public void deveriaDevolverCodigo201AoEnviarUmaRequisicaoPostParaCadastrarUmPacienteNoBancoDeDadosPassandoOsDadosCorretamente() throws Exception {
-//		URI uri = new URI("/paciente");
-//		String json = "{\r\n"
-//					+ "    \"nome\":\"João Augusto\",\r\n"
-//					+ "    \"email\":\"jotaaug@gmail.com\",\r\n"
-//					+ "    \"telefone\":\"(54) 954332345\",\r\n"
-//					+ "    \"cpf\":\"14234254253\",\r\n"
-//					+ "    \"endereco\":\"Av. Bandeirantes, 21, andar 4, apartamento 42, Jardim Planalto, São Paulo, SP, 32143-654\"\r\n"
-//					+ "}";
-//		mockMvc
-//		.perform(MockMvcRequestBuilders
-//				.post(uri)
-//				.content(json)
-//				.contentType(MediaType.APPLICATION_JSON))
-//		.andExpect(MockMvcResultMatchers
-//				.status()
-//				.is(201));
-//	}
-//
-//	@Test
-//	public void deveriaDevolverCodigo400AoEnviarUmaRequisicaoPostParaCadastrarUmPacienteNoBancoDeDadosPassandoDadosInvalidos() throws Exception {
-//		URI uri = new URI("/paciente");
-//		String json = "{\r\n"
-//					+ "    \"nome\":\"Milena Alves\",\r\n"
-//					+ "    \"email\":\"miihil.com\",\r\n"
-//					+ "    \"telefone\":\"(23) 912321\",\r\n"
-//					+ "    \"cpf\":\"1433\",\r\n"
-//					+ "    \"endereco\":\"Av. Bandeirantes, 21, andar 5, apartamento 53, lo, SP, 32143-654\"\r\n"
-//					+ "}";
-//		mockMvc
-//		.perform(MockMvcRequestBuilders
-//				.post(uri)
-//				.content(json)
-//				.contentType(MediaType.APPLICATION_JSON))
-//		.andExpect(MockMvcResultMatchers
-//				.status()
-//				.is(400));
-//	}
-//
-//	@Test
-//	public void deveriaDevolverCodigo200AoEnviarUmaRequisicaoPutParaAtualizarOsDadosDeUmPacienteQueExisteNoBancoDedDadosPassandoDadosValidos() throws Exception {
-//		URI uri = new URI("/paciente/1");
-//		String json = "{\r\n"
-//					+ "    \"telefone\":\"(23) 94522-4321\",\r\n"
-//					+ "    \"endereco\":\"R. Alfeu Seron Júnior, 270, bl4, apto 201, Jardim Venetto II, Sertãozinho, SP, 14169622\"\r\n"
-//					+ "}";
-//		mockMvc
-//		.perform(MockMvcRequestBuilders
-//				.put(uri)
-//				.content(json)
-//				.contentType(MediaType.APPLICATION_JSON))
-//		.andExpect(MockMvcResultMatchers
-//				.status()
-//				.is(200));
-//	}
-//
-//	@Test
-//	public void deveriaDevolverCodigo400AoEnviarUmaRequisicaoPutParaAtualizarOsDadosDeUmPacienteQueExisteNoBancoDedDadosPassandoDadosInvalidos() throws Exception {
-//		URI uri = new URI("/paciente/1");
-//		String json = "{\r\n"
-//					+ "    \"telefone\":\"(23) 9451\",\r\n"
-//					+ "    \"endereco\":\"R. Alfeu Seron Júnior, 270, bl4, apto 201, Jardim Venetto II, Sertãozinho, SP, 14169622\"\r\n"
-//					+ "}";
-//		mockMvc
-//		.perform(MockMvcRequestBuilders
-//				.put(uri)
-//				.content(json)
-//				.contentType(MediaType.APPLICATION_JSON))
-//		.andExpect(MockMvcResultMatchers
-//				.status()
-//				.is(400));
-//	}
-//
-//	@Test
-//	public void deveriaDevolverCodigo404AoEnviarUmaRequisicaoPutParaAtualizarOsDadosDeUmPacienteQueExisteNoBancoDedDados() throws Exception {
-//		URI uri = new URI("/paciente/100");
-//		String json = "{\r\n"
-//					+ "    \"telefone\":\"(23) 94522-4321\",\r\n"
-//					+ "    \"endereco\":\"R. Alfeu Seron Júnior, 270, bl4, apto 201, Jardim Venetto II, Sertãozinho, SP, 14169622\"\r\n"
-//					+ "}";
-//		mockMvc
-//		.perform(MockMvcRequestBuilders
-//				.put(uri)
-//				.content(json)
-//				.contentType(MediaType.APPLICATION_JSON))
-//		.andExpect(MockMvcResultMatchers
-//				.status()
-//				.is(404));
-//	}
-//
-//	@Test
-//	public void deveriaDevolverCodigo200AoEnviarUmaRequisicaoDeleteParaExcluirUmPacienteQueExisteNoBandoDeDados() throws Exception {
-//		URI uri = new URI("/paciente/1");
-//		mockMvc
-//		.perform(MockMvcRequestBuilders
-//				.delete(uri))
-//		.andExpect(MockMvcResultMatchers
-//				.status()
-//				.is(200));
-//	}
-//
-//	@Test
-//	public void deveriaDevolverCodigo404AoEnviarUmaRequisicaoDeleteParaExcluirUmPacienteQueNaoExisteNoBandoDeDados() throws Exception {
-//		URI uri = new URI("/paciente/100");
-//		mockMvc.perform(MockMvcRequestBuilders
-//				.delete(uri))
-//		.andExpect(MockMvcResultMatchers
-//				.status()
-//				.is(404));
-//	}
+    @ParameterizedTest
+    @HttpUrlParamJsonSource("json_source/paciente/deletar_nao_cadastrado.json")
+    @SneakyThrows
+    void deveRetornar404AoTentarDeletarUmPacienteNaoCadastradoNoSistema(String url, String expectedResponse) {
+        mockMvc.perform(delete(url))
+                .andExpect(status().isNotFound())
+                .andExpect(content().json(expectedResponse));
+    }
 }

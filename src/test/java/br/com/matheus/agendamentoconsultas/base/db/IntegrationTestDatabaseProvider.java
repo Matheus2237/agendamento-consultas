@@ -56,7 +56,7 @@ public class IntegrationTestDatabaseProvider {
         return new HikariDataSource(hikariConfig);
     }
 
-    public static IntegrationTestDatabaseProvider getInstance() {
+    public static IntegrationTestDatabaseProvider instance() {
         return IntegrationTestDatabaseHolder.INSTANCE;
     }
 

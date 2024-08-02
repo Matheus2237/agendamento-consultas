@@ -1,0 +1,22 @@
+[
+  {
+    "request": {
+      "nome":"Maria Souza Silva",
+      "telefone":{
+        "ddd":"11",
+        "numero":"912345678"
+      },
+      "endereco": {
+        "logradouro": "Rua Atualizada",
+        "numero": "33",
+        "bairro": "Jardim Atualizado",
+        "cidade": "Cidade Atualizada",
+        "uf": "SP",
+        "cep": "11234543"
+      }
+    },
+    "expectedResponse": {
+      "mensagem": "Paciente não encontrado"
+    }
+  }
+]

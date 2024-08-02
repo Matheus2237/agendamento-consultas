@@ -1,0 +1,108 @@
+[
+  {
+    "request": {},
+    "expectedResponse": {
+      "id": 1,
+      "nome": "Maria Souza",
+      "cpf": "12345678900",
+      "email": "maria.souza@exemplo.com",
+      "telefone": {
+        "ddd": "11",
+        "numero": "987654321"
+      },
+      "endereco": {
+        "logradouro": "Rua Prof Adalberto",
+        "numero": "123",
+        "bairro": "Bairro Jardim Oliveira",
+        "cidade": "São Paulo",
+        "uf": "SP",
+        "cep": "12345678"
+      }
+    }
+  },
+  {
+    "request": {
+      "nome": "Maria Souza Silva"
+    },
+    "expectedResponse": {
+      "id": 1,
+      "nome": "Maria Souza Silva",
+      "cpf": "12345678900",
+      "email": "maria.souza@exemplo.com",
+      "telefone": {
+        "ddd": "11",
+        "numero": "987654321"
+      },
+      "endereco": {
+        "logradouro": "Rua Prof Adalberto",
+        "numero": "123",
+        "bairro": "Bairro Jardim Oliveira",
+        "cidade": "São Paulo",
+        "uf": "SP",
+        "cep": "12345678"
+      }
+    }
+  },
+  {
+    "request": {
+      "nome": "Maria Souza Silva",
+      "telefone": {
+        "ddd": "11",
+        "numero": "912345678"
+      }
+    },
+    "expectedResponse": {
+      "id": 1,
+      "nome": "Maria Souza Silva",
+      "cpf": "12345678900",
+      "email": "maria.souza@exemplo.com",
+      "telefone": {
+        "ddd": "11",
+        "numero": "912345678"
+      },
+      "endereco": {
+        "logradouro": "Rua Prof Adalberto",
+        "numero": "123",
+        "bairro": "Bairro Jardim Oliveira",
+        "cidade": "São Paulo",
+        "uf": "SP",
+        "cep": "12345678"
+      }
+    }
+  },
+  {
+    "request": {
+      "nome": "Maria Souza Silva",
+      "telefone": {
+        "ddd": "11",
+        "numero": "912345678"
+      },
+      "endereco": {
+        "logradouro": "Rua Atualizada",
+        "numero": "33",
+        "bairro": "Jardim Atualizado",
+        "cidade": "Cidade Atualizada",
+        "uf": "SP",
+        "cep": "11234543"
+      }
+    },
+    "expectedResponse": {
+      "id": 1,
+      "nome": "Maria Souza Silva",
+      "cpf": "12345678900",
+      "email": "maria.souza@exemplo.com",
+      "telefone": {
+        "ddd": "11",
+        "numero": "912345678"
+      },
+      "endereco": {
+        "logradouro": "Rua Atualizada",
+        "numero": "33",
+        "bairro": "Jardim Atualizado",
+        "cidade": "Cidade Atualizada",
+        "uf": "SP",
+        "cep": "11234543"
+      }
+    }
+  }
+]

@@ -1,0 +1,43 @@
+[
+  {
+    "url": "/paciente",
+    "expectedResponse": {
+      "content": [
+        {
+          "id": 1,
+          "nome": "Maria Souza",
+          "email": "maria.souza@exemplo.com",
+          "telefone": {
+            "ddd": "11",
+            "numero": "987654321"
+          }
+        }
+      ],
+      "pageable": {
+        "pageNumber": 0,
+        "pageSize": 20,
+        "sort": {
+          "sorted": true,
+          "unsorted": false,
+          "empty": false
+        },
+        "offset": 0,
+        "paged": true,
+        "unpaged": false
+      },
+      "totalPages": 1,
+      "totalElements": 1,
+      "last": true,
+      "first": true,
+      "size": 20,
+      "number": 0,
+      "sort": {
+        "sorted": true,
+        "unsorted": false,
+        "empty": false
+      },
+      "numberOfElements": 1,
+      "empty": false
+    }
+  }
+]

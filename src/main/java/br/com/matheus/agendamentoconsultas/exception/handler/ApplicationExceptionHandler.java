@@ -5,6 +5,7 @@ import br.com.matheus.agendamentoconsultas.exception.ConsultaNaoPodeSerMarcadaEx
 import br.com.matheus.agendamentoconsultas.exception.MedicoNaoEncontradoException;
 import br.com.matheus.agendamentoconsultas.exception.PacienteNaoEncontradoException;
 import br.com.matheus.agendamentoconsultas.exception.handler.dto.ConsultaNaoAgendadaDTO;
+import br.com.matheus.agendamentoconsultas.exception.handler.dto.EntidadeNaoEncontradaDTO;
 import br.com.matheus.agendamentoconsultas.exception.handler.dto.FailedFieldRequestValidationDTO;
 import br.com.matheus.agendamentoconsultas.exception.handler.dto.FailedParameterRequestValidationDTO;
 import io.swagger.v3.oas.annotations.Hidden;
@@ -134,8 +135,8 @@ public class ApplicationExceptionHandler {
     @Hidden
     @ResponseStatus(NOT_FOUND)
     @ExceptionHandler(MedicoNaoEncontradoException.class)
-    public String handle(MedicoNaoEncontradoException exception) {
-        return exception.getMessage();
+    public EntidadeNaoEncontradaDTO handle(MedicoNaoEncontradoException exception) {
+        return new EntidadeNaoEncontradaDTO(exception.getMessage());
     }
 
     /**
@@ -147,8 +148,8 @@ public class ApplicationExceptionHandler {
     @Hidden
     @ResponseStatus(NOT_FOUND)
     @ExceptionHandler(PacienteNaoEncontradoException.class)
-    public String handle(PacienteNaoEncontradoException exception) {
-        return exception.getMessage();
+    public EntidadeNaoEncontradaDTO handle(PacienteNaoEncontradoException exception) {
+        return new EntidadeNaoEncontradaDTO(exception.getMessage());
     }
 
     /**
@@ -160,8 +161,8 @@ public class ApplicationExceptionHandler {
     @Hidden
     @ResponseStatus(NOT_FOUND)
     @ExceptionHandler(ConsultaNaoEncontradaException.class)
-    public String handle(ConsultaNaoEncontradaException exception) {
-        return exception.getMessage();
+    public EntidadeNaoEncontradaDTO handle(ConsultaNaoEncontradaException exception) {
+        return new EntidadeNaoEncontradaDTO(exception.getMessage());
     }
 
     /**

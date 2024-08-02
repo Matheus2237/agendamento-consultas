@@ -17,7 +17,7 @@ import java.util.Locale;
 @AutoConfigureMockMvc
 public abstract class DatabaseProvidedIntegrationTest {
 
-    private static final IntegrationTestDatabaseProvider testDatabase = IntegrationTestDatabaseProvider.getInstance();
+    private static final IntegrationTestDatabaseProvider testDatabase = IntegrationTestDatabaseProvider.instance();
 
     @DynamicPropertySource
     static void configureTestEnvironmentProperties(DynamicPropertyRegistry registry) {
