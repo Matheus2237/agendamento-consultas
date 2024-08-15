@@ -1,0 +1,125 @@
+[
+  {
+    "request": {
+      "telefone": {
+        "ddd": "113",
+        "numero": "91234567800"
+      },
+      "endereco": {
+        "logradouro": "Rua Atualizada",
+        "numero": "33",
+        "bairro": "Jardim Atualizado",
+        "cidade": "Cidade Atualizada",
+        "uf": "SP",
+        "cep": "11234543"
+      }
+    },
+    "expectedResponse": [
+      {
+        "campo": "telefone",
+        "mensagem": "Telefone inválido."
+      }
+    ]
+  },
+  {
+    "request": {
+      "telefone": {
+        "ddd": "113",
+        "numero": "91234567800"
+      },
+      "endereco": {
+        "logradouro": "Rua Atualizada",
+        "numero": "33",
+        "bairro": "Jardim Atualizado",
+        "cidade": "Cidade Atualizada",
+        "uf": "SP",
+        "cep": "11234543"
+      }
+    },
+    "expectedResponse": [
+      {
+        "campo": "telefone",
+        "mensagem": "Telefone inválido."
+      }
+    ]
+  },
+  {
+    "request": {
+      "telefone": {
+        "ddd": "11",
+        "numero": "912345678"
+      },
+      "endereco": {
+        "logradouro": "Rua Atualizada",
+        "numero": "33",
+        "bairro": "Jardim Atualizado",
+        "cidade": "Cidade Atualizada",
+        "uf": "SR",
+        "cep": "1123454354"
+      }
+    },
+    "expectedResponse": [
+      {
+        "campo": "endereco",
+        "mensagem": "Endereço inválido."
+      }
+    ]
+  },
+  {
+    "request": {
+      "telefone": {
+        "ddd": "113",
+        "numero": "91234567800"
+      },
+      "endereco": {
+        "logradouro": "Rua Atualizada",
+        "numero": "33",
+        "bairro": "Jardim Atualizado",
+        "cidade": "Cidade Atualizada",
+        "uf": "SR",
+        "cep": "1123454354"
+      }
+    },
+    "expectedResponse": [
+      {
+        "campo": "telefone",
+        "mensagem": "Telefone inválido."
+      },
+      {
+        "campo": "endereco",
+        "mensagem": "Endereço inválido."
+      }
+    ]
+  },
+  {
+    "request": {
+      "especializacao": "caaaardiologia",
+      "telefone": {
+        "ddd": "113",
+        "numero": "91234567800"
+      },
+      "endereco": {
+        "logradouro": "Rua Atualizada",
+        "numero": "33",
+        "bairro": "Jardim Atualizado",
+        "cidade": "Cidade Atualizada",
+        "uf": "SR",
+        "cep": "1123454354"
+      }
+    },
+    "expectedResponse": [
+      {
+        "campo": "telefone",
+        "mensagem": "Telefone inválido."
+      },
+      {
+        "campo": "endereco",
+        "mensagem": "Endereço inválido."
+      },
+      {
+        "campo": "especializacao",
+        "mensagem": "Especialização não encontrada."
+      }
+    ]
+  }
+]

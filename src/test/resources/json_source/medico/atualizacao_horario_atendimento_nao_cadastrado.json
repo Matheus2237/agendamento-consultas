@@ -1,0 +1,14 @@
+[
+  {
+    "request": [
+      {
+        "diaDaSemana":"QUINTA",
+        "horaInicial":"08:00",
+        "horaFinal":"14:00"
+      }
+    ],
+    "expectedResponse": {
+      "mensagem": "Médico não encontrado"
+    }
+  }
+]

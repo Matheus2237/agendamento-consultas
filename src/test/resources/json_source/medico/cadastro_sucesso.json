@@ -1,0 +1,65 @@
+[
+  {
+    "request": {
+      "nome": "João Augusto",
+      "crm": "SP123456",
+      "email": "jotaaug@gmail.com",
+      "telefone": {
+        "ddd": "54",
+        "numero": "954332345"
+      },
+      "endereco": {
+        "logradouro": "Av. Bandeirantes",
+        "numero": "21, andar 4, apartamento 42",
+        "bairro": "Jardim Planalto",
+        "cidade": "São Paulo",
+        "uf": "SP",
+        "cep": "32143654"
+      },
+      "especializacao":"CARDIOLOGIA",
+      "horariosAtendimento":[
+        {
+          "diaDaSemana":"QUINTA",
+          "horaInicial":"08:00",
+          "horaFinal":"17:00"
+        },
+        {
+          "diaDaSemana":"DOMINGO",
+          "horaInicial":"08:00",
+          "horaFinal":"17:00"
+        }
+      ]
+    },
+    "expectedResponse": {
+      "id": 1,
+      "nome": "João Augusto",
+      "crm": "SP123456",
+      "email": "jotaaug@gmail.com",
+      "telefone": {
+        "ddd": "54",
+        "numero": "954332345"
+      },
+      "endereco": {
+        "logradouro": "Av. Bandeirantes",
+        "numero": "21, andar 4, apartamento 42",
+        "bairro": "Jardim Planalto",
+        "cidade": "São Paulo",
+        "uf": "SP",
+        "cep": "32143654"
+      },
+      "especializacao": "CARDIOLOGIA",
+      "horariosAtendimento": [
+        {
+          "diaDaSemana": "QUINTA",
+          "horaInicial": "08:00",
+          "horaFinal": "17:00"
+        },
+        {
+          "diaDaSemana": "DOMINGO",
+          "horaInicial": "08:00",
+          "horaFinal": "17:00"
+        }
+      ]
+    }
+  }
+]

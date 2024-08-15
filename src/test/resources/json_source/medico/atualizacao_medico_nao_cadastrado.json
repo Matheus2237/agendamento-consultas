@@ -1,0 +1,23 @@
+[
+  {
+    "request": {
+      "nome":"João Augusto Nogueira",
+      "especializacao":"OFTALMOLOGIA",
+      "telefone":{
+        "ddd":"32",
+        "numero":"988883333"
+      },
+      "endereco": {
+        "logradouro": "Rua Atualizada",
+        "numero": "33",
+        "bairro": "Jardim Atualizado",
+        "cidade": "Cidade Atualizada",
+        "uf": "SP",
+        "cep": "11234543"
+      }
+    },
+    "expectedResponse": {
+      "mensagem": "Médico não encontrado"
+    }
+  }
+]

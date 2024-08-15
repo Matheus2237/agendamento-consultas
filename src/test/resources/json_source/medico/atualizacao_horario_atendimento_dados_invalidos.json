@@ -1,0 +1,62 @@
+[
+  {
+    "request": [
+      {
+        "diaDaSemana":"QUARTAAA",
+        "horaInicial":"08:69",
+        "horaFinal":"25:00"
+      }
+    ],
+    "expectedResponse": [
+      {
+        "parametro": "atualizarHorariosAtendimento.horariosAtendimentoRequestDTO[].diaDaSemana",
+        "mensagem": "Dia da semana inválido"
+      },
+      {
+        "parametro": "atualizarHorariosAtendimento.horariosAtendimentoRequestDTO[].horaFinal",
+        "mensagem": "Horário final inválido."
+      },
+      {
+        "parametro": "atualizarHorariosAtendimento.horariosAtendimentoRequestDTO[].horaInicial",
+        "mensagem": "Horário inicial inválido."
+      }
+    ]
+  },
+  {
+    "request": [
+      {
+        "horaInicial":"08:00",
+        "horaFinal":"14:00"
+      }
+    ],
+    "expectedResponse": [
+      {
+        "parametro": "atualizarHorariosAtendimento.horariosAtendimentoRequestDTO[].diaDaSemana",
+        "mensagem": "O campo 'diaDaSemana' é obrigatório"
+      }
+    ]
+  },
+  {
+    "request": [
+      {
+        "diaDaSemana":"QUARTA",
+        "horaInicial":"08:00",
+        "horaFinal":"14:00"
+      },
+      {
+        "diaDaSemana":"DOMINGO",
+        "horaInicial":"08:60"
+      }
+    ],
+    "expectedResponse": [
+      {
+        "parametro": "atualizarHorariosAtendimento.horariosAtendimentoRequestDTO[].horaFinal",
+        "mensagem": "O campo 'horaFinal' é obrigatório"
+      },
+      {
+        "parametro": "atualizarHorariosAtendimento.horariosAtendimentoRequestDTO[].horaInicial",
+        "mensagem": "Horário inicial inválido."
+      }
+    ]
+  }
+]

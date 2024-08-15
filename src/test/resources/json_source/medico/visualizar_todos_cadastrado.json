@@ -1,0 +1,45 @@
+[
+  {
+    "url": "/medico",
+    "expectedResponse": {
+      "content": [
+        {
+          "id": 1,
+          "nome": "João Augusto",
+          "crm": "SP123456",
+          "especializacao": "CARDIOLOGIA",
+          "email": "jotaaug@gmail.com",
+          "telefone": {
+            "ddd": "54",
+            "numero": "954332345"
+          }
+        }
+      ],
+      "pageable": {
+        "pageNumber": 0,
+        "pageSize": 20,
+        "sort": {
+          "sorted": true,
+          "unsorted": false,
+          "empty": false
+        },
+        "offset": 0,
+        "paged": true,
+        "unpaged": false
+      },
+      "totalPages": 1,
+      "totalElements": 1,
+      "last": true,
+      "first": true,
+      "size": 20,
+      "number": 0,
+      "sort": {
+        "sorted": true,
+        "unsorted": false,
+        "empty": false
+      },
+      "numberOfElements": 1,
+      "empty": false
+    }
+  }
+]

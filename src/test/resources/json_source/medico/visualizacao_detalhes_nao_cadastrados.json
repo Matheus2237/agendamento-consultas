@@ -1,0 +1,6 @@
+[
+  {
+    "url": "/medico/1",
+    "expectedResponse": {"mensagem":"Médico não encontrado"}
+  }
+]

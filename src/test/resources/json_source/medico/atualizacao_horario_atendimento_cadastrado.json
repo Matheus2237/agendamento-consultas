@@ -1,0 +1,70 @@
+[
+  {
+    "request": [
+      {
+        "diaDaSemana":"QUINTA",
+        "horaInicial":"08:00",
+        "horaFinal":"14:00"
+      }
+    ],
+    "expectedResponse": [
+      {
+        "diaDaSemana": "QUINTA",
+        "horaInicial": "08:00",
+        "horaFinal": "14:00"
+      }
+    ]
+  },
+  {
+    "request": [
+      {
+        "diaDaSemana":"QUARTA",
+        "horaInicial":"08:00",
+        "horaFinal":"14:00"
+      },
+      {
+        "diaDaSemana":"DOMINGO",
+        "horaInicial":"08:00",
+        "horaFinal":"17:00"
+      }
+    ],
+    "expectedResponse": [
+      {
+        "diaDaSemana":"QUARTA",
+        "horaInicial":"08:00",
+        "horaFinal":"14:00"
+      },
+      {
+        "diaDaSemana":"DOMINGO",
+        "horaInicial":"08:00",
+        "horaFinal":"17:00"
+      }
+    ]
+  },
+  {
+    "request": [
+      {
+        "diaDaSemana":"QUINTA",
+        "horaInicial":"08:00",
+        "horaFinal":"17:00"
+      },
+      {
+        "diaDaSemana":"DOMINGO",
+        "horaInicial":"08:00",
+        "horaFinal":"17:00"
+      }
+    ],
+    "expectedResponse": [
+      {
+        "diaDaSemana":"QUINTA",
+        "horaInicial":"08:00",
+        "horaFinal":"17:00"
+      },
+      {
+        "diaDaSemana":"DOMINGO",
+        "horaInicial":"08:00",
+        "horaFinal":"17:00"
+      }
+    ]
+  }
+]

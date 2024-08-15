@@ -18,14 +18,14 @@ import static org.springframework.test.context.jdbc.SqlConfig.TransactionMode.IS
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-class PacienteControllerIT extends DatabaseProvidedIntegrationTest {
+class PacienteControllerIntegrationTest extends DatabaseProvidedIntegrationTest {
 
     private static final String PACIENTE_INSERT_SCRIPT = "classpath:sql/paciente/insert.sql";
 
     private final MockMvc mockMvc;
 
     @Autowired
-    PacienteControllerIT(MockMvc mockMvc) {
+    PacienteControllerIntegrationTest(MockMvc mockMvc) {
         this.mockMvc = mockMvc;
     }
 

@@ -39,6 +39,5 @@ public abstract class DatabaseProvidedIntegrationTest {
     @AfterAll
     public static void tearDownAll() {
         testDatabase.dropSchema();
-        testDatabase.freeConnection();
     }
 }
