@@ -1,6 +1,6 @@
 package br.com.matheus.agendamentoconsultas.controller;
 
-import br.com.matheus.agendamentoconsultas.base.DatabaseProvidedIntegrationTest;
+import br.com.matheus.agendamentoconsultas.base.AbstractDateFixedAndDatabaseProvidedIntegrationTest;
 import br.com.matheus.agendamentoconsultas.base.json.HttpBodyJsonSource;
 import br.com.matheus.agendamentoconsultas.base.json.HttpUrlParamJsonSource;
 import lombok.SneakyThrows;
@@ -18,16 +18,9 @@ import static org.springframework.test.context.jdbc.SqlConfig.TransactionMode.IS
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-class PacienteControllerIntegrationTest extends DatabaseProvidedIntegrationTest {
+class PacienteControllerIntegrationTest extends AbstractDateFixedAndDatabaseProvidedIntegrationTest {
 
     private static final String PACIENTE_INSERT_SCRIPT = "classpath:sql/paciente/insert.sql";
-
-    private final MockMvc mockMvc;
-
-    @Autowired
-    PacienteControllerIntegrationTest(MockMvc mockMvc) {
-        this.mockMvc = mockMvc;
-    }
 
     @ParameterizedTest
     @HttpUrlParamJsonSource("json_source/paciente/visualizar_todos_cadastrado.json")

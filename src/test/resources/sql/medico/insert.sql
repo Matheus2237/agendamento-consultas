@@ -10,9 +10,5 @@ VALUES
 INSERT INTO medico_horario_atendimento
     (hora_final, hora_inicial, id_medico, dia_da_semana)
 VALUES
-    ('17:00:00', '08:00:00', 1, 'DOMINGO');
-
-INSERT INTO medico_horario_atendimento
-    (hora_final, hora_inicial, id_medico, dia_da_semana)
-VALUES
+    ('17:00:00', '08:00:00', 1, 'DOMINGO'),
     ('17:00:00', '08:00:00', 1, 'QUINTA');
