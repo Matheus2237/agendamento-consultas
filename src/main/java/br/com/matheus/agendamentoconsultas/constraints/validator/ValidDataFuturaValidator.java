@@ -3,8 +3,12 @@ package br.com.matheus.agendamentoconsultas.constraints.validator;
 import br.com.matheus.agendamentoconsultas.constraints.ValidDataFutura;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import java.time.Clock;
 import java.time.LocalDate;
+
+import static org.apache.commons.lang3.StringUtils.isBlank;
 
 /**
  * <p>
@@ -29,6 +33,13 @@ import java.time.LocalDate;
  */
 public class ValidDataFuturaValidator implements ConstraintValidator<ValidDataFutura, String> {
 
+    private final Clock clock;
+
+    @Autowired
+    public ValidDataFuturaValidator(Clock clock) {
+        this.clock = clock;
+    }
+
     /**
      * Valida se a data fornecida é uma data futura.
      *
@@ -38,7 +49,7 @@ public class ValidDataFuturaValidator implements ConstraintValidator<ValidDataFu
      */
     @Override
     public boolean isValid(String data, ConstraintValidatorContext context) {
-        return isDataDaConsultaAmanhaOuPosterior(data);
+        return isBlank(data) || isDataDaConsultaAmanhaOuPosterior(data);
     }
 
     /**
@@ -48,7 +59,7 @@ public class ValidDataFuturaValidator implements ConstraintValidator<ValidDataFu
      * @return {@code true} se a data é posterior à data atual, {@code false} caso contrário.
      */
     private boolean isDataDaConsultaAmanhaOuPosterior(String data) {
-        LocalDate hoje = LocalDate.now();
+        LocalDate hoje = LocalDate.now(clock);
         LocalDate dataConsulta = LocalDate.parse(data);
         return dataConsulta.isAfter(hoje);
     }
