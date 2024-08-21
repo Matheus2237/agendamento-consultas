@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
-class ValidDataFuturaValidatorTest extends MockedUnitTest {
+class ValidStringDateFuturaValidatorTest extends MockedUnitTest {
 
     private static final LocalDate MOCKED_TODAY = LocalDate.of(2024, 7, 21);
 

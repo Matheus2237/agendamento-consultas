@@ -3,6 +3,9 @@ package br.com.matheus.agendamentoconsultas.constraints;
 import br.com.matheus.agendamentoconsultas.constraints.validator.ValidDataFuturaValidator;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
+import jakarta.validation.ReportAsSingleViolation;
+import jakarta.validation.constraints.NotBlank;
+import org.hibernate.validator.constraints.br.CPF;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
@@ -24,6 +27,8 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Constraint(validatedBy = ValidDataFuturaValidator.class)
 @Target(FIELD)
 @Retention(RUNTIME)
+@ValidStringDate(message = "Data da consulta está no formato inválido.")
+@ReportAsSingleViolation
 public @interface ValidDataFutura {
 
     String message() default "Data da solicitação já passada.";

@@ -2,7 +2,7 @@ package br.com.matheus.agendamentoconsultas.controller.dto;
 
 import br.com.matheus.agendamentoconsultas.constraints.ValidDataFutura;
 import br.com.matheus.agendamentoconsultas.constraints.ValidLocalTime;
-import br.com.matheus.agendamentoconsultas.constraints.ValidDataRequisicaoConsulta;
+import br.com.matheus.agendamentoconsultas.constraints.ValidStringDate;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -28,7 +28,6 @@ public record ConsultaRequestDTO(
 
         @Schema(description = "Data da consulta", example = "2024-07-14")
         @NotBlank(message = "O campo 'data' é obrigatório.")
-        @ValidDataRequisicaoConsulta(message = "Data da consulta está no formato inválido.")
         @ValidDataFutura
         String data,
 

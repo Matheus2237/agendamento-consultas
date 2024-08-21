@@ -1,6 +1,6 @@
 package br.com.matheus.agendamentoconsultas.controller;
 
-import br.com.matheus.agendamentoconsultas.constraints.ValidDataRequisicaoConsulta;
+import br.com.matheus.agendamentoconsultas.constraints.ValidStringDate;
 import br.com.matheus.agendamentoconsultas.controller.dto.ConsultaAgendadaDTO;
 import br.com.matheus.agendamentoconsultas.controller.dto.ConsultaRequestDTO;
 import br.com.matheus.agendamentoconsultas.exception.handler.dto.ConsultaNaoAgendadaDTO;
@@ -17,7 +17,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -129,7 +128,7 @@ public class ConsultaController {
                     schema = @Schema(implementation = FailedParameterRequestValidationDTO.class)))
     @GetMapping("/dia")
     public ResponseEntity<Page<ConsultaAgendadaDTO>> visualizarConsultasDoDia(
-            @RequestParam @ValidDataRequisicaoConsulta(message = "Data inválida.") String dia,
+            @RequestParam @ValidStringDate(message = "Data inválida.") String dia,
             @Parameter(
                     description = "Informações de paginação e ordenação.",
                     schema = @Schema(

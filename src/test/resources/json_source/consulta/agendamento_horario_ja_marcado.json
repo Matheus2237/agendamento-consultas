@@ -1,0 +1,13 @@
+[
+  {
+    "request": {
+      "pacienteId": 1,
+      "medicoId": 1,
+      "data": "2024-07-25",
+      "horario": "10:30"
+    },
+    "expectedResponse": {
+      "motivo": "Já existe uma consulta agendada para o mesmo horário com o mesmo médico."
+    }
+  }
+]

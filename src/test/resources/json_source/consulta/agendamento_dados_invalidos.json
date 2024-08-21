@@ -1,0 +1,34 @@
+[
+  {
+    "request": {
+      "pacienteId": 1,
+      "medicoId": 1,
+      "data": "2024-07-20",
+      "horario": "10:30"
+    },
+    "expectedResponse": [
+      {
+        "campo": "data",
+        "mensagem": "Data da solicitação já passada."
+      }
+    ]
+  },
+  {
+    "request": {
+      "pacienteId": 1,
+      "medicoId": 1,
+      "data": "2024-07-32",
+      "horario": "10:60"
+    },
+    "expectedResponse": [
+      {
+        "campo": "horario",
+        "mensagem": "Horário da consulta inválido."
+      },
+      {
+        "campo": "data",
+        "mensagem": "Data da solicitação já passada."
+      }
+    ]
+  }
+]

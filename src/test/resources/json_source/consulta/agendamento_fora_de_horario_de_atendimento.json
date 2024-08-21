@@ -1,0 +1,24 @@
+[
+  {
+    "request": {
+      "pacienteId": 1,
+      "medicoId": 1,
+      "data": "2024-07-26",
+      "horario": "10:30"
+    },
+    "expectedResponse": {
+      "motivo": "Médico não atende nesse dia da semana."
+    }
+  },
+  {
+    "request": {
+      "pacienteId": 1,
+      "medicoId": 1,
+      "data": "2024-07-25",
+      "horario": "18:00"
+    },
+    "expectedResponse": {
+      "motivo": "Médico não atende no horário solicitado."
+    }
+  }
+]

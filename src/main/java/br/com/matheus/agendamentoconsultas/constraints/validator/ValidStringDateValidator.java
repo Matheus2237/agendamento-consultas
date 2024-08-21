@@ -1,6 +1,6 @@
 package br.com.matheus.agendamentoconsultas.constraints.validator;
 
-import br.com.matheus.agendamentoconsultas.constraints.ValidDataRequisicaoConsulta;
+import br.com.matheus.agendamentoconsultas.constraints.ValidStringDate;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
@@ -12,7 +12,7 @@ import static org.apache.commons.lang3.StringUtils.isBlank;
 
 /**
  * <p>
- * Validador para o constraint {@link br.com.matheus.agendamentoconsultas.constraints.ValidDataRequisicaoConsulta}.
+ * Validador para o constraint {@link ValidStringDate}.
  * </p>
  * <p>
  * Esta classe implementa a lógica de validação para a anotação @ValidDataRequisicaoConsulta. Ela verifica se a data
@@ -26,7 +26,7 @@ import static org.apache.commons.lang3.StringUtils.isBlank;
  * @author Matheus Paulino Ribeiro
  * @since 1.0.0
  */
-public class ValidDataRequisicaoConsultaValidator implements ConstraintValidator<ValidDataRequisicaoConsulta, String> {
+public class ValidStringDateValidator implements ConstraintValidator<ValidStringDate, String> {
 
     private static final Pattern YYYY_MM_DD_LOCAL_DATE_PATTERN = Pattern.compile("^(\\d{4})-(0[1-9]|1[012])-(0[1-9]|[12]\\d|3[01])$");
 

@@ -1,14 +1,13 @@
 package br.com.matheus.agendamentoconsultas.constraints;
 
-import br.com.matheus.agendamentoconsultas.constraints.validator.ValidDataRequisicaoConsultaValidator;
+import br.com.matheus.agendamentoconsultas.constraints.validator.ValidStringDateValidator;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
-import static java.lang.annotation.ElementType.FIELD;
-import static java.lang.annotation.ElementType.PARAMETER;
+import static java.lang.annotation.ElementType.*;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
@@ -22,10 +21,10 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  * @author  Matheus Paulino Ribeiro
  * @since 1.0.0
  */
-@Constraint(validatedBy = ValidDataRequisicaoConsultaValidator.class)
-@Target({PARAMETER, FIELD})
+@Constraint(validatedBy = ValidStringDateValidator.class)
+@Target({PARAMETER, FIELD, ANNOTATION_TYPE})
 @Retention(RUNTIME)
-public @interface ValidDataRequisicaoConsulta {
+public @interface ValidStringDate {
 
     String message();
 

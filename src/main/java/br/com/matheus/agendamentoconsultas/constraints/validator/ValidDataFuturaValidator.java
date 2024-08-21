@@ -26,7 +26,7 @@ import static org.apache.commons.lang3.StringUtils.isBlank;
  * @see jakarta.validation.ConstraintValidatorContext
  * @see java.time.LocalDate
  * @see br.com.matheus.agendamentoconsultas.constraints.ValidDataFutura
- * @see br.com.matheus.agendamentoconsultas.constraints.validator.ValidDataRequisicaoConsultaValidator
+ * @see ValidStringDateValidator
  *
  * @author Matheus Paulino Ribeiro
  * @since 1.0.0

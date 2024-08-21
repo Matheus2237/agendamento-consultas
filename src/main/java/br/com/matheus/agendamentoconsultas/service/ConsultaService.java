@@ -123,7 +123,7 @@ public class ConsultaService {
      * @return Um médico disponível
      * @throws MedicoNaoEncontradoException Se nenhum médico disponível for encontrado para a data e horário especificados
      */
-    private Medico obterMedicoAleatorioDisponivelParaDataEHorarioDeterminado(LocalDate data, LocalTime horario) {
+    private Medico  obterMedicoAleatorioDisponivelParaDataEHorarioDeterminado(LocalDate data, LocalTime horario) {
         Optional<Medico> medicoOptional = medicoRepository.findRandomAvailableMedicoToTheSpecifiedDate(data, horario);
         return medicoOptional.orElseThrow(MedicoNaoEncontradoException::new);
     }

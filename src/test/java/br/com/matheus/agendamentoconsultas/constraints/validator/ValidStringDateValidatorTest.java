@@ -3,8 +3,6 @@ package br.com.matheus.agendamentoconsultas.constraints.validator;
 import br.com.matheus.agendamentoconsultas.base.MockedUnitTest;
 import jakarta.validation.ConstraintValidatorContext;
 import lombok.SneakyThrows;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -13,18 +11,16 @@ import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.springframework.data.repository.query.Param;
 
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.util.ReflectionTestUtils.invokeMethod;
 
-class ValidDataRequisicaoConsultaValidatorTest extends MockedUnitTest {
+class ValidStringDateValidatorTest extends MockedUnitTest {
 
     @InjectMocks
-    private ValidDataRequisicaoConsultaValidator validator;
+    private ValidStringDateValidator validator;
 
     @Mock
     private ConstraintValidatorContext contextMock;

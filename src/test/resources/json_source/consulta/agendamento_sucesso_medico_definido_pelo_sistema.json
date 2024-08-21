@@ -1,0 +1,16 @@
+[
+  {
+    "request": {
+      "pacienteId": 1,
+      "medicoId": 0,
+      "data": "2024-07-25",
+      "horario": "10:30"
+    },
+    "expectedResponse": {
+      "pacienteNome": "Maria Souza",
+      "medicoNome": "João Augusto",
+      "data": "2024-07-25",
+      "horario": "10:30"
+    }
+  }
+]

@@ -1,0 +1,54 @@
+[
+  {
+    "request": {
+      "medicoId": 1,
+      "data": "2024-07-25",
+      "horario": "10:30"
+    },
+    "expectedResponse": [
+      {
+        "campo": "pacienteId",
+        "mensagem": "O campo pacienteId é obrigatório."
+      }
+    ]
+  },
+  {
+    "request": {
+      "pacienteId": 1,
+      "data": "2024-07-25",
+      "horario": "10:30"
+    },
+    "expectedResponse": [
+      {
+        "campo": "medicoId",
+        "mensagem": "O campo medicoId é obrigatório."
+      }
+    ]
+  },
+  {
+    "request": {
+      "pacienteId": 1,
+      "medicoId": 1,
+      "horario": "10:30"
+    },
+    "expectedResponse": [
+      {
+        "campo": "data",
+        "mensagem": "O campo data é obrigatório."
+      }
+    ]
+  },
+  {
+    "request": {
+      "pacienteId": 1,
+      "medicoId": 1,
+      "data": "2024-07-25"
+    },
+    "expectedResponse": [
+      {
+        "campo": "horario",
+        "mensagem": "O campo horario é obrigatório."
+      }
+    ]
+  }
+]

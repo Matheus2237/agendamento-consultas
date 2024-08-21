@@ -38,7 +38,7 @@ public class ValidacaoConsultaNaoAgendadaParaMesmoMedicoNoMesmoHorario implement
         LocalDate data = consulta.getData();
         LocalTime horario = consulta.getHorario();
         if (consultaRepository.existsByMedicoIdAndDataAndHorario(medicoId, data, horario)) {
-            throw new ConsultaNaoPodeSerMarcadaException("Já existe uma consulta agendada para o mesmo horário com o mesmo médico");
+            throw new ConsultaNaoPodeSerMarcadaException("Já existe uma consulta agendada para o mesmo horário com o mesmo médico.");
         }
     }
 }
