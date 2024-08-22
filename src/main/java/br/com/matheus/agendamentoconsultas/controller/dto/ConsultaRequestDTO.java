@@ -10,6 +10,9 @@ import jakarta.validation.constraints.NotNull;
 /**
  * DTO para requisição de agendamento de consulta.
  *
+ * @author Matheus Paulino Ribeiro
+ * @since 1.0.0
+ *
  * @param pacienteId ID do paciente.
  * @param medicoId   ID do médico.
  * @param data       Data da consulta.

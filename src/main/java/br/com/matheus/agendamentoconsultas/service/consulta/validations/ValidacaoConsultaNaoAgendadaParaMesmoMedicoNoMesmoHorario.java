@@ -13,6 +13,9 @@ import java.time.LocalTime;
 /**
  * Implementação da interface {@link ValidacaoAgendamentoConsulta} que verifica se já existe uma consulta agendada
  * para o mesmo médico no mesmo horário.
+ *
+ * @author Matheus Paulino Ribeiro
+ * @since 1.0.0
  */
 @Order(3)
 @Component

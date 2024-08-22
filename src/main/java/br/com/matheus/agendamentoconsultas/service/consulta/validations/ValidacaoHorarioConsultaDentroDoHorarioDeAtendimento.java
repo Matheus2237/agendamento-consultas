@@ -16,6 +16,9 @@ import static br.com.matheus.agendamentoconsultas.model.enums.DiaDaSemana.getDia
 /**
  * Implementação da interface {@link ValidacaoAgendamentoConsulta} que verifica se a consulta está dentro
  * do horário de atendimento do médico.
+ *
+ * @author Matheus Paulino Ribeiro
+ * @since 1.0.0
  */
 @Order(1)
 @Component

@@ -35,6 +35,9 @@ import static org.springframework.data.domain.Sort.Direction.ASC;
  * </p>
  *
  * @see br.com.matheus.agendamentoconsultas.service.PacienteService
+ *
+ * @author Matheus Paulino Ribeiro
+ * @since 1.0.0
  */
 @Tag(
         name = "Médico",

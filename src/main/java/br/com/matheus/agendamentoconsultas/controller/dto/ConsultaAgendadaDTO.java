@@ -6,6 +6,9 @@ import io.swagger.v3.oas.annotations.media.Schema;
 /**
  * DTO para resposta de consulta agendada.
  *
+ * @author Matheus Paulino Ribeiro
+ * @since 1.0.0
+ *
  * @param pacienteNome Nome do paciente.
  * @param medicoNome   Nome do médico.
  * @param data         Data da consulta.

@@ -22,6 +22,7 @@ import java.time.LocalTime;
  * Também oferece um método para verificar se um médico já possui mais de doze consultas agendadas em um dia específico.
  * </p>
  *
+ * @author Matheus Paulino Ribeiro
  * @since 1.0.0
  */
 public interface ConsultaRepository extends JpaRepository<Consulta, Long> {
