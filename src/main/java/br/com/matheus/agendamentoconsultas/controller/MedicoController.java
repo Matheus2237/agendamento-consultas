@@ -34,7 +34,7 @@ import static org.springframework.data.domain.Sort.Direction.ASC;
  * Este controlador fornece endpoints para visualizar, cadastrar, detalhar, atualizar e deletar pacientes.
  * </p>
  *
- * @see br.com.matheus.agendamentoconsultas.service.PacienteService
+ * @see br.com.matheus.agendamentoconsultas.service.MedicoService
  *
  * @author Matheus Paulino Ribeiro
  * @since 1.0.0

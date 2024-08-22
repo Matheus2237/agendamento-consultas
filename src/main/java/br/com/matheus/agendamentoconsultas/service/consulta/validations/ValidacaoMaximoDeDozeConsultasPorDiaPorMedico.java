@@ -13,6 +13,8 @@ import java.time.LocalDate;
  * Implementação da interface {@link ValidacaoAgendamentoConsulta} que verifica se o médico possui no máximo
  * doze consultas agendadas no mesmo dia.
  *
+ * @see br.com.matheus.agendamentoconsultas.service.consulta.validations.ValidacaoAgendamentoConsulta
+ *
  * @author Matheus Paulino Ribeiro
  * @since 1.0.0
  */

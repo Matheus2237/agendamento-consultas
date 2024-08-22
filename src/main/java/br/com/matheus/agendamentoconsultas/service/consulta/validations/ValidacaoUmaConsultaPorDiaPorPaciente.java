@@ -13,6 +13,8 @@ import java.time.LocalDate;
  * Implementação da interface {@link ValidacaoAgendamentoConsulta} que verifica se o paciente possui no máximo
  * uma consulta agendada no mesmo dia.
  *
+ * @see br.com.matheus.agendamentoconsultas.service.consulta.validations.ValidacaoAgendamentoConsulta
+ *
  * @author Matheus Paulino Ribeiro
  * @since 1.0.0
  */
