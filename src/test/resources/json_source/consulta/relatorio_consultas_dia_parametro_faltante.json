@@ -1,0 +1,9 @@
+[
+  {
+    "url": "/consulta/dia",
+    "expectedResponse": {
+      "parametro": "dia",
+      "mensagem": "O parâmetro dia é obrigatório."
+    }
+  }
+]

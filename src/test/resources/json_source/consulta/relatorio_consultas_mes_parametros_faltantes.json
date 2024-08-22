@@ -1,0 +1,23 @@
+[
+  {
+    "url": "/consulta/mes?ano=2024",
+    "expectedResponse": {
+      "parametro": "mes",
+      "mensagem": "O parâmetro mes é obrigatório."
+    }
+  },
+  {
+    "url": "/consulta/mes?mes=07",
+    "expectedResponse": {
+      "parametro": "ano",
+      "mensagem": "O parâmetro ano é obrigatório."
+    }
+  },
+  {
+    "url": "/consulta/mes",
+    "expectedResponse": {
+      "parametro": "mes",
+      "mensagem": "O parâmetro mes é obrigatório."
+    }
+  }
+]

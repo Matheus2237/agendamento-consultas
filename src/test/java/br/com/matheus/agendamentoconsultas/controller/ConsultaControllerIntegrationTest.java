@@ -9,12 +9,12 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static org.hamcrest.core.StringContains.containsString;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
 import static org.springframework.test.context.jdbc.SqlConfig.TransactionMode.ISOLATED;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 class ConsultaControllerIntegrationTest extends AbstractDateFixedAndDatabaseProvidedIntegrationTest {
@@ -29,6 +29,10 @@ class ConsultaControllerIntegrationTest extends AbstractDateFixedAndDatabaseProv
     private static final String CONSULTA_INDISPONIVEL_MEDICO_DEFINIDO_PELO_SISTEMA = "classpath:sql/consulta/consulta_indisponivel_medico_definido_pelo_sistema.sql";
     private static final String CONSULTA_A_SER_REMOVIDA = "classpath:sql/consulta/consulta_a_ser_cancelada.sql";
     private static final String CONSULTA_CANCELAMENTO_MESMO_DIA = "classpath:sql/consulta/consulta_a_ser_removida_no_mesmo_dia.sql";
+    private static final String CONSULTAS_NO_DIA = "classpath:sql/consulta/consultas_para_relatorio_no_dia.sql";
+    private static final String CONSULTAS_QUE_NAO_SAO_NO_DIA_ESPECIFICADO = "classpath:sql/consulta/consultas_para_relatorio_que_nao_sao_no_dia_especificado.sql";
+    private static final String CONSULTAS_NO_MES = "classpath:sql/consulta/consultas_para_relatorio_no_mes.sql";
+    private static final String CONSULTAS_QUE_NAO_SAO_NO_MES_ESPECIFICADO = "classpath:sql/consulta/consultas_para_relatorio_que_nao_sao_no_mes_especificado.sql";
 
     @ParameterizedTest
     @HttpBodyJsonSource("json_source/consulta/agendamento_sucesso.json")
@@ -201,6 +205,87 @@ class ConsultaControllerIntegrationTest extends AbstractDateFixedAndDatabaseProv
     void deveRetornar404AoTentarCancelarUmaConsultaQueNaoExisteNoSistema(String url, String expectedResponse) {
         mockMvc.perform(delete(url))
                 .andExpect(status().isNotFound())
+                .andExpect(content().json(expectedResponse));
+    }
+
+    @ParameterizedTest
+    @HttpUrlParamJsonSource("json_source/consulta/relatorio_consultas_dia.json")
+    @Sql(scripts = CONSULTAS_NO_DIA, executionPhase = BEFORE_TEST_METHOD, config = @SqlConfig(transactionMode = ISOLATED))
+    @SneakyThrows
+    void deveExibirORelatorioDeConsultaPorDiaComConsultasArmazenadasNoBanco(String url, String expectedResponse) {
+        mockMvc.perform(get(url))
+                .andExpect(status().isOk())
+                .andExpect(content().json(expectedResponse));
+    }
+
+    @ParameterizedTest
+    @HttpUrlParamJsonSource("json_source/consulta/relatorio_consultas_que_nao_sao_no_dia_especificado.json")
+    @Sql(scripts = CONSULTAS_QUE_NAO_SAO_NO_DIA_ESPECIFICADO, executionPhase = BEFORE_TEST_METHOD, config = @SqlConfig(transactionMode = ISOLATED))
+    @SneakyThrows
+    void deveExibirORelatorioDeConsultaPorDiaSemNenhumaConsultaNaqueleDeterminadoDia(String url, String expectedResponse) {
+        mockMvc.perform(get(url))
+                .andExpect(status().isOk())
+                .andExpect(content().json(expectedResponse));
+    }
+
+
+    @ParameterizedTest
+    @HttpUrlParamJsonSource("json_source/consulta/relatorio_consultas_dia_parametro_faltante.json")
+    @Sql(scripts = CONSULTAS_NO_DIA, executionPhase = BEFORE_TEST_METHOD, config = @SqlConfig(transactionMode = ISOLATED))
+    @SneakyThrows
+    void deveRetornar400AoRealizarAConsultaDeRelatorioDoDiaComParametrosFaltantes(String url, String expectedResponse) {
+        mockMvc.perform(get(url))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().json(expectedResponse));
+    }
+
+    @ParameterizedTest
+    @HttpUrlParamJsonSource("json_source/consulta/relatorio_consultas_dia_formato_invalido.json")
+    @Sql(scripts = CONSULTAS_NO_DIA, executionPhase = BEFORE_TEST_METHOD, config = @SqlConfig(transactionMode = ISOLATED))
+    @SneakyThrows
+    void deveRetornar400AoRealizarAConsultaDeRelatorioDoDiaComParametrosInvalidos(String url, String expectedResponse) {
+        mockMvc.perform(get(url))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().json(expectedResponse));
+    }
+
+    @ParameterizedTest
+    @HttpUrlParamJsonSource("json_source/consulta/relatorio_consultas_mes.json")
+    @Sql(scripts = CONSULTAS_NO_MES, executionPhase = BEFORE_TEST_METHOD, config = @SqlConfig(transactionMode = ISOLATED))
+    @SneakyThrows
+    void deveExibirORelatorioDeConsultaPorMesComConsultasArmazenadasNoBanco(String url, String expectedResponse) {
+        mockMvc.perform(get(url))
+                .andExpect(status().isOk())
+                .andExpect(content().json(expectedResponse));
+    }
+
+    @ParameterizedTest
+    @HttpUrlParamJsonSource("json_source/consulta/relatorio_consultas_que_nao_sao_no_mes_especificado.json")
+    @Sql(scripts = CONSULTAS_QUE_NAO_SAO_NO_MES_ESPECIFICADO, executionPhase = BEFORE_TEST_METHOD, config = @SqlConfig(transactionMode = ISOLATED))
+    @SneakyThrows
+    void deveExibirORelatorioDeConsultaPorMesSemNenhumaConsultaNaqueleDeterminadoMes(String url, String expectedResponse) {
+        mockMvc.perform(get(url))
+                .andExpect(status().isOk())
+                .andExpect(content().json(expectedResponse));
+    }
+
+    @ParameterizedTest
+    @HttpUrlParamJsonSource("json_source/consulta/relatorio_consultas_mes_parametros_faltantes.json")
+    @Sql(scripts = CONSULTAS_NO_MES, executionPhase = BEFORE_TEST_METHOD, config = @SqlConfig(transactionMode = ISOLATED))
+    @SneakyThrows
+    void deveRetornar400AoRealizarAConsultaDeRelatorioDoMesComParametrosFaltantes(String url, String expectedResponse) {
+        mockMvc.perform(get(url))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().json(expectedResponse));
+    }
+
+    @ParameterizedTest
+    @HttpUrlParamJsonSource("json_source/consulta/relatorio_consultas_mes_formato_invalido.json")
+    @Sql(scripts = CONSULTAS_NO_MES, executionPhase = BEFORE_TEST_METHOD, config = @SqlConfig(transactionMode = ISOLATED))
+    @SneakyThrows
+    void deveRetornar400AoRealizarAConsultaDeRelatorioDoMesComParametrosInvalidos(String url, String expectedResponse) {
+        mockMvc.perform(get(url))
+                .andExpect(status().isBadRequest())
                 .andExpect(content().json(expectedResponse));
     }
 }

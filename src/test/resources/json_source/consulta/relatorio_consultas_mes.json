@@ -1,0 +1,70 @@
+[
+  {
+    "url": "/consulta/mes?mes=7&ano=2024",
+    "expectedResponse": {
+      "content": [
+        {
+          "pacienteNome": "Pedro Fernandes",
+          "medicoNome": "Ana Cardoso",
+          "data": "2024-07-22",
+          "horario": "09:30"
+        },
+        {
+          "pacienteNome": "Fernanda Costa",
+          "medicoNome": "Ana Cardoso",
+          "data": "2024-07-22",
+          "horario": "10:30"
+        },
+        {
+          "pacienteNome": "Marcos Rodrigues",
+          "medicoNome": "Ana Cardoso",
+          "data": "2024-07-22",
+          "horario": "11:30"
+        },
+        {
+          "pacienteNome": "Lúcia Almeida",
+          "medicoNome": "Ana Cardoso",
+          "data": "2024-07-25",
+          "horario": "09:30"
+        },
+        {
+          "pacienteNome": "Ana Oliveira",
+          "medicoNome": "João Augusto",
+          "data": "2024-07-21",
+          "horario": "11:30"
+        },
+        {
+          "pacienteNome": "Carlos Santos",
+          "medicoNome": "João Augusto",
+          "data": "2024-07-25",
+          "horario": "08:30"
+        }
+      ],
+      "pageable": {
+        "pageNumber": 0,
+        "pageSize": 20,
+        "sort": {
+          "empty": false,
+          "sorted": true,
+          "unsorted": false
+        },
+        "offset": 0,
+        "paged": true,
+        "unpaged": false
+      },
+      "totalElements": 6,
+      "totalPages": 1,
+      "last": true,
+      "size": 20,
+      "number": 0,
+      "sort": {
+        "empty": false,
+        "sorted": true,
+        "unsorted": false
+      },
+      "numberOfElements": 6,
+      "first": true,
+      "empty": false
+    }
+  }
+]

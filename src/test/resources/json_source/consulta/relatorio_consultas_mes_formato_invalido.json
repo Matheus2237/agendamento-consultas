@@ -1,0 +1,64 @@
+[
+  {
+    "url": "/consulta/mes?mes=00&ano=2024",
+    "expectedResponse": [
+      {
+        "parametro": "visualizarConsultasDoMes.mes",
+        "mensagem": "O valor do mês deve ser maior ou igual a 1"
+      }
+    ]
+  },
+  {
+    "url": "/consulta/mes?mes=13&ano=2024",
+    "expectedResponse": [
+      {
+        "parametro": "visualizarConsultasDoMes.mes",
+        "mensagem": "O valor do mês deve ser menor ou igual a 12"
+      }
+    ]
+  },
+  {
+    "url": "/consulta/mes?mes=07&ano=1899",
+    "expectedResponse": [
+      {
+        "parametro": "visualizarConsultasDoMes.ano",
+        "mensagem": "O valor do ano deve ser maior ou igual a 1900"
+      }
+    ]
+  },
+  {
+    "url": "/consulta/mes?mes=07&ano=10000",
+    "expectedResponse": [
+      {
+        "parametro": "visualizarConsultasDoMes.ano",
+        "mensagem": "O valor do ano deve ser menor ou igual a 9999"
+      }
+    ]
+  },
+  {
+    "url": "/consulta/mes?mes=00&ano=1899",
+    "expectedResponse": [
+      {
+        "parametro": "visualizarConsultasDoMes.ano",
+        "mensagem": "O valor do ano deve ser maior ou igual a 1900"
+      },
+      {
+        "parametro": "visualizarConsultasDoMes.mes",
+        "mensagem": "O valor do mês deve ser maior ou igual a 1"
+      }
+    ]
+  },
+  {
+    "url": "/consulta/mes?mes=13&ano=10000",
+    "expectedResponse": [
+      {
+        "parametro": "visualizarConsultasDoMes.mes",
+        "mensagem": "O valor do mês deve ser menor ou igual a 12"
+      },
+      {
+        "parametro": "visualizarConsultasDoMes.ano",
+        "mensagem": "O valor do ano deve ser menor ou igual a 9999"
+      }
+    ]
+  }
+]

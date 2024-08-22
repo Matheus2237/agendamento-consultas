@@ -1,0 +1,74 @@
+[
+  {
+    "url": "/consulta/dia?dia=0000-00-21",
+    "expectedResponse": [
+      {
+        "parametro": "visualizarConsultasDoDia.dia",
+        "mensagem": "Data inválida."
+      }
+    ]
+  },
+  {
+    "url": "/consulta/dia?dia=10000-00-21",
+    "expectedResponse": [
+      {
+        "parametro": "visualizarConsultasDoDia.dia",
+        "mensagem": "Data inválida."
+      }
+    ]
+  },
+  {
+    "url": "/consulta/dia?dia=2024-00-21",
+    "expectedResponse": [
+      {
+        "parametro": "visualizarConsultasDoDia.dia",
+        "mensagem": "Data inválida."
+      }
+    ]
+  },
+  {
+    "url": "/consulta/dia?dia=2024-13-21",
+    "expectedResponse": [
+      {
+        "parametro": "visualizarConsultasDoDia.dia",
+        "mensagem": "Data inválida."
+      }
+    ]
+  },
+  {
+    "url": "/consulta/dia?dia=2024-07-00",
+    "expectedResponse": [
+      {
+        "parametro": "visualizarConsultasDoDia.dia",
+        "mensagem": "Data inválida."
+      }
+    ]
+  },
+  {
+    "url": "/consulta/dia?dia=2024-07-32",
+    "expectedResponse": [
+      {
+        "parametro": "visualizarConsultasDoDia.dia",
+        "mensagem": "Data inválida."
+      }
+    ]
+  },
+  {
+    "url": "/consulta/dia?dia=2023-02-29",
+    "expectedResponse": [
+      {
+        "parametro": "visualizarConsultasDoDia.dia",
+        "mensagem": "Data inválida."
+      }
+    ]
+  },
+  {
+    "url": "/consulta/dia?dia=2024-02-30",
+    "expectedResponse": [
+      {
+        "parametro": "visualizarConsultasDoDia.dia",
+        "mensagem": "Data inválida."
+      }
+    ]
+  }
+]
