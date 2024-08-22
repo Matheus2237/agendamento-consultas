@@ -1,6 +1,7 @@
 package br.com.matheus.agendamentoconsultas.controller;
 
 import br.com.matheus.agendamentoconsultas.controller.dto.*;
+import br.com.matheus.agendamentoconsultas.exception.handler.dto.EntidadeNaoEncontradaDTO;
 import br.com.matheus.agendamentoconsultas.exception.handler.dto.FailedFieldRequestValidationDTO;
 import br.com.matheus.agendamentoconsultas.model.Medico;
 import br.com.matheus.agendamentoconsultas.service.MedicoService;
@@ -107,7 +108,9 @@ public class MedicoController {
     @ApiResponse(
             responseCode = "404",
             description = "Médico não encontrado",
-            content = @Content(mediaType = "string"))
+            content = @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = EntidadeNaoEncontradaDTO.class)))
     @GetMapping("/{id}")
     public ResponseEntity<ResponseMedicoDTO> detalharMedico(@PathVariable Long id) {
         ResponseMedicoDTO detalhesMedico = this.medicoService.detalharMedico(id);
@@ -132,7 +135,9 @@ public class MedicoController {
     @ApiResponse(
             responseCode = "404",
             description = "Médico não encontrado",
-            content = @Content(mediaType = "string"))
+            content = @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = EntidadeNaoEncontradaDTO.class)))
     @PutMapping("/{id}")
     public ResponseEntity<ResponseMedicoDTO> atualizar(@PathVariable Long id,
                                                        @RequestBody @Valid RequestAtualizacaoMedicoDTO requestAtualizacaoMedicoDTO) {
@@ -149,7 +154,9 @@ public class MedicoController {
     @ApiResponse(
             responseCode = "404",
             description = "Médico não encontrado",
-            content = @Content(mediaType = "string"))
+            content = @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = EntidadeNaoEncontradaDTO.class)))
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletar(@PathVariable Long id) {
         this.medicoService.deletar(id);
@@ -168,7 +175,9 @@ public class MedicoController {
     @ApiResponse(
             responseCode = "404",
             description = "Médico não encontrado",
-            content = @Content(mediaType = "string"))
+            content = @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = EntidadeNaoEncontradaDTO.class)))
     @PutMapping("/{id}/horarios-atendimento")
     public ResponseEntity<Set<HorarioAtendimentoResponseDTO>> atualizarHorariosAtendimento(@PathVariable Long id, @RequestBody @Valid Set<HorarioAtendimentoRequestDTO> horariosAtendimentoRequestDTO) {
         Set<HorarioAtendimentoResponseDTO> horariosAtendimento = medicoService.atualizarHorariosAtendimento(id, horariosAtendimentoRequestDTO);

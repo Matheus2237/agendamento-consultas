@@ -4,6 +4,7 @@ import br.com.matheus.agendamentoconsultas.controller.dto.RequestAtualizacaoPaci
 import br.com.matheus.agendamentoconsultas.controller.dto.RequestCadastroPacienteDTO;
 import br.com.matheus.agendamentoconsultas.controller.dto.ResponsePacienteDTO;
 import br.com.matheus.agendamentoconsultas.controller.dto.ResponseTodosPacientesDTO;
+import br.com.matheus.agendamentoconsultas.exception.handler.dto.EntidadeNaoEncontradaDTO;
 import br.com.matheus.agendamentoconsultas.exception.handler.dto.FailedFieldRequestValidationDTO;
 import br.com.matheus.agendamentoconsultas.model.Paciente;
 import br.com.matheus.agendamentoconsultas.service.PacienteService;
@@ -109,7 +110,9 @@ public class PacienteController {
     @ApiResponse(
             responseCode = "404",
             description = "Paciente não encontrado",
-            content = @Content(mediaType = "string"))
+            content = @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = EntidadeNaoEncontradaDTO.class)))
     @GetMapping("/{id}")
     public ResponseEntity<ResponsePacienteDTO> datalharPaciente(@PathVariable Long id) {
         ResponsePacienteDTO detalhesPaciente = this.pacienteService.detalharPaciente(id);
@@ -134,7 +137,9 @@ public class PacienteController {
     @ApiResponse(
             responseCode = "404",
             description = "Paciente não encontrado",
-            content = @Content(mediaType = "string"))
+            content = @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = EntidadeNaoEncontradaDTO.class)))
     @PutMapping("/{id}")
     public ResponseEntity<ResponsePacienteDTO> atualizar(@PathVariable Long id,
                                                          @RequestBody @Valid RequestAtualizacaoPacienteDTO requestAtualizacaoPacienteDTO) {
@@ -151,7 +156,9 @@ public class PacienteController {
     @ApiResponse(
             responseCode = "404",
             description = "Paciente não encontrado",
-            content = @Content(mediaType = "string"))
+            content = @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = EntidadeNaoEncontradaDTO.class)))
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletar(@PathVariable Long id) {
         this.pacienteService.deletar(id);

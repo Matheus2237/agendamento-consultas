@@ -3,9 +3,7 @@ package br.com.matheus.agendamentoconsultas.controller;
 import br.com.matheus.agendamentoconsultas.constraints.ValidStringDate;
 import br.com.matheus.agendamentoconsultas.controller.dto.ConsultaAgendadaDTO;
 import br.com.matheus.agendamentoconsultas.controller.dto.ConsultaRequestDTO;
-import br.com.matheus.agendamentoconsultas.exception.handler.dto.ConsultaNaoAgendadaDTO;
-import br.com.matheus.agendamentoconsultas.exception.handler.dto.FailedFieldRequestValidationDTO;
-import br.com.matheus.agendamentoconsultas.exception.handler.dto.FailedParameterRequestValidationDTO;
+import br.com.matheus.agendamentoconsultas.exception.handler.dto.*;
 import br.com.matheus.agendamentoconsultas.model.Consulta;
 import br.com.matheus.agendamentoconsultas.service.ConsultaService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -74,11 +72,15 @@ public class ConsultaController {
     @ApiResponse(
             responseCode = "404",
             description = "Médico não encontrado",
-            content = @Content(mediaType = "string"))
+            content = @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = EntidadeNaoEncontradaDTO.class)))
     @ApiResponse(
             responseCode = "404",
             description = "Paciente não encontrado",
-            content = @Content(mediaType = "string"))
+            content = @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = EntidadeNaoEncontradaDTO.class)))
     @ApiResponse(
             responseCode = "422",
             description = "Consulta não foi agendada",
@@ -104,11 +106,15 @@ public class ConsultaController {
     @ApiResponse(
             responseCode = "404",
             description = "Consulta não encontrada",
-            content = @Content(mediaType = "string"))
+            content = @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = EntidadeNaoEncontradaDTO.class)))
     @ApiResponse(
             responseCode = "403",
             description = "Consulta não pode mais ser cancelada",
-            content = @Content(mediaType = "string"))
+            content = @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = ConsultaNaoCanceladaDTO.class)))
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> cancelar(@PathVariable Long id) {
         consultaService.cancelar(id);

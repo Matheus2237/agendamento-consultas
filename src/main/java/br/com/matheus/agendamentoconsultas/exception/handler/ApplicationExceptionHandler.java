@@ -111,7 +111,7 @@ public class ApplicationExceptionHandler {
     @Hidden
     @ResponseStatus(BAD_REQUEST)
     @ExceptionHandler(MissingServletRequestParameterException.class)
-    public Object handle(MissingServletRequestParameterException exception) {
+    public FailedParameterRequestValidationDTO handle(MissingServletRequestParameterException exception) {
         String nomeParametro = exception.getParameterName();
         String mensagemErro = "O parâmetro ".concat(nomeParametro).concat(" é obrigatório.");
         return new FailedParameterRequestValidationDTO(
@@ -163,7 +163,7 @@ public class ApplicationExceptionHandler {
      * Handler para {@link ConsultaNaoPodeSerMarcadaException}.
      *
      * @param exception A exceção lançada quando uma consulta não pode ser agendada.
-     * @return Um {@link ConsultaNaoAgendadaDTO} com o motivo da consulta não agendada.
+     * @return O motivo da consulta não ter sido agendada.
      */
     @Hidden
     @ResponseStatus(UNPROCESSABLE_ENTITY)
@@ -176,7 +176,7 @@ public class ApplicationExceptionHandler {
      * Handler para {@link br.com.matheus.agendamentoconsultas.exception.DiaNaoPermitidoParaCancelarAConsultaException}.
      *
      * @param exception A exceção lançada quando não é permido cancelar a consulta no dia de hoje.
-     * @return Um {@link ConsultaNaoAgendadaDTO} com o motivo da consulta não agendada.
+     * @return O motivo da consulta não ter sido cancelada.
      */
     @Hidden
     @ResponseStatus(FORBIDDEN)
