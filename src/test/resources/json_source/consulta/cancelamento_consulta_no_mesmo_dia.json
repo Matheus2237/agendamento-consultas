@@ -1,0 +1,8 @@
+[
+  {
+    "url": "/consulta/1",
+    "expectedResponse": {
+      "motivo": "Consulta não pode mais ser cancelada."
+    }
+  }
+]

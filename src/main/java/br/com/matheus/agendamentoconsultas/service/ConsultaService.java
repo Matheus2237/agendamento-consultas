@@ -3,6 +3,7 @@ package br.com.matheus.agendamentoconsultas.service;
 import br.com.matheus.agendamentoconsultas.controller.dto.ConsultaAgendadaDTO;
 import br.com.matheus.agendamentoconsultas.controller.dto.ConsultaRequestDTO;
 import br.com.matheus.agendamentoconsultas.exception.ConsultaNaoEncontradaException;
+import br.com.matheus.agendamentoconsultas.exception.DiaNaoPermitidoParaCancelarAConsultaException;
 import br.com.matheus.agendamentoconsultas.exception.MedicoNaoEncontradoException;
 import br.com.matheus.agendamentoconsultas.exception.PacienteNaoEncontradoException;
 import br.com.matheus.agendamentoconsultas.model.Consulta;
@@ -17,6 +18,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.Clock;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
@@ -41,14 +44,16 @@ public class ConsultaService {
     private final PacienteRepository pacienteRepository;
     private final MedicoRepository medicoRepository;
     private final List<ValidacaoAgendamentoConsulta> validacoesAgendamentoConsulta;
+    private final Clock clock;
 
     @Autowired
     public ConsultaService(ConsultaRepository consultaRepository, PacienteRepository pacienteRepository, MedicoRepository medicoRepository,
-                           List<ValidacaoAgendamentoConsulta> validacoesAgendamentoConsulta) {
+                           List<ValidacaoAgendamentoConsulta> validacoesAgendamentoConsulta, Clock clock) {
         this.consultaRepository = consultaRepository;
         this.pacienteRepository = pacienteRepository;
         this.medicoRepository = medicoRepository;
         this.validacoesAgendamentoConsulta = validacoesAgendamentoConsulta;
+        this.clock = clock;
     }
 
     /**
@@ -129,15 +134,31 @@ public class ConsultaService {
     }
 
     /**
-     * Cancela uma consulta com base no ID fornecido.
+     * Cancela uma consulta com base no ID fornecido e na data da tentativa.
      *
      * @param id O ID da consulta a ser cancelada.
-     * @throws ConsultaNaoEncontradaException Se o paciente com o ID especificado não for encontrado.
+     * @throws ConsultaNaoEncontradaException se o paciente com o ID especificado não for encontrado.
+     * @throws DiaNaoPermitidoParaCancelarAConsultaException se a tentativa de cancelamento é na data da consulta ou posterior.
      */
     public void cancelar(Long id) {
-        Long idConsultaEncontrada = consultaRepository.findById(id)
-                .orElseThrow(ConsultaNaoEncontradaException::new).getId();
-        consultaRepository.deleteById(idConsultaEncontrada);
+        Consulta consulta = consultaRepository.findById(id)
+                .orElseThrow(ConsultaNaoEncontradaException::new);
+        if (!podeSerCanceladaNaDataDeHoje(consulta)) {
+            throw new DiaNaoPermitidoParaCancelarAConsultaException();
+        }
+        consultaRepository.deleteById(consulta.getId());
+    }
+
+    /**
+     * Verifica se a consulta pode ser cancelada na data de hoje.
+     *
+     * @param consulta A consulta que será verificada a data agendada
+     * @return {@code true} se a consulta pode ser cancelada na data de hoja e {@code false} caso contrário.
+     */
+    private boolean podeSerCanceladaNaDataDeHoje(Consulta consulta) {
+        LocalDate hoje = LocalDate.now(clock);
+        LocalDate dataDaConsulta = consulta.getData();
+        return hoje.isBefore(dataDaConsulta);
     }
 
     /**

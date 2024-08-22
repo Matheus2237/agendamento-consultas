@@ -3,10 +3,7 @@ package br.com.matheus.agendamentoconsultas.service;
 import br.com.matheus.agendamentoconsultas.base.MockedUnitTest;
 import br.com.matheus.agendamentoconsultas.controller.dto.ConsultaAgendadaDTO;
 import br.com.matheus.agendamentoconsultas.controller.dto.ConsultaRequestDTO;
-import br.com.matheus.agendamentoconsultas.exception.ConsultaNaoEncontradaException;
-import br.com.matheus.agendamentoconsultas.exception.ConsultaNaoPodeSerMarcadaException;
-import br.com.matheus.agendamentoconsultas.exception.MedicoNaoEncontradoException;
-import br.com.matheus.agendamentoconsultas.exception.PacienteNaoEncontradoException;
+import br.com.matheus.agendamentoconsultas.exception.*;
 import br.com.matheus.agendamentoconsultas.model.Consulta;
 import br.com.matheus.agendamentoconsultas.model.Medico;
 import br.com.matheus.agendamentoconsultas.model.Paciente;
@@ -14,8 +11,6 @@ import br.com.matheus.agendamentoconsultas.repository.ConsultaRepository;
 import br.com.matheus.agendamentoconsultas.repository.MedicoRepository;
 import br.com.matheus.agendamentoconsultas.repository.PacienteRepository;
 import br.com.matheus.agendamentoconsultas.service.consulta.validations.*;
-import lombok.SneakyThrows;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -24,13 +19,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.*;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import static java.time.Instant.parse;
+import static java.time.ZoneId.of;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -68,6 +64,9 @@ class ConsultaServiceTest extends MockedUnitTest {
     private ValidacaoMaximoDeDozeConsultasPorDiaPorMedico validacaoMaximoDeDozeConsultasPorDiaPorMedicoMock;
 
     @Mock
+    private Clock clockMock;
+
+    @Mock
     private Pageable pageableMock;
 
     private final Long consultaId = 1L;
@@ -80,6 +79,10 @@ class ConsultaServiceTest extends MockedUnitTest {
 
     @BeforeEach
     void setUp() {
+        LocalDate dataEsperada = LocalDate.now();
+        Instant fixedInstant = dataEsperada.atStartOfDay(ZoneId.systemDefault()).toInstant();
+        when(clockMock.instant()).thenReturn(fixedInstant);
+        when(clockMock.getZone()).thenReturn(ZoneId.systemDefault());
         List<ValidacaoAgendamentoConsulta> validacoesMock = Arrays.asList(
                 validacaoHorarioConsultaDentroDoHorarioDeAtendimentoMock,
                 validacaoUmaConsultaPorDiaPorPacienteMock,
@@ -90,7 +93,8 @@ class ConsultaServiceTest extends MockedUnitTest {
                 consultaRepositoryMock,
                 pacienteRepositoryMock,
                 medicoRepositoryMock,
-                validacoesMock
+                validacoesMock,
+                clockMock
         );
     }
 
@@ -207,6 +211,14 @@ class ConsultaServiceTest extends MockedUnitTest {
         when(consultaRepositoryMock.findById(consultaId)).thenReturn(Optional.of(consulta));
         consultaService.cancelar(consultaId);
         verify(consultaRepositoryMock).deleteById(consultaId);
+    }
+
+    @Test
+    void deveRetornarUmDiaNaoPermitidoParaCancelarAConsultaExceptionQuandoOPacienteTentarCancelarAConsultaNoMesmoDiaEmQueEstaAgendada() {
+        LocalDate hoje = LocalDate.now();
+        Consulta consulta = new Consulta(consultaId, medicoMock, pacienteMock, hoje, LocalTime.parse(horario));
+        when(consultaRepositoryMock.findById(consultaId)).thenReturn(Optional.of(consulta));
+        assertThrows(DiaNaoPermitidoParaCancelarAConsultaException.class, () -> consultaService.cancelar(consultaId));
     }
 
     @Test

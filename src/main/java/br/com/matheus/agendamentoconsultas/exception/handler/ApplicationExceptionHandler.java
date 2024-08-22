@@ -1,13 +1,7 @@
 package br.com.matheus.agendamentoconsultas.exception.handler;
 
-import br.com.matheus.agendamentoconsultas.exception.ConsultaNaoEncontradaException;
-import br.com.matheus.agendamentoconsultas.exception.ConsultaNaoPodeSerMarcadaException;
-import br.com.matheus.agendamentoconsultas.exception.MedicoNaoEncontradoException;
-import br.com.matheus.agendamentoconsultas.exception.PacienteNaoEncontradoException;
-import br.com.matheus.agendamentoconsultas.exception.handler.dto.ConsultaNaoAgendadaDTO;
-import br.com.matheus.agendamentoconsultas.exception.handler.dto.EntidadeNaoEncontradaDTO;
-import br.com.matheus.agendamentoconsultas.exception.handler.dto.FailedFieldRequestValidationDTO;
-import br.com.matheus.agendamentoconsultas.exception.handler.dto.FailedParameterRequestValidationDTO;
+import br.com.matheus.agendamentoconsultas.exception.*;
+import br.com.matheus.agendamentoconsultas.exception.handler.dto.*;
 import io.swagger.v3.oas.annotations.Hidden;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -176,5 +170,18 @@ public class ApplicationExceptionHandler {
     @ExceptionHandler(ConsultaNaoPodeSerMarcadaException.class)
     public ConsultaNaoAgendadaDTO handle(ConsultaNaoPodeSerMarcadaException exception) {
         return new ConsultaNaoAgendadaDTO(exception.getMessage());
+    }
+
+    /**
+     * Handler para {@link br.com.matheus.agendamentoconsultas.exception.DiaNaoPermitidoParaCancelarAConsultaException}.
+     *
+     * @param exception A exceção lançada quando não é permido cancelar a consulta no dia de hoje.
+     * @return Um {@link ConsultaNaoAgendadaDTO} com o motivo da consulta não agendada.
+     */
+    @Hidden
+    @ResponseStatus(FORBIDDEN)
+    @ExceptionHandler(DiaNaoPermitidoParaCancelarAConsultaException.class)
+    public ConsultaNaoCanceladaDTO handle(DiaNaoPermitidoParaCancelarAConsultaException exception) {
+        return new ConsultaNaoCanceladaDTO(exception.getMessage());
     }
 }

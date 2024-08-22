@@ -105,6 +105,10 @@ public class ConsultaController {
             responseCode = "404",
             description = "Consulta não encontrada",
             content = @Content(mediaType = "string"))
+    @ApiResponse(
+            responseCode = "403",
+            description = "Consulta não pode mais ser cancelada",
+            content = @Content(mediaType = "string"))
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> cancelar(@PathVariable Long id) {
         consultaService.cancelar(id);

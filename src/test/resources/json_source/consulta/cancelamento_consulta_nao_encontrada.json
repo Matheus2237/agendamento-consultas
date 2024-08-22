@@ -1,0 +1,8 @@
+[
+  {
+    "url": "/consulta/2",
+    "expectedResponse": {
+      "mensagem": "Consulta não encontrada"
+    }
+  }
+]
