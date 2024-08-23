@@ -13,6 +13,13 @@ import java.util.Objects;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
+/**
+ * Provedor de argumentos que lê dados de um arquivo JSON e os fornece para testes parametrizados.
+ * Espera que o JSON contenha uma lista de objetos no seu root.
+ *
+ * @author Matheus Paulino Ribeiro
+ * @since 1.0.0
+ */
 public class HttpBodyJsonSourceProvider implements ArgumentsProvider, AnnotationConsumer<HttpBodyJsonSource> {
 
     private String jsonFilePath;

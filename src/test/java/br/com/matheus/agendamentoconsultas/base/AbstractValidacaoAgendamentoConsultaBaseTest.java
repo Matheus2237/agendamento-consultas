@@ -11,6 +11,13 @@ import java.time.LocalTime;
 
 import static br.com.matheus.agendamentoconsultas.model.enums.DiaDaSemana.getDiaDaSemanaPelaData;
 
+/**
+ * Classe base para testes de validação de agendamento de consultas, configurando entidades e dados necessários.
+ * Usada para preparar o contexto de testes com valores iniciais comuns.
+ *
+ * @author Matheus Paulino Ribeiro
+ * @since 1.0.0
+ */
 public abstract class AbstractValidacaoAgendamentoConsultaBaseTest extends MockedUnitTest {
 
     protected static Long medicoId;
@@ -32,6 +39,11 @@ public abstract class AbstractValidacaoAgendamentoConsultaBaseTest extends Mocke
         diaDaSemana = getDiaDaSemanaPelaData(data);
     }
 
+    /**
+     * Cria e retorna uma instância de {@link Consulta} com valores pré-configurados.
+     *
+     * @return instância de {@link Consulta}.
+     */
     protected Consulta getEntidadeConsulta() {
         return Consulta.builder()
                 .medico(medico)

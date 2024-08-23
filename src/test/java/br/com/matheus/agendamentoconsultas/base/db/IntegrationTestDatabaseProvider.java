@@ -17,6 +17,13 @@ import java.sql.SQLException;
 
 import static lombok.AccessLevel.PRIVATE;
 
+/**
+ * Provedor de banco de dados para testes de integração utilizando o Testcontainers e configuração Hikari.
+ * Gerencia a configuração, criação, limpeza e destruição do schema durante os testes.
+ *
+ * @author Matheus Paulino Ribeiro
+ * @since 1.0.0
+ */
 @NoArgsConstructor(access = PRIVATE)
 public class IntegrationTestDatabaseProvider {
 
@@ -40,6 +47,11 @@ public class IntegrationTestDatabaseProvider {
         dataSource = getConfiguredHikariDataSourceUsingMysqlContainerProperties();
     }
 
+    /**
+     * Instancia um test container de banco de dados configurado para os testes de integração.
+     *
+     * @return Um test colntainer MySQL configurado com as propriedades do ambiente de teste.
+     */
     private static MySQLContainer<?> getConfiguredMysqlContainerInstance() {
         return new MySQLContainer<>(MYSQL_IMAGE)
                 .withDatabaseName(DB_NAME)
@@ -47,6 +59,11 @@ public class IntegrationTestDatabaseProvider {
                 .withPassword(DB_PASSWORD);
     }
 
+    /**
+     * Configura um data source Hikari baseado nas propriedades do MySQLContainer
+     *
+     * @return Um HikariDataSource configurado com as propriedades do container de banco de dados.
+     */
     private static HikariDataSource getConfiguredHikariDataSourceUsingMysqlContainerProperties() {
         HikariConfig hikariConfig = new HikariConfig();
         hikariConfig.setJdbcUrl(mySQLContainer.getJdbcUrl());
@@ -56,6 +73,11 @@ public class IntegrationTestDatabaseProvider {
         return new HikariDataSource(hikariConfig);
     }
 
+    /**
+     * Singleton para acessar a instância da classe.
+     *
+     * @return Uma instância única de IntegrationDatabaseProvider.
+     */
     public static IntegrationTestDatabaseProvider instance() {
         return IntegrationTestDatabaseHolder.INSTANCE;
     }
@@ -64,6 +86,11 @@ public class IntegrationTestDatabaseProvider {
         private static final IntegrationTestDatabaseProvider INSTANCE = new IntegrationTestDatabaseProvider();
     }
 
+    /**
+     * Configura o registro dinâmico de propriedades para o ambiente de teste.
+     *
+     * @param registry o registro dinâmico de propriedades.
+     */
     public void configureDynamicPropertyRegistryToTestEnvironment(DynamicPropertyRegistry registry) {
         registry.add("spring.datasource.url", mySQLContainer::getJdbcUrl);
         registry.add("spring.datasource.username", mySQLContainer::getUsername);
@@ -72,27 +99,37 @@ public class IntegrationTestDatabaseProvider {
         registry.add("spring.jpa.hibernate.ddl-auto", () -> HIBERNATE_DDL_AUTO);
     }
 
+    /**
+     * Cria o schema do banco de dados utilizado nos testes.
+     */
     public void createSchema() {
         executeScriptInDatabase(SCHEMA_CREATION_SCRIPT);
     }
 
+    /**
+     * Limpa o schema do banco de dados ao final de cada teste.
+     */
     public void cleanSchema() {
         executeScriptInDatabase(SCHEMA_CLEAN_SCRIPT);
     }
 
+    /**
+     * Remove o schema do banco de dados ao final de todos os testes.
+     */
     public void dropSchema() {
         executeScriptInDatabase(SCHEMA_DROP_SCRIPT);
     }
 
+    /**
+     * Executa o script no banco de dados configurado.
+     *
+     * @param sqlScript O Script a ser exectado.
+     */
     private void executeScriptInDatabase(Resource sqlScript) {
         try (Connection connection = DataSourceUtils.getConnection(dataSource)) {
             ScriptUtils.executeSqlScript(connection, sqlScript);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public void freeConnection() {
-        mySQLContainer.close();
     }
 }

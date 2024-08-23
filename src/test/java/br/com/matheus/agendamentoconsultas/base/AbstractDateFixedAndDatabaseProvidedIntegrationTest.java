@@ -17,6 +17,14 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Locale;
 
+/**
+ * Classe abstrata para testes de integração com configuração de banco de dados e data fixa.
+ * Esta classe base combina a configuração de um banco de dados MySQL em container, além de
+ * fornecer um {@link DataFixaConfig} fixo para controlar a data em testes.
+ *
+ * @author Matheus Paulino Ribeiro
+ * @since 1.0.0
+ */
 @SpringBootTest
 @AutoConfigureMockMvc
 @Import(DataFixaConfig.class)
@@ -27,6 +35,11 @@ public abstract class AbstractDateFixedAndDatabaseProvidedIntegrationTest {
     @Autowired
     protected MockMvc mockMvc;
 
+    /**
+     * Configura as propriedades dinâmicas para o ambiente de teste, como a porta do servidor e as propriedades do banco de dados.
+     *
+     * @param registry o registro dinâmico de propriedades.
+     */
     @DynamicPropertySource
     static void configureTestEnvironmentProperties(DynamicPropertyRegistry registry) {
         registry.add("server.port", TestSocketUtils::findAvailableTcpPort);
@@ -34,18 +47,18 @@ public abstract class AbstractDateFixedAndDatabaseProvidedIntegrationTest {
     }
 
     @BeforeAll
-    public static void setUpAll() {
+    static void setUpAll() {
         LocaleContextHolder.setDefaultLocale(Locale.of("pt", "BR"));
         testDatabase.createSchema();
     }
 
     @AfterEach
-    public void tearDown() {
+    void tearDown() {
         testDatabase.cleanSchema();
     }
 
     @AfterAll
-    public static void tearDownAll() {
+    static void tearDownAll() {
         testDatabase.dropSchema();
     }
 }
