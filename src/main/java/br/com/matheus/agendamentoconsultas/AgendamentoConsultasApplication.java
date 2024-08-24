@@ -2,6 +2,7 @@ package br.com.matheus.agendamentoconsultas;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
+import lombok.Generated;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -17,6 +18,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @since 1.0.0
  */
 @SpringBootApplication
+@Generated
 @OpenAPIDefinition(info = @Info(
         title = "Agendamento Consultas",
         version = "1.0.0",
