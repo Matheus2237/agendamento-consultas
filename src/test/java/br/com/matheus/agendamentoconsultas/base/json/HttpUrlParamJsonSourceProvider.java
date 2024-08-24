@@ -20,7 +20,8 @@ import java.util.stream.StreamSupport;
  * @author Matheus Paulino Ribeiro
  * @since 1.0.0
  */
-public class HttpUrlParamJsonSourceProvider implements ArgumentsProvider, AnnotationConsumer<HttpUrlParamJsonSource> {
+public final class HttpUrlParamJsonSourceProvider extends HttpJsonSourceProvider
+        implements ArgumentsProvider, AnnotationConsumer<HttpUrlParamJsonSource> {
 
     private String jsonFilePath;
 
@@ -30,20 +31,13 @@ public class HttpUrlParamJsonSourceProvider implements ArgumentsProvider, Annota
     }
 
     @Override
-    public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
-        ObjectMapper objectMapper = new ObjectMapper();
-        String jsonContent = new String(Files.readAllBytes(Paths.get(Objects.requireNonNull(getClass().getClassLoader().getResource(jsonFilePath)).getPath())));
-        JsonNode jsonNode = objectMapper.readTree(jsonContent);
+    public Stream<? extends Arguments> provideArguments(ExtensionContext context) {
+        return provideArguments(jsonFilePath);
+    }
 
-        if (!jsonNode.isArray()) {
-            throw new IllegalArgumentException("The JSON file must contain a list of objects at the root.");
-        }
-
-        return StreamSupport.stream(jsonNode.spliterator(), false)
-                .map(node -> {
-                    String request = node.path("url").asText();
-                    String expectedResponse = node.path("expectedResponse").toString();
-                    return Arguments.of(request, expectedResponse);
-                });
+    protected Arguments parseNodeArguments(JsonNode node) {
+        String request = node.path("url").asText();
+        String expectedResponse = node.path("expectedResponse").toString();
+        return Arguments.of(request, expectedResponse);
     }
 }

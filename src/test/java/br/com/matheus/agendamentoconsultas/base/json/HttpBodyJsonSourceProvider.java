@@ -7,6 +7,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.ArgumentsProvider;
 import org.junit.jupiter.params.support.AnnotationConsumer;
 
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Objects;
@@ -20,7 +21,8 @@ import java.util.stream.StreamSupport;
  * @author Matheus Paulino Ribeiro
  * @since 1.0.0
  */
-public class HttpBodyJsonSourceProvider implements ArgumentsProvider, AnnotationConsumer<HttpBodyJsonSource> {
+public final class HttpBodyJsonSourceProvider extends HttpJsonSourceProvider
+        implements ArgumentsProvider, AnnotationConsumer<HttpBodyJsonSource> {
 
     private String jsonFilePath;
 
@@ -30,20 +32,13 @@ public class HttpBodyJsonSourceProvider implements ArgumentsProvider, Annotation
     }
 
     @Override
-    public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
-        ObjectMapper objectMapper = new ObjectMapper();
-        String jsonContent = new String(Files.readAllBytes(Paths.get(Objects.requireNonNull(getClass().getClassLoader().getResource(jsonFilePath)).getPath())));
-        JsonNode jsonNode = objectMapper.readTree(jsonContent);
+    public Stream<? extends Arguments> provideArguments(ExtensionContext context) {
+        return provideArguments(jsonFilePath);
+    }
 
-        if (!jsonNode.isArray()) {
-            throw new IllegalArgumentException("The JSON file must contain a list of objects at the root.");
-        }
-
-        return StreamSupport.stream(jsonNode.spliterator(), false)
-                .map(node -> {
-                    String request = node.path("request").toString();
-                    String expectedResponse = node.path("expectedResponse").toString();
-                    return Arguments.of(request, expectedResponse);
-                });
+    protected Arguments parseNodeArguments(JsonNode node) {
+        String request = node.path("request").toString();
+        String expectedResponse = node.path("expectedResponse").toString();
+        return Arguments.of(request, expectedResponse);
     }
 }
