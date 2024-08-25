@@ -175,6 +175,34 @@ class MedicoServiceTest extends MockedUnitTest {
     }
 
     @Test
+    void deveManterOsDadosAntigosAoTentarAtualizarOsDadosDoMedicoSemOsNovosDados() {
+        Medico medico = getMedico();
+        when(medicoRepositorySpy.findById(id)).thenReturn(Optional.of(medico));
+        RequestAtualizacaoMedicoDTO dadosAtualizacao = new RequestAtualizacaoMedicoDTO(null, null, null, null);
+        ResponseMedicoDTO dadosMedicoAtualizado = medicoService.atualizar(id, dadosAtualizacao);
+        assertNotNull(dadosMedicoAtualizado, "Medico cadastrado não deve ser nulo.");
+        Set<HorarioAtendimentoResponseDTO> horariosAtendimento = dadosMedicoAtualizado.horariosAtendimento();
+        assertAll("Dados que constam no request devem ser atualizados enquanto o restante deve ser mantido.",
+                () -> assertEquals(id, dadosMedicoAtualizado.id(), "Id deve ser o mesmo."),
+                () -> assertEquals(nome, dadosMedicoAtualizado.nome(), "Nome deve ser o atualizado."),
+                () -> assertEquals(crm, dadosMedicoAtualizado.crm(), "CPF deve ser o mesmo."),
+                () -> assertEquals(email, dadosMedicoAtualizado.email(), "Email deve ser o mesmo."),
+                () -> assertEquals(ddd, dadosMedicoAtualizado.telefone().ddd(), "DDD de telefone deve ser atualizado."),
+                () -> assertEquals(numeroTelefone, dadosMedicoAtualizado.telefone().numero(), "Número de telefone deve ser atualizado."),
+                () -> assertEquals(logradouro, dadosMedicoAtualizado.endereco().logradouro(), "Logradouro do endereço deve ser o mesmo."),
+                () -> assertEquals(numeroEndereco, dadosMedicoAtualizado.endereco().numero(), "Número do endereço deve ser o mesmo."),
+                () -> assertEquals(bairro, dadosMedicoAtualizado.endereco().bairro(), "Bairro do endereço deve ser o mesmo."),
+                () -> assertEquals(cidade, dadosMedicoAtualizado.endereco().cidade(), "Cidade do endereço deve ser a mesma."),
+                () -> assertEquals(uf, dadosMedicoAtualizado.endereco().uf(), "UF do endereço deve ser a mesma."),
+                () -> assertEquals(cep, dadosMedicoAtualizado.endereco().cep(), "CEP do endereço deve ser o mesmo."),
+                () -> assertEquals(especializacao, dadosMedicoAtualizado.especializacao(), "Especialização deve ser a mesma."),
+                () -> assertTrue(horariosAtendimento.stream().anyMatch(h -> diaDaSemana.equals(h.diaDaSemana())), "Dia da semana do horário de atendimento deve ser o mesmo."),
+                () -> assertTrue(horariosAtendimento.stream().anyMatch(h -> horaInicial.equals(h.horaInicial())), "Hora inicial do horário de atendimento do endereço deve ser o mesmo."),
+                () -> assertTrue(horariosAtendimento.stream().anyMatch(h -> horaFinal.equals(h.horaFinal())), "Hora final do horário de atendimento do endereço deve ser o mesmo.")
+        );
+    }
+
+    @Test
     void deveRetornarUmaMedicoNaoEncontradoExceptionAoTentarAtualizarUmMedicoNaoExistenteNoBancoDeDados() {
         when(medicoRepositorySpy.findById(id)).thenReturn(Optional.empty());
         RequestAtualizacaoMedicoDTO dadosAtualizacao = mock(RequestAtualizacaoMedicoDTO.class);
