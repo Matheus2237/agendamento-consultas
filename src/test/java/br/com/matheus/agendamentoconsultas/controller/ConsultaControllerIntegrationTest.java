@@ -1,6 +1,7 @@
 package br.com.matheus.agendamentoconsultas.controller;
 
 import br.com.matheus.agendamentoconsultas.base.AbstractDateFixedAndDatabaseProvidedIntegrationTest;
+import br.com.matheus.agendamentoconsultas.base.db.SqlScriptToExecuteBeforeTestMethod;
 import br.com.matheus.agendamentoconsultas.base.json.HttpBodyJsonSource;
 import br.com.matheus.agendamentoconsultas.base.json.HttpUrlParamJsonSource;
 import lombok.SneakyThrows;
@@ -36,7 +37,7 @@ class ConsultaControllerIntegrationTest extends AbstractDateFixedAndDatabaseProv
 
     @ParameterizedTest
     @HttpBodyJsonSource("json_source/consulta/agendamento_sucesso.json")
-    @Sql(scripts = CONSULTA_PERMITIDA_SCRIPT, executionPhase = BEFORE_TEST_METHOD, config = @SqlConfig(transactionMode = ISOLATED))
+    @SqlScriptToExecuteBeforeTestMethod(CONSULTA_PERMITIDA_SCRIPT)
     @SneakyThrows
     void deveAgendarUmaConsultaComSucessoQuandoAMesmaPossuiDadosValidos(String request, String expectedResponse) {
         String createdURI = "/consulta/1";
@@ -50,7 +51,7 @@ class ConsultaControllerIntegrationTest extends AbstractDateFixedAndDatabaseProv
 
     @ParameterizedTest
     @HttpBodyJsonSource("json_source/consulta/agendamento_dados_faltantes.json")
-    @Sql(scripts = CONSULTA_PERMITIDA_SCRIPT, executionPhase = BEFORE_TEST_METHOD, config = @SqlConfig(transactionMode = ISOLATED))
+    @SqlScriptToExecuteBeforeTestMethod(CONSULTA_PERMITIDA_SCRIPT)
     @SneakyThrows
     void deveRetornar400AoTentarAgendarUmaConsultaComInformacoesFaltantes(String request, String expectedResponse) {
         mockMvc.perform(post("/consulta/agendamento")
@@ -63,7 +64,7 @@ class ConsultaControllerIntegrationTest extends AbstractDateFixedAndDatabaseProv
 
     @ParameterizedTest
     @HttpBodyJsonSource("json_source/consulta/agendamento_dados_invalidos.json")
-    @Sql(scripts = CONSULTA_PERMITIDA_SCRIPT, executionPhase = BEFORE_TEST_METHOD, config = @SqlConfig(transactionMode = ISOLATED))
+    @SqlScriptToExecuteBeforeTestMethod(CONSULTA_PERMITIDA_SCRIPT)
     @SneakyThrows
     void deveRetornar400AoTentarAgendarUmaConsultaComDadosInvalidos(String request, String expectedResponse) {
         mockMvc.perform(post("/consulta/agendamento")
@@ -75,7 +76,7 @@ class ConsultaControllerIntegrationTest extends AbstractDateFixedAndDatabaseProv
 
     @ParameterizedTest
     @HttpBodyJsonSource("json_source/consulta/agendamento_paciente_nao_cadastrado.json")
-    @Sql(scripts = CONSULTA_PACIENTE_NAO_CADASTRADO, executionPhase = BEFORE_TEST_METHOD, config = @SqlConfig(transactionMode = ISOLATED))
+    @SqlScriptToExecuteBeforeTestMethod(CONSULTA_PACIENTE_NAO_CADASTRADO)
     @SneakyThrows
     void deveRetornar404AoTentarAgendarUmaConsultaComUmPacienteNaoCadastradoNoSistema(String request, String expectedResponse) {
         mockMvc.perform(post("/consulta/agendamento")
@@ -87,7 +88,7 @@ class ConsultaControllerIntegrationTest extends AbstractDateFixedAndDatabaseProv
 
     @ParameterizedTest
     @HttpBodyJsonSource("json_source/consulta/agendamento_medico_nao_cadastrado.json")
-    @Sql(scripts = CONSULTA_MEDICO_NAO_CADASTRADO, executionPhase = BEFORE_TEST_METHOD, config = @SqlConfig(transactionMode = ISOLATED))
+    @SqlScriptToExecuteBeforeTestMethod(CONSULTA_MEDICO_NAO_CADASTRADO)
     @SneakyThrows
     void deveRetornar404AoTentarAgendarUmaConsultaComUmMedicoNaoCadastradoNoSistema(String request, String expectedResponse) {
         mockMvc.perform(post("/consulta/agendamento")
@@ -110,7 +111,7 @@ class ConsultaControllerIntegrationTest extends AbstractDateFixedAndDatabaseProv
 
     @ParameterizedTest
     @HttpBodyJsonSource("json_source/consulta/agendamento_fora_de_horario_de_atendimento.json")
-    @Sql(scripts = CONSULTA_PERMITIDA_SCRIPT, executionPhase = BEFORE_TEST_METHOD, config = @SqlConfig(transactionMode = ISOLATED))
+    @SqlScriptToExecuteBeforeTestMethod(CONSULTA_PERMITIDA_SCRIPT)
     @SneakyThrows
     void deveRetornar422AoTentarAgendarUmaConsultaForaDoHorarioDeAtendimentoDoMedico(String request, String expectedResponse) {
         mockMvc.perform(post("/consulta/agendamento")
@@ -122,7 +123,7 @@ class ConsultaControllerIntegrationTest extends AbstractDateFixedAndDatabaseProv
 
     @ParameterizedTest
     @HttpBodyJsonSource("json_source/consulta/agendamento_paciente_possui_consulta_mesmo_dia.json")
-    @Sql(scripts = CONSULTA_PACIENTE_MESMO_DIA, executionPhase = BEFORE_TEST_METHOD, config = @SqlConfig(transactionMode = ISOLATED))
+    @SqlScriptToExecuteBeforeTestMethod(CONSULTA_PACIENTE_MESMO_DIA)
     @SneakyThrows
     void deveRetornar422AoTentarAgendarUmaConsultaQuandoOPacienteJaPossuiAgendadaParaOMesmoDia(String request, String expectedResponse) {
         mockMvc.perform(post("/consulta/agendamento")
@@ -134,7 +135,7 @@ class ConsultaControllerIntegrationTest extends AbstractDateFixedAndDatabaseProv
 
     @ParameterizedTest
     @HttpBodyJsonSource("json_source/consulta/agendamento_horario_ja_marcado.json")
-    @Sql(scripts = CONSULTA_HORARIO_JA_AGENDADO, executionPhase = BEFORE_TEST_METHOD, config = @SqlConfig(transactionMode = ISOLATED))
+    @SqlScriptToExecuteBeforeTestMethod(CONSULTA_HORARIO_JA_AGENDADO)
     @SneakyThrows
     void deveRetornar422AoTentarAgendarUmaConsultaEmUmHorarioJaAgendadoComOMesmoMedico(String request, String expectedResponse) {
         mockMvc.perform(post("/consulta/agendamento")
@@ -146,7 +147,7 @@ class ConsultaControllerIntegrationTest extends AbstractDateFixedAndDatabaseProv
 
     @ParameterizedTest
     @HttpBodyJsonSource("json_source/consulta/agendamento_medico_agenda_lotada_no_dia.json")
-    @Sql(scripts = CONSULTA_MEDICO_AGENDA_LOTADA_NO_DIA, executionPhase = BEFORE_TEST_METHOD, config = @SqlConfig(transactionMode = ISOLATED))
+    @SqlScriptToExecuteBeforeTestMethod(CONSULTA_MEDICO_AGENDA_LOTADA_NO_DIA)
     @SneakyThrows
     void deveRetornar422AoTentarAgendarUmaConsultaComUmMedicoQueJaTem12ConsultasAgendadasNesseDia(String request, String expectedResponse) {
         mockMvc.perform(post("/consulta/agendamento")
@@ -158,7 +159,7 @@ class ConsultaControllerIntegrationTest extends AbstractDateFixedAndDatabaseProv
 
     @ParameterizedTest
     @HttpBodyJsonSource("json_source/consulta/agendamento_sucesso_medico_definido_pelo_sistema.json")
-    @Sql(scripts = CONSULTA_PERMITIDA_MEDICO_DEFINIDO_PELO_SISTEMA, executionPhase = BEFORE_TEST_METHOD, config = @SqlConfig(transactionMode = ISOLATED))
+    @SqlScriptToExecuteBeforeTestMethod(CONSULTA_PERMITIDA_MEDICO_DEFINIDO_PELO_SISTEMA)
     @SneakyThrows
     void deveAgendarUmaConsultaComSucessoQuandoOPacienteDeixarOSistemaEscolherOMedicoEHouverUmDisponivel(String request, String expectedResponse) {
         mockMvc.perform(post("/consulta/agendamento")
@@ -170,7 +171,7 @@ class ConsultaControllerIntegrationTest extends AbstractDateFixedAndDatabaseProv
 
     @ParameterizedTest
     @HttpBodyJsonSource("json_source/consulta/agendamento_consulta_indisponivel_medico_definido_pelo_sistema.json")
-    @Sql(scripts = CONSULTA_INDISPONIVEL_MEDICO_DEFINIDO_PELO_SISTEMA, executionPhase = BEFORE_TEST_METHOD, config = @SqlConfig(transactionMode = ISOLATED))
+    @SqlScriptToExecuteBeforeTestMethod(CONSULTA_INDISPONIVEL_MEDICO_DEFINIDO_PELO_SISTEMA)
     @SneakyThrows
     void deveRetornar404QuandoOPacienteDeixarOSistemaEscolherOMedicoParaConsultaENaoHouverNenhumDisponivel(String request, String expectedResponse) {
         mockMvc.perform(post("/consulta/agendamento")
@@ -181,7 +182,7 @@ class ConsultaControllerIntegrationTest extends AbstractDateFixedAndDatabaseProv
     }
 
     @Test
-    @Sql(scripts = CONSULTA_A_SER_REMOVIDA, executionPhase = BEFORE_TEST_METHOD, config = @SqlConfig(transactionMode = ISOLATED))
+    @SqlScriptToExecuteBeforeTestMethod(CONSULTA_A_SER_REMOVIDA)
     @SneakyThrows
     void deveCancelarUmaConsultaPreviamenteAgendadaNoSistemaComBaseNoSeuIdEComMaisDeUmDiaDeAntecedencia() {
         mockMvc.perform(delete("/consulta/1"))
@@ -190,7 +191,7 @@ class ConsultaControllerIntegrationTest extends AbstractDateFixedAndDatabaseProv
 
     @ParameterizedTest
     @HttpUrlParamJsonSource("json_source/consulta/cancelamento_consulta_no_mesmo_dia.json")
-    @Sql(scripts = CONSULTA_CANCELAMENTO_MESMO_DIA, executionPhase = BEFORE_TEST_METHOD, config = @SqlConfig(transactionMode = ISOLATED))
+    @SqlScriptToExecuteBeforeTestMethod(CONSULTA_CANCELAMENTO_MESMO_DIA)
     @SneakyThrows
     void deveRetornar403AoTentarCancelarUmaConsultaNoMesmoDiaEmQueEstaAgendada(String url, String expectedResponse) {
         mockMvc.perform(delete(url))
@@ -200,7 +201,7 @@ class ConsultaControllerIntegrationTest extends AbstractDateFixedAndDatabaseProv
 
     @ParameterizedTest
     @HttpUrlParamJsonSource("json_source/consulta/cancelamento_consulta_nao_encontrada.json")
-    @Sql(scripts = CONSULTA_A_SER_REMOVIDA, executionPhase = BEFORE_TEST_METHOD, config = @SqlConfig(transactionMode = ISOLATED))
+    @SqlScriptToExecuteBeforeTestMethod(CONSULTA_A_SER_REMOVIDA)
     @SneakyThrows
     void deveRetornar404AoTentarCancelarUmaConsultaQueNaoExisteNoSistema(String url, String expectedResponse) {
         mockMvc.perform(delete(url))
@@ -210,7 +211,7 @@ class ConsultaControllerIntegrationTest extends AbstractDateFixedAndDatabaseProv
 
     @ParameterizedTest
     @HttpUrlParamJsonSource("json_source/consulta/relatorio_consultas_dia.json")
-    @Sql(scripts = CONSULTAS_NO_DIA, executionPhase = BEFORE_TEST_METHOD, config = @SqlConfig(transactionMode = ISOLATED))
+    @SqlScriptToExecuteBeforeTestMethod(CONSULTAS_NO_DIA)
     @SneakyThrows
     void deveExibirORelatorioDeConsultaPorDiaComConsultasArmazenadasNoBanco(String url, String expectedResponse) {
         mockMvc.perform(get(url))
@@ -220,7 +221,7 @@ class ConsultaControllerIntegrationTest extends AbstractDateFixedAndDatabaseProv
 
     @ParameterizedTest
     @HttpUrlParamJsonSource("json_source/consulta/relatorio_consultas_que_nao_sao_no_dia_especificado.json")
-    @Sql(scripts = CONSULTAS_QUE_NAO_SAO_NO_DIA_ESPECIFICADO, executionPhase = BEFORE_TEST_METHOD, config = @SqlConfig(transactionMode = ISOLATED))
+    @SqlScriptToExecuteBeforeTestMethod(CONSULTAS_QUE_NAO_SAO_NO_DIA_ESPECIFICADO)
     @SneakyThrows
     void deveExibirORelatorioDeConsultaPorDiaSemNenhumaConsultaNaqueleDeterminadoDia(String url, String expectedResponse) {
         mockMvc.perform(get(url))
@@ -231,7 +232,7 @@ class ConsultaControllerIntegrationTest extends AbstractDateFixedAndDatabaseProv
 
     @ParameterizedTest
     @HttpUrlParamJsonSource("json_source/consulta/relatorio_consultas_dia_parametro_faltante.json")
-    @Sql(scripts = CONSULTAS_NO_DIA, executionPhase = BEFORE_TEST_METHOD, config = @SqlConfig(transactionMode = ISOLATED))
+    @SqlScriptToExecuteBeforeTestMethod(CONSULTAS_NO_DIA)
     @SneakyThrows
     void deveRetornar400AoRealizarAConsultaDeRelatorioDoDiaComParametrosFaltantes(String url, String expectedResponse) {
         mockMvc.perform(get(url))
@@ -241,7 +242,7 @@ class ConsultaControllerIntegrationTest extends AbstractDateFixedAndDatabaseProv
 
     @ParameterizedTest
     @HttpUrlParamJsonSource("json_source/consulta/relatorio_consultas_dia_formato_invalido.json")
-    @Sql(scripts = CONSULTAS_NO_DIA, executionPhase = BEFORE_TEST_METHOD, config = @SqlConfig(transactionMode = ISOLATED))
+    @SqlScriptToExecuteBeforeTestMethod(CONSULTAS_NO_DIA)
     @SneakyThrows
     void deveRetornar400AoRealizarAConsultaDeRelatorioDoDiaComParametrosInvalidos(String url, String expectedResponse) {
         mockMvc.perform(get(url))
@@ -251,7 +252,7 @@ class ConsultaControllerIntegrationTest extends AbstractDateFixedAndDatabaseProv
 
     @ParameterizedTest
     @HttpUrlParamJsonSource("json_source/consulta/relatorio_consultas_mes.json")
-    @Sql(scripts = CONSULTAS_NO_MES, executionPhase = BEFORE_TEST_METHOD, config = @SqlConfig(transactionMode = ISOLATED))
+    @SqlScriptToExecuteBeforeTestMethod(CONSULTAS_NO_MES)
     @SneakyThrows
     void deveExibirORelatorioDeConsultaPorMesComConsultasArmazenadasNoBanco(String url, String expectedResponse) {
         mockMvc.perform(get(url))
@@ -271,7 +272,7 @@ class ConsultaControllerIntegrationTest extends AbstractDateFixedAndDatabaseProv
 
     @ParameterizedTest
     @HttpUrlParamJsonSource("json_source/consulta/relatorio_consultas_mes_parametros_faltantes.json")
-    @Sql(scripts = CONSULTAS_NO_MES, executionPhase = BEFORE_TEST_METHOD, config = @SqlConfig(transactionMode = ISOLATED))
+    @SqlScriptToExecuteBeforeTestMethod(CONSULTAS_NO_MES)
     @SneakyThrows
     void deveRetornar400AoRealizarAConsultaDeRelatorioDoMesComParametrosFaltantes(String url, String expectedResponse) {
         mockMvc.perform(get(url))
@@ -281,7 +282,7 @@ class ConsultaControllerIntegrationTest extends AbstractDateFixedAndDatabaseProv
 
     @ParameterizedTest
     @HttpUrlParamJsonSource("json_source/consulta/relatorio_consultas_mes_formato_invalido.json")
-    @Sql(scripts = CONSULTAS_NO_MES, executionPhase = BEFORE_TEST_METHOD, config = @SqlConfig(transactionMode = ISOLATED))
+    @SqlScriptToExecuteBeforeTestMethod(CONSULTAS_NO_MES)
     @SneakyThrows
     void deveRetornar400AoRealizarAConsultaDeRelatorioDoMesComParametrosInvalidos(String url, String expectedResponse) {
         mockMvc.perform(get(url))

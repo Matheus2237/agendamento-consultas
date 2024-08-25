@@ -1,6 +1,7 @@
 package br.com.matheus.agendamentoconsultas.controller;
 
 import br.com.matheus.agendamentoconsultas.base.AbstractDateFixedAndDatabaseProvidedIntegrationTest;
+import br.com.matheus.agendamentoconsultas.base.db.SqlScriptToExecuteBeforeTestMethod;
 import br.com.matheus.agendamentoconsultas.base.json.HttpBodyJsonSource;
 import br.com.matheus.agendamentoconsultas.base.json.HttpUrlParamJsonSource;
 import lombok.SneakyThrows;
@@ -24,7 +25,7 @@ class PacienteControllerIntegrationTest extends AbstractDateFixedAndDatabaseProv
 
     @ParameterizedTest
     @HttpUrlParamJsonSource("json_source/paciente/visualizar_todos_cadastrado.json")
-    @Sql(scripts = PACIENTE_INSERT_SCRIPT, executionPhase = BEFORE_TEST_METHOD, config = @SqlConfig(transactionMode = ISOLATED))
+    @SqlScriptToExecuteBeforeTestMethod(PACIENTE_INSERT_SCRIPT)
     @SneakyThrows
     void deveRetornar200AoVisualizarTodosOsPacientesCadastradosNoSistema(String url, String expectedResponse) {
         mockMvc.perform(get(url))
@@ -69,7 +70,7 @@ class PacienteControllerIntegrationTest extends AbstractDateFixedAndDatabaseProv
 
     @ParameterizedTest
     @HttpBodyJsonSource("json_source/paciente/cadastro_cpf_email_repetidos.json")
-    @Sql(scripts = PACIENTE_INSERT_SCRIPT, executionPhase = BEFORE_TEST_METHOD, config = @SqlConfig(transactionMode = ISOLATED))
+    @SqlScriptToExecuteBeforeTestMethod(PACIENTE_INSERT_SCRIPT)
     @SneakyThrows
     void deveRetornar400AoTentarCadastrarUmPacienteComCPFOuEmailJaExistentesNoBancoDeDados(String request, String expectedResponse) {
         mockMvc.perform(
@@ -82,7 +83,7 @@ class PacienteControllerIntegrationTest extends AbstractDateFixedAndDatabaseProv
 
     @ParameterizedTest
     @HttpUrlParamJsonSource("json_source/paciente/visualizacao_detalhes_cadastrados.json")
-    @Sql(scripts = PACIENTE_INSERT_SCRIPT, executionPhase = BEFORE_TEST_METHOD, config = @SqlConfig(transactionMode = ISOLATED))
+    @SqlScriptToExecuteBeforeTestMethod(PACIENTE_INSERT_SCRIPT)
     @SneakyThrows
     void deveRetornar200AoVisualizarOsDetalhesDeUmPacienteJaCadastradoNaAplicacao(String url, String expectedResponse) {
         mockMvc.perform(get(url))
@@ -101,7 +102,7 @@ class PacienteControllerIntegrationTest extends AbstractDateFixedAndDatabaseProv
 
     @ParameterizedTest
     @HttpBodyJsonSource("json_source/paciente/atualizacao_cadastrado.json")
-    @Sql(scripts = PACIENTE_INSERT_SCRIPT, executionPhase = BEFORE_TEST_METHOD, config = @SqlConfig(transactionMode = ISOLATED))
+    @SqlScriptToExecuteBeforeTestMethod(PACIENTE_INSERT_SCRIPT)
     @SneakyThrows
     void deveRetornar200AoTentarAtualizarComDadosValidosUmPacienteCadastradoNoSistema(String request, String expectedResponse) {
         mockMvc.perform(
@@ -114,7 +115,7 @@ class PacienteControllerIntegrationTest extends AbstractDateFixedAndDatabaseProv
 
     @ParameterizedTest
     @HttpBodyJsonSource("json_source/paciente/atualizacao_dados_invalidos.json")
-    @Sql(scripts = PACIENTE_INSERT_SCRIPT, executionPhase = BEFORE_TEST_METHOD, config = @SqlConfig(transactionMode = ISOLATED))
+    @SqlScriptToExecuteBeforeTestMethod(PACIENTE_INSERT_SCRIPT)
     @SneakyThrows
     void deveRetornar400AoTentarAtualizarComDadosInvalidosUmPaciente(String request, String expectedResponse) {
         mockMvc.perform(
@@ -138,7 +139,7 @@ class PacienteControllerIntegrationTest extends AbstractDateFixedAndDatabaseProv
     }
 
     @Test
-    @Sql(scripts = PACIENTE_INSERT_SCRIPT, executionPhase = BEFORE_TEST_METHOD, config = @SqlConfig(transactionMode = ISOLATED))
+    @SqlScriptToExecuteBeforeTestMethod(PACIENTE_INSERT_SCRIPT)
     @SneakyThrows
     void deveRetornar200AoDeletarUmPacientePreviamenteCadastradoNoSistema() {
         String url = "/paciente/1";
