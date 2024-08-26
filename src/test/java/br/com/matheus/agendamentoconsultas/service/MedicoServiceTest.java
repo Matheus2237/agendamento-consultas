@@ -18,6 +18,10 @@ import lombok.SneakyThrows;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.NullAndEmptySource;
+import org.junit.jupiter.params.provider.ValueSource;
+import org.junit.platform.commons.util.StringUtils;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
@@ -174,11 +178,12 @@ class MedicoServiceTest extends MockedUnitTest {
         );
     }
 
-    @Test
-    void deveManterOsDadosAntigosAoTentarAtualizarOsDadosDoMedicoSemOsNovosDados() {
+    @ParameterizedTest
+    @NullAndEmptySource
+    void deveManterOsDadosAntigosAoTentarAtualizarOsDadosDoMedicoSemOsNovosDados(String dado) {
         Medico medico = getMedico();
         when(medicoRepositorySpy.findById(id)).thenReturn(Optional.of(medico));
-        RequestAtualizacaoMedicoDTO dadosAtualizacao = new RequestAtualizacaoMedicoDTO(null, null, null, null);
+        RequestAtualizacaoMedicoDTO dadosAtualizacao = new RequestAtualizacaoMedicoDTO(dado, dado, null, null);
         ResponseMedicoDTO dadosMedicoAtualizado = medicoService.atualizar(id, dadosAtualizacao);
         assertNotNull(dadosMedicoAtualizado, "Medico cadastrado não deve ser nulo.");
         Set<HorarioAtendimentoResponseDTO> horariosAtendimento = dadosMedicoAtualizado.horariosAtendimento();

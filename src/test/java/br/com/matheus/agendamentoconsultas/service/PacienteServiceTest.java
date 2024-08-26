@@ -13,6 +13,8 @@ import lombok.SneakyThrows;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
@@ -147,11 +149,12 @@ class PacienteServiceTest extends MockedUnitTest {
         );
     }
 
-    @Test
-    void deveManterOsDadosAntigosAoTentarAtualizarOsDadosDoMedicoSemOsNovosDados() {
+    @ParameterizedTest
+    @NullAndEmptySource
+    void deveManterOsDadosAntigosAoTentarAtualizarOsDadosDoMedicoSemOsNovosDados(String dado) {
         Paciente paciente = getPaciente();
         when(pacienteRepositorySpy.findById(id)).thenReturn(Optional.of(paciente));
-        RequestAtualizacaoPacienteDTO dadosAtualizacao = new RequestAtualizacaoPacienteDTO(null, null, null);
+        RequestAtualizacaoPacienteDTO dadosAtualizacao = new RequestAtualizacaoPacienteDTO(dado, null, null);
         ResponsePacienteDTO dadosPacienteAtualizado = pacienteService.atualizar(id, dadosAtualizacao);
         assertNotNull(dadosPacienteAtualizado, "Paciente cadastrado não deve ser nulo.");
         assertAll("Dados que constam no request devem ser atualizados enquanto o restante deve ser mantido.",
