@@ -43,7 +43,7 @@ class ValidTelefoneRequestDTOValidatorTest extends MockedUnitTest {
     @SuppressWarnings("unused")
     static ArgumentSets provisionaNumerosEDDDsInvalidos() {
         return ArgumentSets
-                .argumentsForFirstParameter("1a", "11!", "1 1", "1", "111")
+                .argumentsForFirstParameter("1a", "11!", "1 1", "1", "111", "11")
                 .argumentsForNextParameter("98765abcd", "98765@#$%", "9876543210", "98765 4321", "98765432");
     }
 
