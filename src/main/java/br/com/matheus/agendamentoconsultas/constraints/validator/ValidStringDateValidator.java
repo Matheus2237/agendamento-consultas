@@ -94,6 +94,6 @@ public class ValidStringDateValidator implements ConstraintValidator<ValidString
      * @return {@code true} se o ano é bissexto, {@code false} caso contrário.
      */
     private boolean isAnoBissexto(int ano) {
-        return ano % 100 != 0 && ano % 4 == 0 || ano % 400 == 0;
+        return ano % 400 == 0 || ano % 100 != 0 && ano % 4 == 0;
     }
 }

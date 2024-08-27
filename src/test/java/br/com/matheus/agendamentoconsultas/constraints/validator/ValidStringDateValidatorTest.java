@@ -27,9 +27,9 @@ class ValidStringDateValidatorTest extends MockedUnitTest {
 
     @ParameterizedTest
     @ValueSource(strings = {
-            "2023-01-01", "2024-02-29", "2024-03-29", "2000-04-29", "1999-05-15",
+            "2023-01-01", "2024-02-29", "2024-03-29", "2000-04-30", "1999-05-15",
             "1999-06-30", "2027-06-30", "2025-07-15", "2026-08-20", "2024-09-24",
-            "2003-10-18", "2011-11-11", "2023-12-31"
+            "2003-10-18", "2011-11-11", "2023-12-31", "2000-02-29"
     })
     void deveRetornarTrueAoReceberDataComFormatoValido(String data) {
         assertTrue(validator.isValid(data, contextMock), data.concat(" deve ser válida."));
@@ -46,8 +46,9 @@ class ValidStringDateValidatorTest extends MockedUnitTest {
 
     @ParameterizedTest
     @ValueSource(strings = {
+            "1700-02-29", "1800-02-29", "1900-02-29", "2100-02-29",
             "2021-02-29", "2022-02-29", "2023-02-29",
-            "2010-02-29", "2100-02-29"
+            "2010-02-29"
     })
     void deveRetornarFalseCasoOAnoNaoSejaBissexto(String data) {
         assertFalse(validator.isValid(data, contextMock), "Falhou para a data inválida: ".concat(data));
