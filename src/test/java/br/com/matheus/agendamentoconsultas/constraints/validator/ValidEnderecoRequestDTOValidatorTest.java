@@ -48,7 +48,7 @@ class ValidEnderecoRequestDTOValidatorTest extends MockedUnitTest {
     @SuppressWarnings("unused")
     static ArgumentSets provisionaCEPOuUFInconsistentes() {
         return ArgumentSets
-                .argumentsForFirstParameter("XX", "YY", "ZZ", "S1", "12", "S!", "MZ")
+                .argumentsForFirstParameter("XX", "YY", "ZZ", "S1", "12", "S!", "MZ", "SP")
                 .argumentsForNextParameter("1234567", "123456789", "12345A78", "12345-678");
     }
 
