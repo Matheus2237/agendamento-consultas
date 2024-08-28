@@ -5,9 +5,9 @@ spring:
   application:
     name: agendamento-consultas
   datasource:
-    url: jdbc:mysql://${MYSQL_HOST}:${MYSQL_PORT}/${MYSQL_DATABASE}?useUnicode=true&characterEncoding=utf-8
-    username: ${MYSQL_USER}
-    password: ${MYSQL_PASSWORD}
+    url: ${DATABASE_URL}?useUnicode=true&characterEncoding=utf-8
+    username: ${DATABASE_USER}
+    password: ${DATABASE_PASSWORD}
     driver-class-name: com.mysql.cj.jdbc.Driver
     hikari:
       connection-init-sql: "SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci"
