@@ -31,7 +31,15 @@ Para subir o projeto e a documentação, siga os seguintes passos:
 
 ### Exemplo de Arquivo de Variáveis de Ambiente
 
-[Exemplo do arquivo de variáveis de ambiente]
+agendamentoconsultas.env:
+
+```env
+SERVER_PORT=<porta da aplicação>
+DATABASE_URL=<url de conexão com o banco>
+DATABASE_USER=<usuario do banco>
+DATABASE_PASSWORD=<senha do banco>
+HIBERNATE_DDL_AUTO=<ddl do hibernate>
+```
 
 ### Testes com o Postman
 
