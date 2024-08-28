@@ -25,9 +25,10 @@ Esta aplicação foi desenvolvida para gerenciar o agendamento de consultas méd
 
 Para subir o projeto e a documentação, siga os seguintes passos:
 
-1. [Passo 1]
-2. [Passo 2]
-3. [Passo 3]
+1. **Configure o Banco de Dados**: Certifique-se de que o banco de dados esteja disponível online e obtenha a URL de conexão, usuário e senha.
+2. **Configure as variáveis de ambiente**: Preencha o arquivo `agendamentoconsultas.env` com as informações do banco de dados conforme o exemplo fornecido. Um exemplo do arquivo se encontra abaixo.
+3. **Compile o Projeto**: Utilize o Java 21 e o Maven para compilar o projeto.
+4. **Execute o Projeto**: O projeto possui apenas um perfil default para execução. A diferenciação de ambientes se dá mediante variáveis de ambiente.
 
 ### Exemplo de Arquivo de Variáveis de Ambiente
 
