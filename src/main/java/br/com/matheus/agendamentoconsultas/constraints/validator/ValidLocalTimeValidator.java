@@ -3,7 +3,6 @@ package br.com.matheus.agendamentoconsultas.constraints.validator;
 import br.com.matheus.agendamentoconsultas.constraints.ValidLocalTime;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
-import org.apache.commons.lang3.StringUtils;
 
 import java.util.regex.Pattern;
 

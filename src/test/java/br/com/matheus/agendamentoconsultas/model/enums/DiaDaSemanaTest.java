@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.util.stream.Stream;
 
 import static br.com.matheus.agendamentoconsultas.model.enums.DiaDaSemana.getDiaDaSemanaPelaData;
+import static br.com.matheus.agendamentoconsultas.model.enums.DiaDaSemana.getDiaDaSemanaPeloValorNumerico;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -35,15 +36,13 @@ class DiaDaSemanaTest {
 
     @Test
     void deveLancarUmaIllegalArgumentExceptionParaUmaDataNula() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            getDiaDaSemanaPelaData(null);
-        }, "Deveria ter lançado IllegalArgumentException para data nula.");
+        assertThrows(IllegalArgumentException.class, () -> getDiaDaSemanaPelaData(null),
+                "Deveria ter lançado IllegalArgumentException para data nula.");
     }
 
     @Test
     void deveLancarUmaIllegalArgumentExceptionParaUmValorDeDiaDaSemanaQueNaoExiste() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            DiaDaSemana.getDiaDaSemanaPeloValorNumerico(8);
-        }, "Deve lançar uma IllegalArgumentException para valores maiores que 7.");
+        assertThrows(IllegalArgumentException.class, () -> getDiaDaSemanaPeloValorNumerico(8),
+                "Deve lançar uma IllegalArgumentException para valores maiores que 7.");
     }
 }

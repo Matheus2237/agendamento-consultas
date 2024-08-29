@@ -9,9 +9,6 @@ import br.com.matheus.agendamentoconsultas.model.Telefone;
 import br.com.matheus.agendamentoconsultas.model.vo.CPF;
 import br.com.matheus.agendamentoconsultas.model.vo.Email;
 import br.com.matheus.agendamentoconsultas.repository.PacienteRepository;
-import lombok.SneakyThrows;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
@@ -29,7 +26,6 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
-import static org.mockito.MockitoAnnotations.openMocks;
 
 class PacienteServiceTest extends MockedUnitTest {
 

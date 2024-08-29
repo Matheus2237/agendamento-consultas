@@ -1,18 +1,12 @@
 package br.com.matheus.agendamentoconsultas.constraints.validator;
 
 import br.com.matheus.agendamentoconsultas.base.MockedUnitTest;
-import br.com.matheus.agendamentoconsultas.base.clock.DataFixaConfig;
 import jakarta.validation.ConstraintValidatorContext;
-import lombok.SneakyThrows;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.springframework.context.annotation.Import;
 
 import java.time.Clock;
 import java.time.LocalDate;

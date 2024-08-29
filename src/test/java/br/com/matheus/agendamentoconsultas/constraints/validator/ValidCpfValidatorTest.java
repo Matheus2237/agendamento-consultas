@@ -2,18 +2,15 @@ package br.com.matheus.agendamentoconsultas.constraints.validator;
 
 import br.com.matheus.agendamentoconsultas.base.MockedUnitTest;
 import jakarta.validation.ConstraintValidatorContext;
-import lombok.SneakyThrows;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ValidCpfValidatorTest extends MockedUnitTest {
 
@@ -44,6 +41,6 @@ class ValidCpfValidatorTest extends MockedUnitTest {
     @ParameterizedTest
     @NullAndEmptySource
     void deveRetornarTrueCasoOCPFSejaNuloOuEmBranco(String cpf) {
-         assertTrue(validator.isValid(cpf, contextMock));
+        assertTrue(validator.isValid(cpf, contextMock));
     }
 }

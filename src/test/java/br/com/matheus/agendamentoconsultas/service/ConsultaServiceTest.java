@@ -25,8 +25,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import static java.time.Instant.parse;
-import static java.time.ZoneId.of;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -158,7 +156,7 @@ class ConsultaServiceTest extends MockedUnitTest {
                 "Deve lançar uma MedicoNaoEncontradoException.");
     }
 
-        @Test
+    @Test
     void deveLancarExcecaoQuandoOHorarioDaConsultaEstiverForaDoHorarioDeAtendimentoDoMedico() {
         ConsultaRequestDTO consultaRequestDTO = getConsultaRequestDTO();
         when(pacienteRepositoryMock.findById(pacienteId)).thenReturn(Optional.of(pacienteMock));

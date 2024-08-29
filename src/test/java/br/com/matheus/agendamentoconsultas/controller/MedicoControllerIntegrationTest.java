@@ -7,17 +7,10 @@ import br.com.matheus.agendamentoconsultas.base.json.HttpUrlParamJsonSource;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.jdbc.SqlConfig;
-import org.springframework.test.web.servlet.MockMvc;
 
 import static org.hamcrest.core.StringContains.containsString;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
-import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
-import static org.springframework.test.context.jdbc.SqlConfig.TransactionMode.ISOLATED;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 class MedicoControllerIntegrationTest extends AbstractDateFixedAndDatabaseProvidedIntegrationTest {
@@ -46,7 +39,7 @@ class MedicoControllerIntegrationTest extends AbstractDateFixedAndDatabaseProvid
     @ParameterizedTest
     @HttpBodyJsonSource("json_source/medico/cadastro_sucesso.json")
     @SneakyThrows
-    void deveRetornar201AoCadastrarUmMedicoComSucesso(String request, String expectedResponse){
+    void deveRetornar201AoCadastrarUmMedicoComSucesso(String request, String expectedResponse) {
         final String createdURI = "/medico/1";
         mockMvc.perform(
                         post("/medico")

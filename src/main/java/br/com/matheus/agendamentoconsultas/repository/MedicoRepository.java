@@ -45,7 +45,7 @@ public interface MedicoRepository extends JpaRepository<Medico, Long> {
     /**
      * Encontra um médico disponível de forma aleatória para uma data e horário especificados.
      *
-     * @param data A data da consulta
+     * @param data    A data da consulta
      * @param horario O horário da consulta
      * @return Um {@link Optional} contendo um médico disponível, se encontrado
      */
@@ -58,8 +58,8 @@ public interface MedicoRepository extends JpaRepository<Medico, Long> {
      * Encontra um médico disponível de forma aleatória para uma data e horário
      * especificados, considerando o dia da semana.
      *
-     * @param data A data da consulta
-     * @param horario O horário da consulta
+     * @param data        A data da consulta
+     * @param horario     O horário da consulta
      * @param diaDaSemana O dia da semana da consulta
      * @return Um {@link Optional} contendo um médico disponível, se encontrado
      */

@@ -3,9 +3,6 @@ package br.com.matheus.agendamentoconsultas.constraints.validator;
 import br.com.matheus.agendamentoconsultas.base.MockedUnitTest;
 import br.com.matheus.agendamentoconsultas.repository.MedicoRepository;
 import jakarta.validation.ConstraintValidatorContext;
-import lombok.SneakyThrows;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -13,7 +10,6 @@ import org.mockito.Mock;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
-import static org.mockito.MockitoAnnotations.openMocks;
 
 class UniqueCrmValidatorTest extends MockedUnitTest {
 

@@ -19,7 +19,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.Clock;
-import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
@@ -115,7 +114,7 @@ public class ConsultaService {
 
     /**
      * <p>
- *     Obtém um médico aleatório disponível para a data e horário solicitados.
+     * Obtém um médico aleatório disponível para a data e horário solicitados.
      * </p>
      * <p>
      * Traz apenas um resultado dentro das regras de agendamento. Considera apenas os médicos que
@@ -128,7 +127,7 @@ public class ConsultaService {
      * @return Um médico disponível
      * @throws MedicoNaoEncontradoException Se nenhum médico disponível for encontrado para a data e horário especificados
      */
-    private Medico  obterMedicoAleatorioDisponivelParaDataEHorarioDeterminado(LocalDate data, LocalTime horario) {
+    private Medico obterMedicoAleatorioDisponivelParaDataEHorarioDeterminado(LocalDate data, LocalTime horario) {
         Optional<Medico> medicoOptional = medicoRepository.findRandomAvailableMedicoToTheSpecifiedDate(data, horario);
         return medicoOptional.orElseThrow(MedicoNaoEncontradoException::new);
     }
@@ -137,7 +136,7 @@ public class ConsultaService {
      * Cancela uma consulta com base no ID fornecido e na data da tentativa.
      *
      * @param id O ID da consulta a ser cancelada.
-     * @throws ConsultaNaoEncontradaException se o paciente com o ID especificado não for encontrado.
+     * @throws ConsultaNaoEncontradaException                se o paciente com o ID especificado não for encontrado.
      * @throws DiaNaoPermitidoParaCancelarAConsultaException se a tentativa de cancelamento é na data da consulta ou posterior.
      */
     public void cancelar(Long id) {
@@ -164,7 +163,7 @@ public class ConsultaService {
     /**
      * Busca uma página de consultas agendadas para uma data específica.
      *
-     * @param data a data das consultas a serem buscadas no formato YYYY-MM-DD.
+     * @param data     a data das consultas a serem buscadas no formato YYYY-MM-DD.
      * @param pageable o objeto de paginação que especifica a página, o tamanho da página e a ordenação.
      * @return uma página de {@link ConsultaAgendadaDTO} que representa as consultas agendadas na data especificada.
      */
@@ -176,8 +175,8 @@ public class ConsultaService {
     /**
      * Busca uma página de consultas agendadas em um mês específico.
      *
-     * @param mes a mês das consultas a serem buscadas.
-     * @param ano o ano das consultas a serem buscadas.
+     * @param mes      a mês das consultas a serem buscadas.
+     * @param ano      o ano das consultas a serem buscadas.
      * @param pageable o objeto de paginação que especifica a página, o tamanho da página e a ordenação.
      * @return uma página de {@link ConsultaAgendadaDTO} que representa as consultas agendadas para o mês especificado.
      */

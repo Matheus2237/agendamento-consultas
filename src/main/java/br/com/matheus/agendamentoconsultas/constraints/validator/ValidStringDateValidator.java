@@ -33,7 +33,7 @@ public class ValidStringDateValidator implements ConstraintValidator<ValidString
     /**
      * Valida se a data fornecida é válida.
      *
-     * @param data A data a ser validada
+     * @param data    A data a ser validada
      * @param context O contexto de validação
      * @return {@code true} se a data é válida ou está em branco/nula, {@code false} caso contrário
      */

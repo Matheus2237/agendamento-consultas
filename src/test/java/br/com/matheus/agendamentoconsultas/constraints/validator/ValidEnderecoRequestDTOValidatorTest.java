@@ -3,17 +3,16 @@ package br.com.matheus.agendamentoconsultas.constraints.validator;
 import br.com.matheus.agendamentoconsultas.base.MockedUnitTest;
 import br.com.matheus.agendamentoconsultas.controller.dto.EnderecoRequestDTO;
 import jakarta.validation.ConstraintValidatorContext;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.MethodSource;
 import org.junitpioneer.jupiter.cartesian.ArgumentSets;
 import org.junitpioneer.jupiter.cartesian.CartesianTest;
 import org.junitpioneer.jupiter.cartesian.CartesianTest.MethodFactory;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ValidEnderecoRequestDTOValidatorTest extends MockedUnitTest {
 

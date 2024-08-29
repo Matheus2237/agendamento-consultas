@@ -34,7 +34,7 @@ public class UniqueCpfValidator implements ConstraintValidator<UniqueCpf, String
     /**
      * Verifica se o CPF informado é único.
      *
-     * @param cpf O CPF que será validado.
+     * @param cpf     O CPF que será validado.
      * @param context O contexto de validação.
      * @return {@code true} se o CPF é único e não existe no banco de dados,
      * {@code false} caso contrário.

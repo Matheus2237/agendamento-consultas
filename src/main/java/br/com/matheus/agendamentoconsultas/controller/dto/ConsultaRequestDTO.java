@@ -2,7 +2,6 @@ package br.com.matheus.agendamentoconsultas.controller.dto;
 
 import br.com.matheus.agendamentoconsultas.constraints.ValidDataFutura;
 import br.com.matheus.agendamentoconsultas.constraints.ValidLocalTime;
-import br.com.matheus.agendamentoconsultas.constraints.ValidStringDate;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -10,13 +9,12 @@ import jakarta.validation.constraints.NotNull;
 /**
  * DTO para requisição de agendamento de consulta.
  *
- * @author Matheus Paulino Ribeiro
- * @since 1.0.0
- *
  * @param pacienteId ID do paciente.
  * @param medicoId   ID do médico.
  * @param data       Data da consulta.
  * @param horario    Horário da consulta.
+ * @author Matheus Paulino Ribeiro
+ * @since 1.0.0
  */
 @Schema(description = "DTO para requisição de agendamento de consulta")
 public record ConsultaRequestDTO(

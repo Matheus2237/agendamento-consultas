@@ -15,8 +15,8 @@ import static org.springframework.test.context.jdbc.SqlConfig.TransactionMode.IS
 /**
  * Anotação customizada para executar um script Sql antes do método de teste.
  *
- * @since 1.0.0
  * @author Matheus Paulino Ribeiro
+ * @since 1.0.0
  */
 @Target(METHOD)
 @Retention(RUNTIME)

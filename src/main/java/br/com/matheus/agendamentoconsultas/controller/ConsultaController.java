@@ -37,9 +37,8 @@ import static org.springframework.data.domain.Sort.Direction.ASC;
  * bem como gerar relatórios dos agendamentos.
  * </p>
  *
- * @see br.com.matheus.agendamentoconsultas.service.ConsultaService
- *
  * @author Matheus Paulino Ribeiro
+ * @see br.com.matheus.agendamentoconsultas.service.ConsultaService
  * @since 1.0.0
  */
 @Tag(

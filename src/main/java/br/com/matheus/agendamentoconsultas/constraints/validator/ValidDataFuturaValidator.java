@@ -22,13 +22,12 @@ import static org.apache.commons.lang3.StringUtils.isBlank;
  * A data é considerada válida se for posterior à data atual.
  * </p>
  *
+ * @author Matheus Paulino Ribeiro
  * @see jakarta.validation.ConstraintValidator
  * @see jakarta.validation.ConstraintValidatorContext
  * @see java.time.LocalDate
  * @see br.com.matheus.agendamentoconsultas.constraints.ValidDataFutura
  * @see ValidStringDateValidator
- *
- * @author Matheus Paulino Ribeiro
  * @since 1.0.0
  */
 public class ValidDataFuturaValidator implements ConstraintValidator<ValidDataFutura, String> {
@@ -43,7 +42,7 @@ public class ValidDataFuturaValidator implements ConstraintValidator<ValidDataFu
     /**
      * Valida se a data fornecida é uma data futura.
      *
-     * @param data A data a ser validada
+     * @param data    A data a ser validada
      * @param context O contexto de validação
      * @return {@code true} se a data é futura, {@code false} caso contrário
      */

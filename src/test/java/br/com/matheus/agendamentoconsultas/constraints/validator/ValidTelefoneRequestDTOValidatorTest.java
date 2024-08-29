@@ -3,21 +3,17 @@ package br.com.matheus.agendamentoconsultas.constraints.validator;
 import br.com.matheus.agendamentoconsultas.base.MockedUnitTest;
 import br.com.matheus.agendamentoconsultas.controller.dto.TelefoneRequestDTO;
 import jakarta.validation.ConstraintValidatorContext;
-import lombok.SneakyThrows;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.NullSource;
 import org.junitpioneer.jupiter.cartesian.ArgumentSets;
 import org.junitpioneer.jupiter.cartesian.CartesianTest;
 import org.junitpioneer.jupiter.cartesian.CartesianTest.MethodFactory;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ValidTelefoneRequestDTOValidatorTest extends MockedUnitTest {
 

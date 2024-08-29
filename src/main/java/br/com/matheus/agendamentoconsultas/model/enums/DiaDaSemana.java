@@ -39,7 +39,7 @@ public enum DiaDaSemana {
     }
 
     /**
- *     Obtém o dia da semana com base no valor numérico correspondente
+     * Obtém o dia da semana com base no valor numérico correspondente
      * (1 para SEGUNDA, 2 para TERCA, ..., 7 para DOMINGO).
      *
      * @param valorNumerico O valor numérico representando o dia da semana

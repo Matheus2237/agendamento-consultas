@@ -7,15 +7,9 @@ import br.com.matheus.agendamentoconsultas.base.json.HttpUrlParamJsonSource;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.jdbc.SqlConfig;
-import org.springframework.test.web.servlet.MockMvc;
 
 import static org.hamcrest.core.StringContains.containsString;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
-import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
-import static org.springframework.test.context.jdbc.SqlConfig.TransactionMode.ISOLATED;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -45,10 +39,10 @@ class PacienteControllerIntegrationTest extends AbstractDateFixedAndDatabaseProv
     @ParameterizedTest
     @HttpBodyJsonSource("json_source/paciente/cadastro_sucesso.json")
     @SneakyThrows
-    void deveRetornar201AoCadastrarUmPacienteComSucesso(String request, String expectedResponse){
+    void deveRetornar201AoCadastrarUmPacienteComSucesso(String request, String expectedResponse) {
         final String createdURI = "/paciente/1";
         mockMvc.perform(
-                post("/paciente")
+                        post("/paciente")
                                 .contentType(APPLICATION_JSON)
                                 .content(request))
                 .andExpect(status().isCreated())
@@ -61,9 +55,9 @@ class PacienteControllerIntegrationTest extends AbstractDateFixedAndDatabaseProv
     @SneakyThrows
     void deveRetornar400AoTentarCadastrarUmPacienteComAlgumDadoFaltanteOuEmBranco(String request, String expectedResponse) {
         mockMvc.perform(
-                post("/paciente")
-                        .contentType(APPLICATION_JSON)
-                        .content(request))
+                        post("/paciente")
+                                .contentType(APPLICATION_JSON)
+                                .content(request))
                 .andExpect(status().isBadRequest())
                 .andExpect(content().json(expectedResponse));
     }
@@ -74,9 +68,9 @@ class PacienteControllerIntegrationTest extends AbstractDateFixedAndDatabaseProv
     @SneakyThrows
     void deveRetornar400AoTentarCadastrarUmPacienteComCPFOuEmailJaExistentesNoBancoDeDados(String request, String expectedResponse) {
         mockMvc.perform(
-                post("/paciente")
-                        .contentType(APPLICATION_JSON)
-                        .content(request))
+                        post("/paciente")
+                                .contentType(APPLICATION_JSON)
+                                .content(request))
                 .andExpect(status().isBadRequest())
                 .andExpect(content().json(expectedResponse));
     }
@@ -106,9 +100,9 @@ class PacienteControllerIntegrationTest extends AbstractDateFixedAndDatabaseProv
     @SneakyThrows
     void deveRetornar200AoTentarAtualizarComDadosValidosUmPacienteCadastradoNoSistema(String request, String expectedResponse) {
         mockMvc.perform(
-                put("/paciente/1")
-                        .contentType(APPLICATION_JSON)
-                        .content(request))
+                        put("/paciente/1")
+                                .contentType(APPLICATION_JSON)
+                                .content(request))
                 .andExpect(status().isOk())
                 .andExpect(content().json(expectedResponse));
     }
@@ -119,9 +113,9 @@ class PacienteControllerIntegrationTest extends AbstractDateFixedAndDatabaseProv
     @SneakyThrows
     void deveRetornar400AoTentarAtualizarComDadosInvalidosUmPaciente(String request, String expectedResponse) {
         mockMvc.perform(
-                put("/paciente/1")
-                        .contentType(APPLICATION_JSON)
-                        .content(request))
+                        put("/paciente/1")
+                                .contentType(APPLICATION_JSON)
+                                .content(request))
                 .andExpect(status().isBadRequest())
                 .andExpect(content().json(expectedResponse));
     }
@@ -131,9 +125,9 @@ class PacienteControllerIntegrationTest extends AbstractDateFixedAndDatabaseProv
     @SneakyThrows
     void deveRetornar404AoTentarAtualizarUmPacienteNaoCadastradoNoSistema(String request, String expectedResponse) {
         mockMvc.perform(
-                put("/paciente/1")
-                        .contentType(APPLICATION_JSON)
-                        .content(request))
+                        put("/paciente/1")
+                                .contentType(APPLICATION_JSON)
+                                .content(request))
                 .andExpect(status().isNotFound())
                 .andExpect(content().json(expectedResponse));
     }
