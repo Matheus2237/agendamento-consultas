@@ -1,0 +1,115 @@
+{
+	"info": {
+		"_postman_id": "bd2e0d1d-ed45-444d-8b37-89962021a4e4",
+		"name": "Consulta",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "22811367"
+	},
+	"item": [
+		{
+			"name": "agendar",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"pacienteId\":1,\n    \"medicoId\":1,\n    \"data\":\"2024-07-21\",\n    \"horario\":\"10:30\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/consulta/agendamento",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"consulta",
+						"agendamento"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cancelar",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/consulta/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"consulta",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "relatório dia",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/consulta/dia?dia=2024-07-21",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"consulta",
+						"dia"
+					],
+					"query": [
+						{
+							"key": "dia",
+							"value": "2024-07-21"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "relatório mês",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/consulta/mes?mes=7&ano=2024",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"consulta",
+						"mes"
+					],
+					"query": [
+						{
+							"key": "mes",
+							"value": "7"
+						},
+						{
+							"key": "ano",
+							"value": "2024"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

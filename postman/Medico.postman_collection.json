@@ -1,0 +1,158 @@
+{
+	"info": {
+		"_postman_id": "2654e0e5-a96a-493e-ad78-813127c5b266",
+		"name": "Medico",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "22811367"
+	},
+	"item": [
+		{
+			"name": "visualizar todos",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/medico",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"medico"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "detalhar",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/medico/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"medico",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cadastrar",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nome\": \"João Augusto\",\r\n    \"crm\": \"SP123456\",\r\n    \"email\": \"jotaaug@gmail.com\",\r\n    \"telefone\": {\r\n        \"ddd\": \"54\",\r\n        \"numero\": \"954332345\"\r\n    },\r\n    \"endereco\": {\r\n        \"logradouro\": \"Av. Bandeirantes\",\r\n        \"numero\": \"21, andar 4, apartamento 42\",\r\n        \"bairro\": \"Jardim Planalto\",\r\n        \"cidade\": \"São Paulo\",\r\n        \"uf\": \"SP\",\r\n        \"cep\": \"32143654\"\r\n    },\r\n    \"especializacao\":\"CARDIOLOGIA\",\r\n    \"horariosAtendimento\":[\r\n        {\r\n            \"diaDaSemana\":\"QUINTA\",\r\n            \"horaInicial\":\"08:00\",\r\n            \"horaFinal\":\"17:00\"\r\n        },\r\n        {\r\n            \"diaDaSemana\":\"DOMINGO\",\r\n            \"horaInicial\":\"08:00\",\r\n            \"horaFinal\":\"17:00\"\r\n        }\r\n    ]\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/medico",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"medico"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "excluir",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/medico/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"medico",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "atualizar",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nome\":\"João Augusto Nogueira\",\r\n    \"especializacao\":\"OFTALMOLOGIA\",\r\n    \"telefone\":{\r\n        \"ddd\":\"32\",\r\n        \"numero\":\"988883333\"\r\n    },\r\n    \"endereco\": {\r\n        \"logradouro\": \"Rua Atualizada\",\r\n        \"numero\": \"33\",\r\n        \"bairro\": \"Jardim Atualizado\",\r\n        \"cidade\": \"Cidade Atualizada\",\r\n        \"uf\": \"SP\",\r\n        \"cep\": \"11234543\"\r\n    }\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/medico/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"medico",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "atualizar horarios atendimento",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n    {\n        \"diaDaSemana\":\"QUARTA\",\n        \"horaInicial\":\"08:00\",\n        \"horaFinal\":\"14:00\"\n    },\n    {\n        \"diaDaSemana\":\"DOMINGO\",\n        \"horaInicial\":\"08:00\",\n        \"horaFinal\":\"17:00\"\n    }\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/medico/1/horarios-atendimento",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"medico",
+						"1",
+						"horarios-atendimento"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

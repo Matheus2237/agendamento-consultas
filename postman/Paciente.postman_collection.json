@@ -1,0 +1,128 @@
+{
+	"info": {
+		"_postman_id": "226c4855-5502-4cf0-9ebc-9b64adcde67d",
+		"name": "Paciente",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "22811367"
+	},
+	"item": [
+		{
+			"name": "visualizar todos",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/paciente",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"paciente"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "detalhar",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/paciente/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"paciente",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cadastrar",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nome\": \"Maria Souza\",\r\n    \"cpf\": \"12345678900\",\r\n    \"email\": \"maria.souza@exemplo.com\",\r\n    \"telefone\": {\r\n        \"ddd\": \"11\",\r\n        \"numero\": \"987654321\"\r\n    },\r\n    \"endereco\": {\r\n        \"logradouro\": \"Rua Exemplo\",\r\n        \"numero\": \"123\",\r\n        \"bairro\": \"Bairro Exemplo\",\r\n        \"cidade\": \"Cidade Exemplo\",\r\n        \"uf\": \"SP\",\r\n        \"cep\": \"12345678\"\r\n    }\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/paciente",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"paciente"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "atualizar",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"telefone\":{\r\n        \"ddd\":\"11\",\r\n        \"numero\":\"91234567800\"\r\n    },\r\n    \"endereco\": {\r\n        \"logradouro\": \"Rua Atualizada\",\r\n        \"numero\": \"33\",\r\n        \"bairro\": \"Jardim Atualizado\",\r\n        \"cidade\": \"Cidade Atualizada\",\r\n        \"uf\": \"SP\",\r\n        \"cep\": \"11234543\"\r\n    }\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/paciente/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"paciente",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "excluir",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/paciente/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"paciente",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

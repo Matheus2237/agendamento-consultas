@@ -43,7 +43,7 @@ HIBERNATE_DDL_AUTO=<ddl do hibernate>
 
 ### 🧪 Testes com o Postman
 
-Você pode importar a coleção do Postman para testar a API. [Link para a collection do Postman]
+Você pode importar a coleção do Postman para testar a API. Para isso, baixe o pacote de collections do Postman: [Coleções do Postman](./postman)
 
 ## 📜 Licença
 
