@@ -29,9 +29,9 @@ Para subir o projeto, siga os seguintes passos:
 3. **Compile o Projeto**: Utilize o Java 21 e o Maven para compilar o projeto.
 4. **Execute o Projeto**: O projeto possui apenas um perfil default para execução. A diferenciação de ambientes se dá mediante variáveis de ambiente.
 
-### 📄 Exemplo de Arquivo de Variáveis de Ambiente
+### 📄 Variáveis de Ambiente
 
-agendamentoconsultas.env:
+Escreva um arquivo *agendamentoconsultas.env* contendo as seguintes variáveis:
 
 ```env
 SERVER_PORT=<porta da aplicação>
