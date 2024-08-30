@@ -5,8 +5,10 @@ import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import org.springframework.stereotype.Component;
 
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static br.com.matheus.agendamentoconsultas.constraints.validator.UFValidator.isValidUF;
 import static org.apache.commons.lang3.StringUtils.isBlank;
 
 /**
@@ -24,7 +26,7 @@ import static org.apache.commons.lang3.StringUtils.isBlank;
 @Component
 public class ValidCrmValidator implements ConstraintValidator<ValidCrm, String> {
 
-    private static final Pattern CRM_PATTERN = Pattern.compile("^(AC|AL|AM|AP|BA|CE|DF|ES|GO|MA|MG|MS|MT|PA|PB|PE|PI|PR|RJ|RN|RO|RR|RS|SC|SE|SP|TO)(\\d{6})$");
+    private static final Pattern CRM_PATTERN = Pattern.compile("^([A-Z]{2})(\\d{6})$");
 
     /**
      * Verifica se o CRM informado está no formato válido.
@@ -35,6 +37,15 @@ public class ValidCrmValidator implements ConstraintValidator<ValidCrm, String> 
      */
     @Override
     public boolean isValid(String crm, ConstraintValidatorContext context) {
-        return isBlank(crm) || CRM_PATTERN.matcher(crm).matches();
+        return isBlank(crm) || isValid(crm);
+    }
+
+    private boolean isValid(String crm) {
+        Matcher crmMatcher = CRM_PATTERN.matcher(crm);
+        if (crmMatcher.matches()) {
+            String uf = crmMatcher.group(1);
+            return isValidUF(uf);
+        }
+        return false;
     }
 }

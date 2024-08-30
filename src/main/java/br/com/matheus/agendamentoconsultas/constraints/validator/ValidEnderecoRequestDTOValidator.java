@@ -6,8 +6,10 @@ import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import org.springframework.stereotype.Component;
 
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static br.com.matheus.agendamentoconsultas.constraints.validator.UFValidator.isValidUF;
 import static java.util.Objects.isNull;
 import static org.apache.commons.lang3.StringUtils.isBlank;
 
@@ -26,7 +28,7 @@ import static org.apache.commons.lang3.StringUtils.isBlank;
 @Component
 public class ValidEnderecoRequestDTOValidator implements ConstraintValidator<ValidEnderecoRequestDTO, EnderecoRequestDTO> {
 
-    private static final Pattern ESTADO_PATTERN = Pattern.compile("^(AC|AL|AP|AM|BA|CE|DF|ES|GO|MA|MT|MS|MG|PA|PB|PR|PE|PI|RJ|RN|RS|RO|RR|SC|SP|SE|TO)$");
+    private static final Pattern UF_PATTERN = Pattern.compile("^([A-Z]{2})$");
     private static final Pattern CEP_PATTERN = Pattern.compile("^\\d{8}$");
 
     /**
@@ -65,7 +67,16 @@ public class ValidEnderecoRequestDTOValidator implements ConstraintValidator<Val
      * @return {@code true} se o UF e o CEP são válidos, {@code false} caso contrário.
      */
     private boolean isUfECepValidos(String uf, String cep) {
-        return ESTADO_PATTERN.matcher(uf).matches()
+        return isValid(uf)
                 && CEP_PATTERN.matcher(cep).matches();
+    }
+
+    private boolean isValid(String uf) {
+        Matcher ufMatcher = UF_PATTERN.matcher(uf);
+        if (ufMatcher.matches()) {
+            String ufMatch = ufMatcher.group(1);
+            return isValidUF(ufMatch);
+        }
+        return false;
     }
 }
