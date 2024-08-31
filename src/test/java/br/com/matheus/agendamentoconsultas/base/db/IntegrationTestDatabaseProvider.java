@@ -52,6 +52,7 @@ public class IntegrationTestDatabaseProvider {
      *
      * @return Um test colntainer MySQL configurado com as propriedades do ambiente de teste.
      */
+    @SuppressWarnings("resource")
     private static MySQLContainer<?> getConfiguredMysqlContainerInstance() {
         return new MySQLContainer<>(MYSQL_IMAGE)
                 .withDatabaseName(DB_NAME)
