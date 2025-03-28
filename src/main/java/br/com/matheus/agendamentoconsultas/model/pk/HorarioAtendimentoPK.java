@@ -22,8 +22,6 @@ import java.util.Objects;
  */
 @Embeddable
 @Builder
-@Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public final class HorarioAtendimentoPK {
@@ -32,6 +30,7 @@ public final class HorarioAtendimentoPK {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "dia_da_semana")
+    @Getter
     private DiaDaSemana diaDaSemana;
 
     @Override

@@ -6,7 +6,6 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.util.Objects;
 
@@ -22,9 +21,9 @@ import java.util.Objects;
  * @author Matheus Paulino Ribeiro
  * @since 1.0.0
  */
-@Embeddable
+
 @Getter
-@Setter
+@Embeddable
 @NoArgsConstructor
 @AllArgsConstructor
 public class CPF {
