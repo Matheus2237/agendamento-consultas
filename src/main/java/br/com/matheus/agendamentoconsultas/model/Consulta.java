@@ -22,7 +22,6 @@ import java.time.LocalTime;
 @Entity
 @Builder
 @Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "consulta")
