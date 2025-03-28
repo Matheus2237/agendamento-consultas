@@ -18,10 +18,9 @@ import lombok.*;
  * @author Matheus Paulino Ribeiro
  * @since 1.0.0
  */
+@Getter
 @Entity
 @Builder
-@Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "paciente")
@@ -31,6 +30,7 @@ public class Paciente {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Setter
     @NotNull
     private String nome;
 
@@ -40,9 +40,11 @@ public class Paciente {
     @Embedded
     private Email email;
 
+    @Setter
     @Embedded
     private Telefone telefone;
 
+    @Setter
     @Embedded
     private Endereco endereco;
 }

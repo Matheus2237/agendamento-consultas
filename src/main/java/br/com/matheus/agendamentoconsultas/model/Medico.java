@@ -24,7 +24,6 @@ import java.util.Set;
 @Entity
 @Builder
 @Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "medico")
@@ -34,6 +33,7 @@ public class Medico {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Setter
     @NotNull
     private String nome;
 
@@ -43,16 +43,20 @@ public class Medico {
     @Embedded
     private Email email;
 
+    @Setter
     @Embedded
     private Telefone telefone;
 
+    @Setter
     @Embedded
     private Endereco endereco;
 
+    @Setter
     @NotNull
     @Enumerated(value = EnumType.STRING)
     private Especializacao especializacao;
 
+    @Setter
     @OneToMany(
             mappedBy = "medico",
             cascade = CascadeType.ALL,
