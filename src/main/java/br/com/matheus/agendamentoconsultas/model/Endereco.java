@@ -2,7 +2,9 @@ package br.com.matheus.agendamentoconsultas.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 /**
  * <p>
@@ -19,7 +21,6 @@ import lombok.*;
 @Builder
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor
 public class Endereco {
 
     @Column(name = "endereco_logradouro")
@@ -39,4 +40,13 @@ public class Endereco {
 
     @Column(name = "endereco_cep")
     private String cep;
+
+    public Endereco(String logradouro, String numero, String bairro, String cidade, String uf, String cep) {
+        this.logradouro = logradouro;
+        this.numero = numero;
+        this.bairro = bairro;
+        this.cidade = cidade;
+        this.uf = uf;
+        this.cep = cep;
+    }
 }

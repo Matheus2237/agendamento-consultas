@@ -3,12 +3,8 @@ package br.com.matheus.agendamentoconsultas.model.vo;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-import java.util.Objects;
 
 /**
  * <p>
@@ -25,10 +21,13 @@ import java.util.Objects;
 @Embeddable
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor
 public class Email {
 
     @NotBlank
     @Column(name = "email", nullable = false)
     private String value;
+
+    public Email(String value) {
+        this.value = value;
+    }
 }

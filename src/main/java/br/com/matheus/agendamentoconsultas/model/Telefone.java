@@ -2,7 +2,9 @@ package br.com.matheus.agendamentoconsultas.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 /**
  * <p>
@@ -19,7 +21,6 @@ import lombok.*;
 @Builder
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor
 public class Telefone {
 
     @Column(name = "telefone_ddd")
@@ -27,4 +28,9 @@ public class Telefone {
 
     @Column(name = "telefone_numero")
     private String numero;
+
+    public Telefone(String ddd, String numero) {
+        this.ddd = ddd;
+        this.numero = numero;
+    }
 }

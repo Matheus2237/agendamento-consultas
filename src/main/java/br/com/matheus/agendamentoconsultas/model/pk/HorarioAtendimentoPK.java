@@ -5,9 +5,9 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import lombok.*;
-
-import java.util.Objects;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 /**
  * <p>
@@ -23,7 +23,6 @@ import java.util.Objects;
 @Embeddable
 @Builder
 @NoArgsConstructor
-@AllArgsConstructor
 public final class HorarioAtendimentoPK {
 
     private Long medicoId;
@@ -32,4 +31,9 @@ public final class HorarioAtendimentoPK {
     @Column(name = "dia_da_semana")
     @Getter
     private DiaDaSemana diaDaSemana;
+
+    public HorarioAtendimentoPK(Long medicoId, DiaDaSemana diaDaSemana) {
+        this.medicoId = medicoId;
+        this.diaDaSemana = diaDaSemana;
+    }
 }

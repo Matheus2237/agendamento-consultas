@@ -3,7 +3,9 @@ package br.com.matheus.agendamentoconsultas.model;
 import br.com.matheus.agendamentoconsultas.model.pk.HorarioAtendimentoPK;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalTime;
 
@@ -21,7 +23,6 @@ import java.time.LocalTime;
 @Entity
 @Builder
 @NoArgsConstructor
-@AllArgsConstructor
 @Table(name = "medico_horario_atendimento")
 public class HorarioAtendimento {
 
@@ -43,4 +44,11 @@ public class HorarioAtendimento {
     @NotNull
     @Column(name = "hora_final")
     private LocalTime horaFinal;
+
+    public HorarioAtendimento(HorarioAtendimentoPK primaryKey, Medico medico, LocalTime horaInicial, LocalTime horaFinal) {
+        this.primaryKey = primaryKey;
+        this.medico = medico;
+        this.horaInicial = horaInicial;
+        this.horaFinal = horaFinal;
+    }
 }

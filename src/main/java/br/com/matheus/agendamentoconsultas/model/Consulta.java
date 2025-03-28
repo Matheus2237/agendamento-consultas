@@ -2,7 +2,9 @@ package br.com.matheus.agendamentoconsultas.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -23,7 +25,6 @@ import java.time.LocalTime;
 @Builder
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor
 @Table(name = "consulta")
 public class Consulta {
 
@@ -46,4 +47,12 @@ public class Consulta {
 
     @NotNull
     private LocalTime horario;
+
+    public Consulta(Long id, Medico medico, Paciente paciente, LocalDate data, LocalTime horario) {
+        this.id = id;
+        this.medico = medico;
+        this.paciente = paciente;
+        this.data = data;
+        this.horario = horario;
+    }
 }

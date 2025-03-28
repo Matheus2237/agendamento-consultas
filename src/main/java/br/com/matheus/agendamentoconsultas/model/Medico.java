@@ -5,7 +5,10 @@ import br.com.matheus.agendamentoconsultas.model.vo.CRM;
 import br.com.matheus.agendamentoconsultas.model.vo.Email;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.Set;
 
@@ -25,7 +28,6 @@ import java.util.Set;
 @Builder
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor
 @Table(name = "medico")
 public class Medico {
 
@@ -62,4 +64,16 @@ public class Medico {
             cascade = CascadeType.ALL,
             orphanRemoval = true)
     private Set<HorarioAtendimento> horariosAtendimento;
+
+    public Medico(Long id, String nome, CRM crm, Email email, Telefone telefone, Endereco endereco,
+                  Especializacao especializacao, Set<HorarioAtendimento> horariosAtendimento) {
+        this.id = id;
+        this.nome = nome;
+        this.crm = crm;
+        this.email = email;
+        this.telefone = telefone;
+        this.endereco = endereco;
+        this.especializacao = especializacao;
+        this.horariosAtendimento = horariosAtendimento;
+    }
 }
