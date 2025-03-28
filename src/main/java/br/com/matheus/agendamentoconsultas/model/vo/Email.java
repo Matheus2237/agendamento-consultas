@@ -31,22 +31,4 @@ public class Email {
     @NotBlank
     @Column(name = "email", nullable = false)
     private String value;
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
-        Email email = (Email) obj;
-        return Objects.equals(value, email.value);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(value);
-    }
-
-    @Override
-    public String toString() {
-        return this.value;
-    }
 }

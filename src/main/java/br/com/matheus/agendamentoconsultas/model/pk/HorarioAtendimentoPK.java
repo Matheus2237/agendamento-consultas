@@ -32,26 +32,4 @@ public final class HorarioAtendimentoPK {
     @Column(name = "dia_da_semana")
     @Getter
     private DiaDaSemana diaDaSemana;
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null || this.getClass() != obj.getClass()) return false;
-        if (this == obj) return true;
-        HorarioAtendimentoPK pk = (HorarioAtendimentoPK) obj;
-        return Objects.equals(this.medicoId, pk.medicoId)
-                && Objects.equals(this.diaDaSemana, pk.diaDaSemana);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(medicoId, diaDaSemana);
-    }
-
-    @Override
-    public String toString() {
-        return "HorarioAtendimentoPK{" +
-                "medicoId=" + medicoId +
-                ", diaDaSemana=" + diaDaSemana +
-                '}';
-    }
 }

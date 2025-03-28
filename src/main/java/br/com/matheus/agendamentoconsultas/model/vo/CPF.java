@@ -31,22 +31,4 @@ public class CPF {
     @NotBlank
     @Column(name = "cpf", unique = true, nullable = false)
     private String value;
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
-        CPF cpf = (CPF) obj;
-        return Objects.equals(value, cpf.value);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(value);
-    }
-
-    @Override
-    public String toString() {
-        return this.value;
-    }
 }
