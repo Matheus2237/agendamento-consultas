@@ -4,7 +4,10 @@ import br.com.matheus.agendamentoconsultas.model.vo.CPF;
 import br.com.matheus.agendamentoconsultas.model.vo.Email;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 /**
  * <p>
@@ -22,7 +25,6 @@ import lombok.*;
 @Entity
 @Builder
 @NoArgsConstructor
-@AllArgsConstructor
 @Table(name = "paciente")
 public class Paciente {
 
@@ -47,4 +49,13 @@ public class Paciente {
     @Setter
     @Embedded
     private Endereco endereco;
+
+    public Paciente(Long id, String nome, CPF cpf, Email email, Telefone telefone, Endereco endereco) {
+        this.id = id;
+        this.nome = nome;
+        this.cpf = cpf;
+        this.email = email;
+        this.telefone = telefone;
+        this.endereco = endereco;
+    }
 }
