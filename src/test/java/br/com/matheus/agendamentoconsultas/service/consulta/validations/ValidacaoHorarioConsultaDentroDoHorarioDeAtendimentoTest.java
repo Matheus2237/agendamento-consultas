@@ -77,8 +77,8 @@ class ValidacaoHorarioConsultaDentroDoHorarioDeAtendimentoTest extends AbstractV
 
     private static HorarioAtendimento getHorarioAtendimento(DiaDaSemana diaDaSemana, LocalTime horarioInicial, LocalTime horarioFinal) {
         return HorarioAtendimento.builder()
-                .primaryKey(new HorarioAtendimentoPK(medicoId, diaDaSemana))
                 .medico(medico)
+                .diaDaSemana(diaDaSemana)
                 .horaInicial(horarioInicial)
                 .horaFinal(horarioFinal)
                 .build();

@@ -280,11 +280,8 @@ class MedicoServiceTest extends MockedUnitTest {
                 .especializacao(Especializacao.valueOf(especializacao))
                 .build();
         HorarioAtendimento horarioAtendimento = HorarioAtendimento.builder()
-                .primaryKey(HorarioAtendimentoPK.builder()
-                        .medicoId(id)
-                        .diaDaSemana(DiaDaSemana.valueOf(diaDaSemana))
-                        .build())
                 .medico(medico)
+                .diaDaSemana(DiaDaSemana.valueOf(diaDaSemana))
                 .horaInicial(LocalTime.parse(horaInicial))
                 .horaFinal(LocalTime.parse(horaFinal))
                 .build();

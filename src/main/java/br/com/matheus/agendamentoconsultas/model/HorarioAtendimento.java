@@ -1,9 +1,12 @@
 package br.com.matheus.agendamentoconsultas.model;
 
+import br.com.matheus.agendamentoconsultas.model.enums.DiaDaSemana;
 import br.com.matheus.agendamentoconsultas.model.pk.HorarioAtendimentoPK;
+import ch.qos.logback.classic.spi.LoggingEventVO;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -21,7 +24,6 @@ import java.time.LocalTime;
  * @since 1.0.0
  */
 @Entity
-@Builder
 @NoArgsConstructor
 @Table(name = "medico_horario_atendimento")
 public class HorarioAtendimento {
@@ -45,10 +47,46 @@ public class HorarioAtendimento {
     @Column(name = "hora_final")
     private LocalTime horaFinal;
 
-    public HorarioAtendimento(HorarioAtendimentoPK primaryKey, Medico medico, LocalTime horaInicial, LocalTime horaFinal) {
-        this.primaryKey = primaryKey;
+    public HorarioAtendimento(Medico medico, DiaDaSemana diaDaSemana, LocalTime horaInicial, LocalTime horaFinal) {
+        this.primaryKey = new HorarioAtendimentoPK(medico.getId(), diaDaSemana);
         this.medico = medico;
         this.horaInicial = horaInicial;
         this.horaFinal = horaFinal;
+    }
+
+    public static HorarioAtendimentoBuilder builder() {
+        return new HorarioAtendimentoBuilder();
+    }
+    
+    public static class HorarioAtendimentoBuilder {
+        
+        private Medico medico;
+        private DiaDaSemana diaDaSemana;
+        private LocalTime horaInicial;
+        private LocalTime horaFinal;
+
+        public HorarioAtendimentoBuilder medico(Medico medico) {
+            this.medico = medico;
+            return this;
+        }
+
+        public HorarioAtendimentoBuilder diaDaSemana(DiaDaSemana diaDaSemana) {
+            this.diaDaSemana = diaDaSemana;
+            return this;
+        }
+
+        public HorarioAtendimentoBuilder horaInicial(LocalTime horaInicial) {
+            this.horaInicial = horaInicial;
+            return this;
+        }
+
+        public HorarioAtendimentoBuilder horaFinal(LocalTime horaFinal) {
+            this.horaFinal = horaFinal;
+            return this;
+        }
+
+        public HorarioAtendimento build() {
+            return new HorarioAtendimento(medico, diaDaSemana, horaInicial, horaFinal);
+        }
     }
 }

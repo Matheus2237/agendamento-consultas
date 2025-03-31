@@ -80,8 +80,7 @@ public class MedicoService {
                 .especializacao(Especializacao.valueOf(medicoDTO.especializacao()))
                 .build();
         Set<HorarioAtendimento> horariosAtendimento = medicoDTO.horariosAtendimento().stream()
-                .map(hrAt -> new HorarioAtendimento(new HorarioAtendimentoPK(medico.getId(),
-                        DiaDaSemana.valueOf(hrAt.diaDaSemana())), medico,
+                .map(hrAt -> new HorarioAtendimento(medico, DiaDaSemana.valueOf(hrAt.diaDaSemana()),
                         LocalTime.parse(hrAt.horaInicial()), LocalTime.parse(hrAt.horaFinal())))
                 .collect(Collectors.toSet());
         medico.setHorariosAtendimento(horariosAtendimento);
@@ -149,8 +148,8 @@ public class MedicoService {
         horarioAtendimentoRepository.deleteByMedicoId(id);
         Set<HorarioAtendimento> horariosAtendimento = horariosAtendimentoRequestDTO.stream()
                 .map(hrAt -> HorarioAtendimento.builder()
-                        .primaryKey(new HorarioAtendimentoPK(id, DiaDaSemana.valueOf(hrAt.diaDaSemana())))
                         .medico(medico)
+                        .diaDaSemana(DiaDaSemana.valueOf(hrAt.diaDaSemana()))
                         .horaInicial(LocalTime.parse(hrAt.horaInicial()))
                         .horaFinal(LocalTime.parse(hrAt.horaFinal()))
                         .build())
