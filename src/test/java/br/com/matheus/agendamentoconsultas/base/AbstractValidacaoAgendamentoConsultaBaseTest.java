@@ -4,8 +4,10 @@ import br.com.matheus.agendamentoconsultas.model.Consulta;
 import br.com.matheus.agendamentoconsultas.model.Medico;
 import br.com.matheus.agendamentoconsultas.model.Paciente;
 import br.com.matheus.agendamentoconsultas.model.enums.DiaDaSemana;
+import lombok.SneakyThrows;
 import org.junit.jupiter.api.BeforeAll;
 
+import java.lang.reflect.Field;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -31,12 +33,21 @@ public abstract class AbstractValidacaoAgendamentoConsultaBaseTest extends Mocke
     @BeforeAll
     static void setUpBeforeAll() {
         medicoId = 1L;
+        medico = new Medico();
+        setPrivateField(medico, medicoId);
         pacienteId = 1L;
-        medico = Medico.builder().id(medicoId).build();
-        paciente = Paciente.builder().id(pacienteId).build();
+        paciente = new Paciente();
+        setPrivateField(paciente, pacienteId);
         data = LocalDate.now().plusDays(1);
         horarioConsulta = LocalTime.parse("10:00");
         diaDaSemana = getDiaDaSemanaPelaData(data);
+    }
+
+    @SneakyThrows
+    private static void setPrivateField(Object entity, Long id) {
+        Field field = entity.getClass().getDeclaredField("id");
+        field.setAccessible(true);
+        field.set(entity, id);
     }
 
     /**
