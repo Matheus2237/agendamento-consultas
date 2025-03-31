@@ -30,6 +30,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import static br.com.matheus.agendamentoconsultas.base.AbstractValidacaoAgendamentoConsultaBaseTest.setPrivateField;
+import static br.com.matheus.agendamentoconsultas.util.ReflectionUtil.setPrivateId;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -261,7 +263,6 @@ class MedicoServiceTest extends MockedUnitTest {
 
     private Medico getMedico() {
         Medico medico = Medico.builder()
-                .id(id)
                 .nome(nome)
                 .crm(new CRM(crm))
                 .email(new Email(email))
@@ -286,6 +287,7 @@ class MedicoServiceTest extends MockedUnitTest {
                 .horaFinal(LocalTime.parse(horaFinal))
                 .build();
         Set<HorarioAtendimento> horariosAtendimento = Set.of(horarioAtendimento);
+        setPrivateId(medico, id);
         medico.setHorariosAtendimento(horariosAtendimento);
         return medico;
     }
