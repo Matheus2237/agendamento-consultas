@@ -4,6 +4,7 @@ import br.com.matheus.agendamentoconsultas.model.enums.Especializacao;
 import br.com.matheus.agendamentoconsultas.model.vo.CRM;
 import br.com.matheus.agendamentoconsultas.model.vo.Email;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Getter;
@@ -25,7 +26,6 @@ import java.util.Set;
  * @since 1.0.0
  */
 @Entity
-@Builder
 @Getter
 @NoArgsConstructor
 @Table(name = "medico")
@@ -65,15 +65,61 @@ public class Medico {
             orphanRemoval = true)
     private Set<HorarioAtendimento> horariosAtendimento;
 
-    public Medico(Long id, String nome, CRM crm, Email email, Telefone telefone, Endereco endereco,
-                  Especializacao especializacao, Set<HorarioAtendimento> horariosAtendimento) {
-        this.id = id;
+    public Medico(String nome, CRM crm, Email email, Telefone telefone, Endereco endereco,
+                  Especializacao especializacao) {
         this.nome = nome;
         this.crm = crm;
         this.email = email;
         this.telefone = telefone;
         this.endereco = endereco;
         this.especializacao = especializacao;
-        this.horariosAtendimento = horariosAtendimento;
+    }
+
+    public static MedicoBuilder builder() {
+        return new MedicoBuilder();
+    }
+
+    public static class MedicoBuilder {
+
+        private String nome;
+        private CRM crm;
+        private Email email;
+        private Telefone telefone;
+        private Endereco endereco;
+        private Especializacao especializacao;
+
+        public MedicoBuilder nome(String nome) {
+            this.nome = nome;
+            return this;
+        }
+
+        public MedicoBuilder crm(CRM crm) {
+            this.crm = crm;
+            return this;
+        }
+
+        public MedicoBuilder email(Email email) {
+            this.email = email;
+            return this;
+        }
+
+        public MedicoBuilder telefone(Telefone telefone) {
+            this.telefone = telefone;
+            return this;
+        }
+
+        public MedicoBuilder endereco(Endereco endereco) {
+            this.endereco = endereco;
+            return this;
+        }
+
+        public MedicoBuilder especializacao(Especializacao especializacao) {
+            this.especializacao = especializacao;
+            return this;
+        }
+
+        public Medico build() {
+            return new Medico(nome, crm, email, telefone, endereco, especializacao);
+        }
     }
 }

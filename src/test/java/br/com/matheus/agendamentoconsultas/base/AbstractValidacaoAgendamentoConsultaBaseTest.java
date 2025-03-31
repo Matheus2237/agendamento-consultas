@@ -44,7 +44,7 @@ public abstract class AbstractValidacaoAgendamentoConsultaBaseTest extends Mocke
     }
 
     @SneakyThrows
-    private static void setPrivateField(Object entity, Long id) {
+    public static void setPrivateField(Object entity, Long id) {
         Field field = entity.getClass().getDeclaredField("id");
         field.setAccessible(true);
         field.set(entity, id);
