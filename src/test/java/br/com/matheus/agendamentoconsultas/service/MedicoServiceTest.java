@@ -9,7 +9,6 @@ import br.com.matheus.agendamentoconsultas.model.Medico;
 import br.com.matheus.agendamentoconsultas.model.Telefone;
 import br.com.matheus.agendamentoconsultas.model.enums.DiaDaSemana;
 import br.com.matheus.agendamentoconsultas.model.enums.Especializacao;
-import br.com.matheus.agendamentoconsultas.model.pk.HorarioAtendimentoPK;
 import br.com.matheus.agendamentoconsultas.model.vo.CRM;
 import br.com.matheus.agendamentoconsultas.model.vo.Email;
 import br.com.matheus.agendamentoconsultas.repository.HorarioAtendimentoRepository;
@@ -30,7 +29,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-import static br.com.matheus.agendamentoconsultas.base.AbstractValidacaoAgendamentoConsultaBaseTest.setPrivateField;
 import static br.com.matheus.agendamentoconsultas.util.ReflectionUtil.setPrivateId;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;

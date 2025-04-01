@@ -9,7 +9,6 @@ import br.com.matheus.agendamentoconsultas.model.Telefone;
 import br.com.matheus.agendamentoconsultas.model.vo.CPF;
 import br.com.matheus.agendamentoconsultas.model.vo.Email;
 import br.com.matheus.agendamentoconsultas.repository.PacienteRepository;
-import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
@@ -20,11 +19,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 
-import java.lang.reflect.Field;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import static br.com.matheus.agendamentoconsultas.util.ReflectionUtil.setPrivateId;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -210,15 +209,8 @@ class PacienteServiceTest extends MockedUnitTest {
                         .cep(cep)
                         .build())
                 .build();
-        setPrivatePacienteId(paciente, id);
+        setPrivateId(paciente, id);
         return paciente;
-    }
-
-    @SneakyThrows
-    private void setPrivatePacienteId(Paciente paciente, Long id) {
-        Field field = paciente.getClass().getDeclaredField("id");
-        field.setAccessible(true);
-        field.set(paciente, id);
     }
 
     private RequestCadastroPacienteDTO getRequestCadastroPacienteDTO() {
