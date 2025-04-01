@@ -70,6 +70,7 @@ public class MedicoService {
     public Medico cadastrar(final RequestCadastroMedicoDTO medicoDTO) {
         TelefoneRequestDTO telefoneDTO = medicoDTO.telefone();
         EnderecoRequestDTO enderecoDTO = medicoDTO.endereco();
+
         Medico medico = Medico.builder()
                 .nome(medicoDTO.nome())
                 .crm(new CRM(medicoDTO.crm()))
@@ -79,11 +80,14 @@ public class MedicoService {
                         enderecoDTO.cidade(), enderecoDTO.uf(), enderecoDTO.cep()))
                 .especializacao(Especializacao.valueOf(medicoDTO.especializacao()))
                 .build();
-        Set<HorarioAtendimento> horariosAtendimento = medicoDTO.horariosAtendimento().stream()
-                .map(hrAt -> new HorarioAtendimento(medico, DiaDaSemana.valueOf(hrAt.diaDaSemana()),
-                        LocalTime.parse(hrAt.horaInicial()), LocalTime.parse(hrAt.horaFinal())))
-                .collect(Collectors.toSet());
-        medico.setHorariosAtendimento(horariosAtendimento);
+
+        medicoDTO.horariosAtendimento().forEach(hrAt -> {
+            DiaDaSemana diaDaSemana = DiaDaSemana.valueOf(hrAt.diaDaSemana());
+            LocalTime horaInicial = LocalTime.parse(hrAt.horaInicial());
+            LocalTime horaFinal = LocalTime.parse(hrAt.horaFinal());
+            medico.adicionaHorarioAtendimento(diaDaSemana, horaInicial, horaFinal);
+        });
+
         return this.medicoRepository.save(medico);
     }
 

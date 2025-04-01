@@ -1,5 +1,6 @@
 package br.com.matheus.agendamentoconsultas.model;
 
+import br.com.matheus.agendamentoconsultas.model.enums.DiaDaSemana;
 import br.com.matheus.agendamentoconsultas.model.enums.Especializacao;
 import br.com.matheus.agendamentoconsultas.model.vo.CRM;
 import br.com.matheus.agendamentoconsultas.model.vo.Email;
@@ -11,6 +12,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalTime;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -58,21 +61,26 @@ public class Medico {
     @Enumerated(value = EnumType.STRING)
     private Especializacao especializacao;
 
-    @Setter
     @OneToMany(
             mappedBy = "medico",
             cascade = CascadeType.ALL,
             orphanRemoval = true)
     private Set<HorarioAtendimento> horariosAtendimento;
 
-    public Medico(String nome, CRM crm, Email email, Telefone telefone, Endereco endereco,
-                  Especializacao especializacao) {
+    public Medico(String nome, CRM crm, Email email, Telefone telefone,
+                  Endereco endereco, Especializacao especializacao) {
         this.nome = nome;
         this.crm = crm;
         this.email = email;
         this.telefone = telefone;
         this.endereco = endereco;
         this.especializacao = especializacao;
+        this.horariosAtendimento = new HashSet<>();
+    }
+
+    public void adicionaHorarioAtendimento(DiaDaSemana diaDaSemana, LocalTime horaInicial, LocalTime horaFinal) {
+        HorarioAtendimento horarioAtendimento = new HorarioAtendimento(this,diaDaSemana,horaInicial,horaFinal);
+        this.horariosAtendimento.add(horarioAtendimento);
     }
 
     public static MedicoBuilder builder() {
