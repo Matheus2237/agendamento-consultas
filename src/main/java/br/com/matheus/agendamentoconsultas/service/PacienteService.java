@@ -57,16 +57,7 @@ public class PacienteService {
      */
     @Transactional
     public Paciente cadastrar(RequestCadastroPacienteDTO pacienteDTO) {
-        TelefoneRequestDTO telefoneDTO = pacienteDTO.telefone();
-        EnderecoRequestDTO enderecoDTO = pacienteDTO.endereco();
-        Paciente paciente = Paciente.builder()
-                .nome(pacienteDTO.nome())
-                .cpf(new CPF(pacienteDTO.cpf()))
-                .email(new Email(pacienteDTO.email()))
-                .telefone(new Telefone(telefoneDTO.ddd(), telefoneDTO.numero()))
-                .endereco(new Endereco(enderecoDTO.logradouro(), enderecoDTO.numero(), enderecoDTO.bairro(),
-                        enderecoDTO.cidade(), enderecoDTO.uf(), enderecoDTO.cep()))
-                .build();
+        Paciente paciente = pacienteDTO.toEntity();
         return this.pacienteRepository.save(paciente);
     }
 

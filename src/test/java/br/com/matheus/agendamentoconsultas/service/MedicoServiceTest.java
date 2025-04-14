@@ -260,24 +260,12 @@ class MedicoServiceTest extends MockedUnitTest {
     }
 
     private Medico getMedico() {
-        Medico medico = Medico.builder()
-                .nome(nome)
-                .crm(new CRM(crm))
-                .email(new Email(email))
-                .telefone(Telefone.builder()
-                        .ddd(ddd)
-                        .numero(numeroTelefone)
-                        .build())
-                .endereco(Endereco.builder()
-                        .logradouro(logradouro)
-                        .numero(numeroEndereco)
-                        .bairro(bairro)
-                        .cidade(cidade)
-                        .uf(uf)
-                        .cep(cep)
-                        .build())
-                .especializacao(Especializacao.valueOf(especializacao))
-                .build();
+        CRM crmEntity = new CRM(crm);
+        Email emailEntity = new Email(email);
+        Telefone telefone = new Telefone(ddd, numeroTelefone);
+        Endereco endereco = new Endereco(logradouro, numeroEndereco, bairro, cidade, uf, cep);
+        Especializacao especializacaoEntity = Especializacao.valueOf(especializacao);
+        Medico medico = new Medico(nome, crmEntity, emailEntity, telefone, endereco, especializacaoEntity);
 
         setPrivateId(medico, id);
         medico.adicionaHorarioAtendimento(

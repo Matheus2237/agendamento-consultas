@@ -1,13 +1,15 @@
 package br.com.matheus.agendamentoconsultas.model.pk;
 
+import br.com.matheus.agendamentoconsultas.model.Medico;
 import br.com.matheus.agendamentoconsultas.model.enums.DiaDaSemana;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  * <p>
@@ -21,7 +23,6 @@ import lombok.NoArgsConstructor;
  * @since 1.0.0
  */
 @Embeddable
-@Builder
 @NoArgsConstructor
 public final class HorarioAtendimentoPK {
 
@@ -32,8 +33,8 @@ public final class HorarioAtendimentoPK {
     @Getter
     private DiaDaSemana diaDaSemana;
 
-    public HorarioAtendimentoPK(Long medicoId, DiaDaSemana diaDaSemana) {
-        this.medicoId = medicoId;
+    public HorarioAtendimentoPK(Medico medico, DiaDaSemana diaDaSemana) {
+        this.medicoId = requireNonNull(medico).getId();
         this.diaDaSemana = diaDaSemana;
     }
 }

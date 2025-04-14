@@ -48,11 +48,6 @@ public abstract class AbstractValidacaoAgendamentoConsultaBaseTest extends Mocke
      * @return instância de {@link Consulta}.
      */
     protected Consulta getEntidadeConsulta() {
-        return Consulta.builder()
-                .medico(medico)
-                .paciente(paciente)
-                .data(data)
-                .horario(horarioConsulta)
-                .build();
+        return new Consulta(medico, paciente, data, horarioConsulta);
     }
 }

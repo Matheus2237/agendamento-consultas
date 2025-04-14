@@ -1,10 +1,14 @@
 package br.com.matheus.agendamentoconsultas.controller.dto;
 
 import br.com.matheus.agendamentoconsultas.constraints.*;
+import br.com.matheus.agendamentoconsultas.model.Endereco;
+import br.com.matheus.agendamentoconsultas.model.Paciente;
+import br.com.matheus.agendamentoconsultas.model.Telefone;
+import br.com.matheus.agendamentoconsultas.model.vo.CPF;
+import br.com.matheus.agendamentoconsultas.model.vo.Email;
 import br.com.matheus.agendamentoconsultas.repository.PacienteRepository;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
@@ -33,7 +37,7 @@ public record RequestCadastroPacienteDTO(
         String cpf,
 
         @NotBlank(message = "O campo 'email' é obrigatório")
-        @Email
+        @jakarta.validation.constraints.Email
         @UniqueEmail(repository = PacienteRepository.class)
         @Schema(description = "Email do paciente", example = "maria.souza@exemplo.com")
         String email,
@@ -50,4 +54,11 @@ public record RequestCadastroPacienteDTO(
         @Schema(description = "Endereço do paciente")
         EnderecoRequestDTO endereco
 ) {
+    public Paciente toEntity() {
+            CPF cpfEntity = new CPF(cpf);
+            Email emailEntity = new Email(email);
+            Telefone telefoneEntity = telefone.toEntity();
+            Endereco enderecoEntity = endereco.toEntity();
+            return new Paciente(nome, cpfEntity, emailEntity, telefoneEntity, enderecoEntity);
+    }
 }

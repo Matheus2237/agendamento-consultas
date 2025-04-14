@@ -1,13 +1,20 @@
 package br.com.matheus.agendamentoconsultas.controller.dto;
 
 import br.com.matheus.agendamentoconsultas.constraints.*;
+import br.com.matheus.agendamentoconsultas.model.Endereco;
+import br.com.matheus.agendamentoconsultas.model.Medico;
+import br.com.matheus.agendamentoconsultas.model.Telefone;
+import br.com.matheus.agendamentoconsultas.model.enums.DiaDaSemana;
+import br.com.matheus.agendamentoconsultas.model.enums.Especializacao;
+import br.com.matheus.agendamentoconsultas.model.vo.CRM;
+import br.com.matheus.agendamentoconsultas.model.vo.Email;
 import br.com.matheus.agendamentoconsultas.repository.MedicoRepository;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
+import java.time.LocalTime;
 import java.util.Set;
 
 /**
@@ -37,7 +44,7 @@ public record RequestCadastroMedicoDTO(
         String crm,
 
         @NotBlank(message = "O campo 'email' é obrigatório")
-        @Email
+        @jakarta.validation.constraints.Email
         @UniqueEmail(repository = MedicoRepository.class)
         @Schema(description = "Email do médico", example = "joao.silva@exemplo.com")
         String email,
@@ -64,4 +71,24 @@ public record RequestCadastroMedicoDTO(
         @Schema(description = "Horários de atendimento do médico")
         Set<HorarioAtendimentoRequestDTO> horariosAtendimento
 ) {
+        public Medico toEntity() {
+
+                Telefone telefoneEntity = telefone.toEntity();
+                Endereco enderecoEntity = endereco.toEntity();
+                CRM crmEntity = new CRM(crm);
+                Email emailEntity = new Email(email);
+                Especializacao especializacaoEntity = Especializacao.valueOf(especializacao);
+
+                Medico medico = new Medico(nome, crmEntity, emailEntity, telefoneEntity,
+                        enderecoEntity, especializacaoEntity);
+
+                horariosAtendimento.forEach(hrAt -> {
+                        DiaDaSemana diaDaSemana = DiaDaSemana.valueOf(hrAt.diaDaSemana());
+                        LocalTime horaInicial = LocalTime.parse(hrAt.horaInicial());
+                        LocalTime horaFinal = LocalTime.parse(hrAt.horaFinal());
+                        medico.adicionaHorarioAtendimento(diaDaSemana, horaInicial, horaFinal);
+                });
+
+                return medico;
+        }
 }

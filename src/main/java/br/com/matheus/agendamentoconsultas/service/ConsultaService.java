@@ -82,12 +82,7 @@ public class ConsultaService {
         final Medico medico = consultaRequestDTO.medicoId() != 0
                 ? obterMedicoPeloId(consultaRequestDTO.medicoId())
                 : obterMedicoAleatorioDisponivelParaDataEHorarioDeterminado(data, horario);
-        return Consulta.builder()
-                .paciente(paciente)
-                .medico(medico)
-                .data(data)
-                .horario(horario)
-                .build();
+        return new Consulta(medico, paciente, data, horario);
     }
 
     /**

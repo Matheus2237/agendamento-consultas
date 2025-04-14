@@ -22,7 +22,6 @@ import java.time.LocalTime;
  * @since 1.0.0
  */
 @Entity
-@Builder
 @Getter
 @NoArgsConstructor
 @Table(name = "consulta")
@@ -50,6 +49,13 @@ public class Consulta {
 
     public Consulta(Long id, Medico medico, Paciente paciente, LocalDate data, LocalTime horario) {
         this.id = id;
+        this.medico = medico;
+        this.paciente = paciente;
+        this.data = data;
+        this.horario = horario;
+    }
+
+    public Consulta(Medico medico, Paciente paciente, LocalDate data, LocalTime horario) {
         this.medico = medico;
         this.paciente = paciente;
         this.data = data;

@@ -2,8 +2,11 @@ package br.com.matheus.agendamentoconsultas.controller.dto;
 
 import br.com.matheus.agendamentoconsultas.constraints.ValidDiaDaSemana;
 import br.com.matheus.agendamentoconsultas.constraints.ValidLocalTime;
+import br.com.matheus.agendamentoconsultas.model.enums.DiaDaSemana;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
+
+import java.time.LocalTime;
 
 /**
  * DTO para solicitação de horário de atendimento.
@@ -32,4 +35,15 @@ public record HorarioAtendimentoRequestDTO(
         @Schema(description = "Hora final do atendimento", example = "12:00")
         String horaFinal
 ) {
+        public DiaDaSemana diaDaSemanaAsEnum() {
+                return DiaDaSemana.valueOf(diaDaSemana);
+        }
+
+        public LocalTime horaInicialAsLocalTime() {
+                return LocalTime.parse(horaInicial);
+        }
+
+        public LocalTime horaFinalAsLocalTime() {
+                return LocalTime.parse(horaFinal);
+        }
 }

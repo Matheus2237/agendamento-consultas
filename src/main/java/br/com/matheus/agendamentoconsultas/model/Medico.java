@@ -5,9 +5,7 @@ import br.com.matheus.agendamentoconsultas.model.enums.Especializacao;
 import br.com.matheus.agendamentoconsultas.model.vo.CRM;
 import br.com.matheus.agendamentoconsultas.model.vo.Email;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -81,53 +79,5 @@ public class Medico {
     public void adicionaHorarioAtendimento(DiaDaSemana diaDaSemana, LocalTime horaInicial, LocalTime horaFinal) {
         HorarioAtendimento horarioAtendimento = new HorarioAtendimento(this,diaDaSemana,horaInicial,horaFinal);
         this.horariosAtendimento.add(horarioAtendimento);
-    }
-
-    public static MedicoBuilder builder() {
-        return new MedicoBuilder();
-    }
-
-    public static class MedicoBuilder {
-
-        private String nome;
-        private CRM crm;
-        private Email email;
-        private Telefone telefone;
-        private Endereco endereco;
-        private Especializacao especializacao;
-
-        public MedicoBuilder nome(String nome) {
-            this.nome = nome;
-            return this;
-        }
-
-        public MedicoBuilder crm(CRM crm) {
-            this.crm = crm;
-            return this;
-        }
-
-        public MedicoBuilder email(Email email) {
-            this.email = email;
-            return this;
-        }
-
-        public MedicoBuilder telefone(Telefone telefone) {
-            this.telefone = telefone;
-            return this;
-        }
-
-        public MedicoBuilder endereco(Endereco endereco) {
-            this.endereco = endereco;
-            return this;
-        }
-
-        public MedicoBuilder especializacao(Especializacao especializacao) {
-            this.especializacao = especializacao;
-            return this;
-        }
-
-        public Medico build() {
-            return new Medico(nome, crm, email, telefone, endereco, especializacao);
-        }
     }
 }

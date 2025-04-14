@@ -192,23 +192,11 @@ class PacienteServiceTest extends MockedUnitTest {
     }
 
     private Paciente getPaciente() {
-        Paciente paciente = Paciente.builder()
-                .nome(nome)
-                .cpf(new CPF(cpf))
-                .email(new Email(email))
-                .telefone(Telefone.builder()
-                        .ddd(ddd)
-                        .numero(numeroTelefone)
-                        .build())
-                .endereco(Endereco.builder()
-                        .logradouro(logradouro)
-                        .numero(numeroEndereco)
-                        .bairro(bairro)
-                        .cidade(cidade)
-                        .uf(uf)
-                        .cep(cep)
-                        .build())
-                .build();
+        CPF cpfEntity = new CPF(cpf);
+        Email emailEntity = new Email(email);
+        Telefone telefone = new Telefone(ddd, numeroTelefone);
+        Endereco endereco = new Endereco(logradouro, numeroEndereco, bairro, cidade, uf, cep);
+        Paciente paciente = new Paciente(nome, cpfEntity, emailEntity, telefone, endereco);
         setPrivateId(paciente, id);
         return paciente;
     }
