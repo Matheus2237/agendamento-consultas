@@ -29,7 +29,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-import static br.com.matheus.agendamentoconsultas.util.ReflectionUtil.setPrivateId;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -107,7 +106,8 @@ class MedicoServiceTest extends MockedUnitTest {
 
     @Test
     void deveDetalharUmMedicoPeloSeuId() {
-        Medico medico = getMedico();
+        Medico medico = spy(getMedico());
+        when(medico.getId()).thenReturn(id);
         when(medicoRepositorySpy.findById(id)).thenReturn(Optional.of(medico));
         ResponseMedicoDTO responseMedicoDTO = medicoService.detalharMedico(id);
         assertNotNull(responseMedicoDTO, "Medico cadastrado não deve ser nulo.");
@@ -147,7 +147,8 @@ class MedicoServiceTest extends MockedUnitTest {
         final String logradouroAtualizado = "Av Atualizada";
         final String numeroEnderecoAtualizado = "33";
         final String bairroAtualizado = "Atualizado";
-        Medico medico = getMedico();
+        Medico medico = spy(getMedico());
+        when(medico.getId()).thenReturn(id);
         when(medicoRepositorySpy.findById(id)).thenReturn(Optional.of(medico));
         TelefoneRequestDTO telefoneAtualizado = new TelefoneRequestDTO(dddAtualizado, numeroTelefoneAtualizado);
         EnderecoRequestDTO enderecoAtualizado = new EnderecoRequestDTO(logradouroAtualizado, numeroEnderecoAtualizado, bairroAtualizado, cidade, uf, cep);
@@ -178,7 +179,8 @@ class MedicoServiceTest extends MockedUnitTest {
     @ParameterizedTest
     @NullAndEmptySource
     void deveManterOsDadosAntigosAoTentarAtualizarOsDadosDoMedicoSemOsNovosDados(String dado) {
-        Medico medico = getMedico();
+        Medico medico = spy(getMedico());
+        when(medico.getId()).thenReturn(id);
         when(medicoRepositorySpy.findById(id)).thenReturn(Optional.of(medico));
         RequestAtualizacaoMedicoDTO dadosAtualizacao = new RequestAtualizacaoMedicoDTO(dado, dado, null, null);
         ResponseMedicoDTO dadosMedicoAtualizado = medicoService.atualizar(id, dadosAtualizacao);
@@ -213,7 +215,8 @@ class MedicoServiceTest extends MockedUnitTest {
 
     @Test
     void deveDeletarUmMedicoPeloSeuId() {
-        Medico medico = getMedico();
+        Medico medico = spy(getMedico());
+        when(medico.getId()).thenReturn(id);
         when(medicoRepositorySpy.findById(id)).thenReturn(Optional.of(medico));
         medicoService.deletar(id);
         verify(medicoRepositorySpy).deleteById(id);
@@ -266,14 +269,11 @@ class MedicoServiceTest extends MockedUnitTest {
         Endereco endereco = new Endereco(logradouro, numeroEndereco, bairro, cidade, uf, cep);
         Especializacao especializacaoEntity = Especializacao.valueOf(especializacao);
         Medico medico = new Medico(nome, crmEntity, emailEntity, telefone, endereco, especializacaoEntity);
-
-        setPrivateId(medico, id);
         medico.adicionaHorarioAtendimento(
                 DiaDaSemana.valueOf(diaDaSemana),
                 LocalTime.parse(horaInicial),
                 LocalTime.parse(horaFinal)
         );
-
         return medico;
     }
 }

@@ -10,7 +10,8 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 import static br.com.matheus.agendamentoconsultas.model.enums.DiaDaSemana.getDiaDaSemanaPelaData;
-import static br.com.matheus.agendamentoconsultas.util.ReflectionUtil.setPrivateId;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.when;
 
 /**
  * Classe base para testes de validação de agendamento de consultas, configurando entidades e dados necessários.
@@ -32,11 +33,14 @@ public abstract class AbstractValidacaoAgendamentoConsultaBaseTest extends Mocke
     @BeforeAll
     static void setUpBeforeAll() {
         medicoId = 1L;
-        medico = new Medico();
-        setPrivateId(medico, medicoId);
         pacienteId = 1L;
-        paciente = new Paciente();
-        setPrivateId(paciente, pacienteId);
+
+        medico = spy(new Medico());
+        paciente = spy(new Paciente());
+
+        when(medico.getId()).thenReturn(medicoId);
+        when(paciente.getId()).thenReturn(pacienteId);
+
         data = LocalDate.now().plusDays(1);
         horarioConsulta = LocalTime.parse("10:00");
         diaDaSemana = getDiaDaSemanaPelaData(data);
