@@ -256,13 +256,7 @@ class ConsultaServiceTest extends MockedUnitTest {
     }
 
     private Consulta getConsulta() {
-        return Consulta.builder()
-                .id(consultaId)
-                .medico(medicoMock)
-                .paciente(pacienteMock)
-                .data(LocalDate.parse(data))
-                .horario(LocalTime.parse(horario))
-                .build();
+        return new Consulta(consultaId, medicoMock, pacienteMock, LocalDate.parse(data), LocalTime.parse(horario));
     }
 
     private ConsultaRequestDTO getConsultaRequestDTO() {

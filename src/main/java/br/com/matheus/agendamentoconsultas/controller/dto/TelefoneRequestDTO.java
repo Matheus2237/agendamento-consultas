@@ -1,5 +1,6 @@
 package br.com.matheus.agendamentoconsultas.controller.dto;
 
+import br.com.matheus.agendamentoconsultas.model.Telefone;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 
@@ -22,4 +23,7 @@ public record TelefoneRequestDTO(
         @Schema(description = "Número do telefone", example = "987654321")
         String numero
 ) {
+    public Telefone toEntity() {
+        return new Telefone(ddd, numero);
+    }
 }

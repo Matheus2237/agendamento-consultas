@@ -68,26 +68,7 @@ public class MedicoService {
      */
     @Transactional
     public Medico cadastrar(final RequestCadastroMedicoDTO medicoDTO) {
-        TelefoneRequestDTO telefoneDTO = medicoDTO.telefone();
-        EnderecoRequestDTO enderecoDTO = medicoDTO.endereco();
-
-        Medico medico = Medico.builder()
-                .nome(medicoDTO.nome())
-                .crm(new CRM(medicoDTO.crm()))
-                .email(new Email(medicoDTO.email()))
-                .telefone(new Telefone(telefoneDTO.ddd(), telefoneDTO.numero()))
-                .endereco(new Endereco(enderecoDTO.logradouro(), enderecoDTO.numero(), enderecoDTO.bairro(),
-                        enderecoDTO.cidade(), enderecoDTO.uf(), enderecoDTO.cep()))
-                .especializacao(Especializacao.valueOf(medicoDTO.especializacao()))
-                .build();
-
-        medicoDTO.horariosAtendimento().forEach(hrAt -> {
-            DiaDaSemana diaDaSemana = DiaDaSemana.valueOf(hrAt.diaDaSemana());
-            LocalTime horaInicial = LocalTime.parse(hrAt.horaInicial());
-            LocalTime horaFinal = LocalTime.parse(hrAt.horaFinal());
-            medico.adicionaHorarioAtendimento(diaDaSemana, horaInicial, horaFinal);
-        });
-
+        Medico medico = medicoDTO.toEntity();
         return this.medicoRepository.save(medico);
     }
 
@@ -147,18 +128,18 @@ public class MedicoService {
      */
     @Transactional
     public Set<HorarioAtendimentoResponseDTO> atualizarHorariosAtendimento(Long id, Set<HorarioAtendimentoRequestDTO> horariosAtendimentoRequestDTO) {
-        Medico medico = this.medicoRepository.findById(id)
-                .orElseThrow(MedicoNaoEncontradoException::new);
+        Medico medico = this.medicoRepository.findById(id).orElseThrow(MedicoNaoEncontradoException::new);
         horarioAtendimentoRepository.deleteByMedicoId(id);
+
         Set<HorarioAtendimento> horariosAtendimento = horariosAtendimentoRequestDTO.stream()
-                .map(hrAt -> HorarioAtendimento.builder()
-                        .medico(medico)
-                        .diaDaSemana(DiaDaSemana.valueOf(hrAt.diaDaSemana()))
-                        .horaInicial(LocalTime.parse(hrAt.horaInicial()))
-                        .horaFinal(LocalTime.parse(hrAt.horaFinal()))
-                        .build())
-                .collect(Collectors.toSet());
+                .map(hrAt -> {
+                    DiaDaSemana diaDaSemana = hrAt.diaDaSemanaAsEnum();
+                    LocalTime horaInicial = hrAt.horaInicialAsLocalTime();
+                    LocalTime horaFinal = hrAt.horaFinalAsLocalTime();
+                    return new HorarioAtendimento(medico, diaDaSemana, horaInicial, horaFinal);
+                }).collect(Collectors.toSet());
         horarioAtendimentoRepository.saveAll(horariosAtendimento);
+
         return horariosAtendimento.stream()
                 .map(HorarioAtendimentoResponseDTO::new)
                 .collect(Collectors.toSet());

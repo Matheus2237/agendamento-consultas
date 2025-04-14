@@ -76,11 +76,6 @@ class ValidacaoHorarioConsultaDentroDoHorarioDeAtendimentoTest extends AbstractV
     }
 
     private static HorarioAtendimento getHorarioAtendimento(DiaDaSemana diaDaSemana, LocalTime horarioInicial, LocalTime horarioFinal) {
-        return HorarioAtendimento.builder()
-                .medico(medico)
-                .diaDaSemana(diaDaSemana)
-                .horaInicial(horarioInicial)
-                .horaFinal(horarioFinal)
-                .build();
+        return new HorarioAtendimento(medico, diaDaSemana, horarioInicial, horarioFinal);
     }
 }

@@ -1,5 +1,6 @@
 package br.com.matheus.agendamentoconsultas.controller.dto;
 
+import br.com.matheus.agendamentoconsultas.model.Endereco;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 
@@ -42,4 +43,7 @@ public record EnderecoRequestDTO(
         @Schema(description = "CEP do endereço", example = "11222123")
         String cep
 ) {
+    public Endereco toEntity() {
+        return new Endereco(logradouro, numero, bairro, cidade, uf, cep);
+    }
 }

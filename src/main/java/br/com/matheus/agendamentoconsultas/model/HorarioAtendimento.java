@@ -2,11 +2,8 @@ package br.com.matheus.agendamentoconsultas.model;
 
 import br.com.matheus.agendamentoconsultas.model.enums.DiaDaSemana;
 import br.com.matheus.agendamentoconsultas.model.pk.HorarioAtendimentoPK;
-import ch.qos.logback.classic.spi.LoggingEventVO;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.Builder;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -48,45 +45,9 @@ public class HorarioAtendimento {
     private LocalTime horaFinal;
 
     public HorarioAtendimento(Medico medico, DiaDaSemana diaDaSemana, LocalTime horaInicial, LocalTime horaFinal) {
-        this.primaryKey = new HorarioAtendimentoPK(medico.getId(), diaDaSemana);
+        this.primaryKey = new HorarioAtendimentoPK(medico, diaDaSemana);
         this.medico = medico;
         this.horaInicial = horaInicial;
         this.horaFinal = horaFinal;
-    }
-
-    public static HorarioAtendimentoBuilder builder() {
-        return new HorarioAtendimentoBuilder();
-    }
-    
-    public static class HorarioAtendimentoBuilder {
-        
-        private Medico medico;
-        private DiaDaSemana diaDaSemana;
-        private LocalTime horaInicial;
-        private LocalTime horaFinal;
-
-        public HorarioAtendimentoBuilder medico(Medico medico) {
-            this.medico = medico;
-            return this;
-        }
-
-        public HorarioAtendimentoBuilder diaDaSemana(DiaDaSemana diaDaSemana) {
-            this.diaDaSemana = diaDaSemana;
-            return this;
-        }
-
-        public HorarioAtendimentoBuilder horaInicial(LocalTime horaInicial) {
-            this.horaInicial = horaInicial;
-            return this;
-        }
-
-        public HorarioAtendimentoBuilder horaFinal(LocalTime horaFinal) {
-            this.horaFinal = horaFinal;
-            return this;
-        }
-
-        public HorarioAtendimento build() {
-            return new HorarioAtendimento(medico, diaDaSemana, horaInicial, horaFinal);
-        }
     }
 }
